@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v0</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.12/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+</head>
+<body>
+    <div id="app">
+        <p v-if="isShown">{{ msg }}</p>
+        <input type="text" v-model="msg">
+    </div>
+    <section id='header' class="header" v-show="isShown">
+        <header>
+            <h1 v-if="parseInt(x) > parseInt(y)">{{ title_A }}</h1>
+            <h1 v-else>{{ title_B }}</h1>
+            <h2 v-if="parseInt(x) > parseInt(y)">{{ title_B }}</h2>
+            <h2 v-else-if="parseInt(x) !== parseInt(y)">{{ title_A }}</h2>
+        </header>
+    </section>
+    <section id="input_num">
+        <input type="number" name='quantity' min="30" max="40" v-model="x">
+        <input type="number" name='quantity' v-model="y">
+        <p>{{ x }}, {{ y }}</p>
+    </section>
+</body>
+<script>
+    var exmapleData = {
+        msg: 'Hello World!', isShown: true
+    };
+    var titleData = {
+        title_A: "Apple",
+        title_B: "Banana",
+        x: undefined, y: undefined,
+        isShown: true
+    };
+    new Vue({
+        el: '#app', data: exmapleData
+    });
+    new Vue({
+        el: '#header', data: titleData
+    })
+    new Vue({
+        el: '#input_num', data: titleData
+    })
+</script>
+</html>

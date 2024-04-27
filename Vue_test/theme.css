@@ -1,0 +1,20 @@
+#app {
+    margin: 100px;
+    font-size: 50px;
+    font-family: "Times New Roman";
+}
+input {
+    text-align: center;
+    height: 50px;
+    position: relative;
+    left: 500px;
+}
+.header {
+    border: 5px black solid;
+    margin: 100px;
+    text-align: center;
+    width: 30%;
+}
+input {
+    background-color: yellow;
+}
