@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 组件系统</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.12/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <hello-world></hello-world>
+    </div>
+</body>
+<script>
+    var myComponent = Vue.extend({
+        template: '<div>Hello World!</div>'
+    });
+    Vue.component('hello-world', myComponent);
+    new Vue({
+        el: '#app'
+    });
+</script>
+</html>
