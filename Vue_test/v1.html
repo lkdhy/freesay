@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <title>Vue 组件系统</title>
 <!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
-    <script src="https://cdn.bootcss.com/vue/2.6.12/vue.min.js"></script>
+<!--    <script src="https://cdn.bootcss.com/vue/2.6.12/vue.min.js"></script>-->
+<!--    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.0/vue.cjs.js"></script>-->
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/compiler-sfc.js"></script>-->
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.4.9/vue.cjs.min.js"></script>-->
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.3.0/vue.global.js"></script>
+    <script type="module">
+        import { defineComponent } from 'vue'
+    </script>
     <style>
         ul {
             list-style-type: square;
@@ -23,6 +33,8 @@
     </script>
 </head>
 <body>
+    <article>
+    <h2>我是 app</h2>
     <div id="app">
         <section>
             <h3>组件的创建、注册</h3>
@@ -50,15 +62,25 @@
             <local-hello>你说的对</local-hello>
         </section>
     </div>
+    </article>
+    <hr>
+    <h2>我是 tree</h2>
+    <div id="tree">
+        <child></child>
+        <my-component-a></my-component-a>
+        <my-component-b></my-component-b>
+    </div>
 </body>
-<script>
-    let hw1 = Vue.extend({
+<!-- app -->
+<script type="module">
+    import { defineComponent } from 'vue'
+    let hw1 = defineComponent({
         template: '<div>' + '<strong>' +
             'Hello World!' + '</strong>' +
             '</div>'
-    });
+    })
     // 下面这句话是组件的“全局注册”
-    Vue.component('hello-world', hw1);
+    // Vue.component('hello-world', hw1);
     let appData = {
         courses: [
             '计算机组成与体系结构',
@@ -85,4 +107,45 @@
         }
     });
 </script>
+<!-- tree -->
+<template id="parentHello">
+    <p>Hello World from Parent.</p>
+</template>
+<!--<script>-->
+<!--    var child = Vue.extend({-->
+<!--        // template: '<p>' +-->
+<!--        //     'Hello World from Child' +-->
+<!--        //     '</p>'-->
+<!--        template: '<p>Hello World from Child</p>'-->
+<!--    });-->
+<!--    new Vue({-->
+<!--        el: '#tree',-->
+<!--        components: {-->
+<!--            'child': child-->
+<!--        }-->
+<!--    });-->
+<!--    // 父组件上局部注册子组件，定义标签<child-component>-->
+<!--    var parentA = Vue.extend({-->
+<!--        template: '<p>Hello World from Parent A</p><p>fnwjon</p><child-component></child-component>',-->
+<!--        // template: '<child-component></child-component>',-->
+<!--        components: {-->
+<!--            'child-component': child-->
+<!--        }-->
+<!--    });-->
+<!--    var parentB = Vue.extend({-->
+<!--        template: '<div><p>Hello World from Parent B</p><p>312niio</p></div>',-->
+<!--            // '<child-component></child-component>',-->
+<!--        components: {-->
+<!--            'child-component': child-->
+<!--        }-->
+<!--    });-->
+<!--    new Vue({-->
+<!--        el: '#tree',-->
+<!--        components: {-->
+<!--            'my-component-a': parentA,-->
+<!--            'my-component-b': parentB-->
+<!--        }-->
+<!--    });-->
+
+<!--</script>-->
 </html>
