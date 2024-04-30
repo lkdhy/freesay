@@ -3,20 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Vue 组件系统</title>
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
     <script src="https://cdn.bootcss.com/vue/2.6.12/vue.min.js"></script>
+    <style>
+        ul {
+            list-style-type: square;
+        }
+        .highlight {
+            font-family: 华文新魏;
+            font-size: 20px;
+            background-color: mediumaquamarine;
+        }
+    </style>
+    <script>
+        function greet(cname) {
+            revcname = cname.split('').reverse().join('');
+            alert(`要上 ${revcname} 课啦！`);
+        }
+    </script>
 </head>
 <body>
     <div id="app">
-        <hello-world></hello-world>
+        <section>
+            <h3>组件的创建、注册</h3>
+            <hello-world></hello-world>
+            <p>我是分割文字</p>
+            <p>我是第二个分割文字</p>
+            <p>Vue标签名推荐使用烤串命令法，
+                如果使用的是驼峰命名方式，
+                那么在 HTML 中使用时需要转换为短横线分隔的方式。</p>
+            <uppercase-helloworld></uppercase-helloworld>
+        </section>
+        <section>
+            <h3>必修专业课</h3>
+            <ul>
+<!--                <li>计算机组成与体系结构</li>-->
+<!--                <li>数据库引论</li>-->
+<!--                <li>代数结构与数理逻辑</li>-->
+<!--                <li>计算理论基础</li>-->
+                <li v-for="course of appData.courses"
+                    :class="course === '移动互联网' ? 'highlight' : ''"
+                    @click="greet(course)">
+                    {{ course }}
+                </li>
+            </ul>
+            <local-hello>你说的对</local-hello>
+        </section>
     </div>
 </body>
 <script>
-    var myComponent = Vue.extend({
-        template: '<div>Hello World!</div>'
+    let hw1 = Vue.extend({
+        template: '<div>' + '<strong>' +
+            'Hello World!' + '</strong>' +
+            '</div>'
     });
-    Vue.component('hello-world', myComponent);
+    // 下面这句话是组件的“全局注册”
+    Vue.component('hello-world', hw1);
+    let appData = {
+        courses: [
+            '计算机组成与体系结构',
+            '数据库引论',
+            '移动互联网',
+            '代数结构与数理基础',
+            '计算理论基础',
+        ]
+    }
+    // 【创建-注册语法糖】直接在注册的时候创建组件
+    // 虽然可简化过程，但这样有 “html 与 JS 紧耦合的缺点”
+    Vue.component('uppercaseHelloworld', {
+        template: '<div>' +
+            '<mark> HELLOWORLD </mark>'
+            + '</div>'
+    });
     new Vue({
-        el: '#app'
+        el: '#app',
+        data: appData,
+        components: {
+            'localHello': {
+                template: '<em>你好啊</em>'
+            }
+        }
     });
 </script>
 </html>
