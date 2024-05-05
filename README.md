@@ -8,6 +8,29 @@ Freesay is where you can chat and share freely.
 >
 > wsh：https://github.com/formula12
 
+## [TODO]下一步计划_ 0505周日晚 21:35 编
+
+##### 功能上本周的目标（lch 的数据库 PJ）
+
+> lch 数据库 PJ1 的要求文档：本仓库的 [lhc数据库_PJ1_要求.docx](./lhc数据库_PJ1_要求.docx)
+
+💥💥💥 <u>*实现 “popi 提问箱 的基本功能”*</u>！ 💥💥💥
+
+##### @lch
+
+- [ ] 安装 mysql
+- [ ] 继续实践助教 Vue 讲座上提及的内容
+- [ ] 构思前端界面
+- [ ] element-plus 组件调研
+- [ ] ~~学习 bserv~~
+- [ ] ……
+
+##### @wsh
+
+- [ ] 完成后端的：与数据库交互进行 “登录” 
+- [ ] 设计前端 *发帖子并回复* 相关的 *关系数据库表格*<u>（可以一起讨论）</u>
+- [ ] ……
+
 ## 本项目目录结构
 
 * 前端（基于 Vue）：`frontend` 目录
