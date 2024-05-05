@@ -80,6 +80,8 @@ Freesay is where you can chat and share freely.
 
    * 界面：登录界面
    * “你的用户名” 一栏有默认值 “小明还是小红...”
+   
+5. 退出（关闭前端服务器）方法：终端输入 q，回车
 
 ### 后端
 
@@ -94,6 +96,8 @@ Freesay is where you can chat and share freely.
   ```cmd
   D:\freesay\backend>python manage.py runserver
   ```
+
+退出方法：Ctrl + C
 
 ### 登录过程（前后端交互）
 
