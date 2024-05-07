@@ -16,7 +16,6 @@ const ruleForm = reactive({
   password: ''
 });
 
-
 const checkUserName = (rule: any, value: any, callback: any) => {
   if (value === '') {
     return callback(new Error('请输入用户名'))
@@ -49,7 +48,7 @@ const successMessage = (userName: string) =>  {
   });
 };
 const failMessage = () => {
-  // TODO：考虑用户登录时跳出 alert 弹窗，而不是上面弹出的消磁
+  // TODO：可以考虑用户登录时跳出 alert 弹窗（洛谷），而不是上面弹出的消息
   ElMessage({
     message: 'Oops，用户名或密码错误',
     type: 'warning'
@@ -68,18 +67,17 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('登陆结果：' + res.success);
       if (res.success) {
         successMessage(ruleForm.userName);
-        // alert('登陆成功！console控制台也能看得到后端返回的数据\n' +
-        //     '马上会跳到 index 页面，你可以按回退键回来');
+        // 存下状态
+        userStore.userName = ruleForm.userName;
         await router.push('/index');
       } else {
         failMessage();
-        // alert('WTF，登录失败？')
+        return false;
       }
     } else {
-      console.log('表单验证未通过，请重新填写表单');
-      let res = await TestHello();
-      console.log(res);
-      // alert('res: ' + JSON.stringify(res));
+      console.log('登录表单验证未通过，请重新填写表单');
+      // let res = await TestHello();
+      // console.log(res);
     }
   })
 }

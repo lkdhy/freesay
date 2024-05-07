@@ -427,6 +427,104 @@ Vue 生态是指与 Vue.js 框架相关的生态系统，包括各种工具、�
 
 这些工具和库构成了 Vue 生态系统，为 Vue.js 开发者提供了完整的解决方案，帮助他们更高效地构建现代 Web 应用程序。
 
+#### Vue Router
+
+在 Vue.js 中，可以通过嵌套 `<router-view>` 标签来实现嵌套路由。下面是一个例子：
+
+首先，定义路由配置：
+
+```typescript
+const routes = [
+  {
+    path: '/user/:id',
+    component: User,
+    children: [
+      {
+        // 当 /user/:id/profile 匹配成功，
+        // UserProfile 会被渲染在 User 的 <router-view> 中
+        path: 'profile',
+        component: UserProfile,
+      },
+      {
+        // 当 /user/:id/posts 匹配成功
+        // UserPosts 会被渲染在 User 的 <router-view> 中
+        path: 'posts',
+        component: UserPosts,
+      }
+    ]
+  }
+]
+```
+
+然后，我们需要在 User 组件中包含一个 `<router-view>`，以便显示子路由的组件：
+
+```vue
+<!-- User.vue -->
+<template>
+  <div>
+    <h2>User {{ $route.params.id }}</h2>
+    <!-- 这里是子路由的出口，用于显示 UserProfile 或 UserPosts 组件 -->
+    <router-view></router-view>
+  </div>
+</template>
+```
+
+在这个例子中，如果我们访问 /user/123/profile，那么 UserProfile 组件会被渲染在 User 组件的 `<router-view>` 中。如果我们访问 /user/123/posts，那么 UserPosts 组件会被渲染在 User 组件的 `<router-view>` 中。
+
+> 在Vue.js中，<router-view> 标签通常用于显示当前路由匹配到的组件。虽然它==**通常是作为根级路由的出口**==，但也可以嵌套在其他组件中使用来展示子路由的内容。以下是一个简单的例子，展示了如何在Vue.js中嵌套使用 <router-view> s标签：
+>
+> ```vue
+> <!-- App.vue -->
+> <template>
+>   <div id="app">
+>     <h1>主页</h1>
+>     <router-view></router-view>
+>   </div>
+> </template>
+> 
+> <!-- Home.vue -->
+> <template>
+>   <div>
+>     <h2>Home页面</h2>
+>     <router-view></router-view>
+>   </div>
+> </template>
+> 
+> <!-- About.vue -->
+> <template>
+>   <div>
+>     <h2>About页面</h2>
+>   </div>
+> </template>
+> 
+> <!-- router/index.js -->
+> import Vue from 'vue'
+> import Router from 'vue-router'
+> import Home from '@/components/Home'
+> import About from '@/components/About'
+> 
+> Vue.use(Router)
+> 
+> const router = new Router({
+>   routes: [
+>     {
+>       path: '/',
+>       component: Home,
+>       children: [
+>         {
+>           path: 'about',
+>           component: About
+>         }
+>       ]
+>     }
+>   ]
+> })
+> 
+> export default router
+> ```
+>
+> 在这个例子中，<router-view> 标签嵌套在 Home.vue 组件内部，用于显示子路由 About.vue 的内容。当访问根路由 '/' 时，会先加载 Home.vue 组件，然后根据子路由 '/about' 加载 About.vue 组件
+
 #### axios
 
 [Getting Started | Axios Docs (axios-http.com)](https://axios-http.com/docs/intro)
@@ -507,7 +605,20 @@ axios.get('/api/users')
 
 总之，axios 是一个功能强大且易于使用的 HTTP 请求库，可以帮助你在 Vue.js 中处理异步请求。
 
+#### pinia
 
+Pinia是一种新的==Vue.js状态管理库==，由Vue.js核心团队成员开发。它的目标是提供一种更简单、更直观的方式来==管理Vue.js应用程序的状态，同时保持与Vue.js的紧密集成。==
+
+Pinia的主要特点包括：
+
+1. 与Vue 3的Composition API紧密集成，允许在组件之外使用状态和逻辑。
+2. 提供了一种类型安全的方式来定义和访问存储状态，这对于使用TypeScript的开发人员非常有用。
+3. 允许开发人员直接在DevTools中跟踪和修改状态，这大大简化了调试过程。
+4. 支持模块化和命名空间，使得状态管理在大型应用程序中更加清晰和可维护。
+
+总的来说，Pinia是一个轻量级且强大的Vue.js状态管理解决方案，旨在提供更好的开发者体验。
+
+#### Django
 
 **前端用 axios 发送请求，后端用 django 作为服务器。评述这样设计的可行性和合理性**
 
@@ -625,6 +736,12 @@ let output = identity<string>(["myString"]);
 > 泛型在 TS 中的使用非常灵活，可以帮助我们提高代码的复用性和可读性。通过理解和灵活运用泛型，我们可以编写更加通用和健壮的代码。
 
 #### html 与 css
+
+##### 网页图标
+
+如何理解`<head>`标签下的`<link rel="icon" href="/favicon.ico">`
+
+<head>标签下的<link rel="icon" href="/favicon.ico">用于指定网页的图标，也称为网站图标或者favicon。其中，rel属性指定链接的关系，href属性指定图标文件的路径。这样浏览器就可以在标签页、书签栏等位置显示网站的图标。favicon.ico是常见的图标文件名，通常放置在网站根目录下。
 
 ##### html 表单
 
@@ -746,6 +863,22 @@ p {
 
 `place-items: center;`属性同样用于在水平和竖直方向上居中子元素。`grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));`则确保每行只有一个元素。
 
+##### 盒模型（box model）的计算方式
+
+如何理解
+
+<style scoped> * { box-sizing: border-box; }
+
+这段代码是CSS（层叠样式表）的一部分，用于定义网页的呈现样式。
+
+在这里，“*”是一个通用选择器，表示选择页面上的所有元素。然后，设置了这些元素的“box-sizing”属性为“border-box”。
+
+“box-sizing”属性用于改变元素的盒模型（box model）的计算方式。默认值为“content-box”，指的是元素的宽度和高度只包括内容本身，不包括边框（border）、内边距（padding）和外边距（margin）。
+
+当“box-sizing”设置为“border-box”时，元素的宽度和高度将包括内容、边框和内边距，但不包括外边距。这使得元素的尺寸计算更加直观和易于控制，尤其是在进行响应式设计时。
+
+简单来说，这段代码的作用就是让页面上的所有元素在计算尺寸时都包括内容、边框和内边距。
+
 #### HTTP 回顾
 
 HTTP（超文本传输协议）是一种用于数据通信的协议，主要用于在万维网上发布和检索HTML网页。HTTP允许浏览器向服务器发送请求，并获取服务器的响应。这是一个无状态的协议，意味着每一次请求都是独立的，服务器不会保存之前的请求信息。
@@ -774,9 +907,18 @@ Python 的 -m 选项是用来运行库模块作为脚本。
 
 具体举例，如果你想运行一个叫做 script.py 的脚本，你可以直接运行 `python script.py`。但是如果你想运行 Python 的内置 HTTP 服务器，你需要使用 -m 选项，如 `python -m http.server`。你不能直接运行 `python http.server`，因为 http.server 是一个模块，不是一个脚本文件。
 
+---
 
+是的，有很多网站可以自己制作图标，例如：
 
+1. Iconfinder：这是一个图标搜索引擎，也可以在线创建自己的图标。
+2. Flaticon：这个网站提供了大量的免费图标，同时也提供了在线制作图标的功能。
+3. Icons8：这个网站提供了大量的免费图标，同时也提供了在线制作图标的功能。
+4. Canva：这是一个设计工具网站，你可以使用它来设计自己的图标。
+5. Fiverr：这是一个服务交易平台，你可以找到许多专业的设计师，他们可以帮你设计图标。
+6. Iconion：这是一个图标制作工具，它可以让你把svg、png、jpg等文件转换成图标文件。
 
+以上网站都能满足你制作图标的需求，你可以根据自己的需要选择合适的工具。
 
 
 

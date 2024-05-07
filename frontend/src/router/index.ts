@@ -4,6 +4,7 @@ import Test from "@/pages/Test.vue";
 import Index from '@/pages/Index.vue';
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
+import Plaza from "@/pages/Plaza.vue";
 
 const routes =
     [
@@ -20,7 +21,17 @@ const routes =
         {
             path: '/index',
             name: 'Index',
-            component: Index
+            component: Index,
+            children: [
+                {
+                    path: 'plaza', name: 'Plaza',
+                    component: Plaza
+                },
+                {
+                    path: 'test', name: 'Test',
+                    component: Test
+                }
+            ]
         },
         {
             path: '/register',
