@@ -20,7 +20,14 @@ interface ReqStatus {
     navStatus: string
 }
 
-
+interface User {
+    is_active: boolean,
+    username: string,
+    email: string,
+    is_superuser: boolean,
+    first_name: string,
+    last_name: string
+}
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
 // 一般情况下响应数据返回的这三个参数，
@@ -35,15 +42,6 @@ interface ItypeAPI<T> {
     users: User[]
     total_users: number
     total_pages: number
-}
-
-interface User {
-    is_active: boolean,
-    username: string,
-    email: string,
-    is_superuser: boolean,
-    first_name: string,
-    last_name: string
 }
 
 //测试hello api

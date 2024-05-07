@@ -5,15 +5,16 @@ import type {FormInstance, FormRules} from 'element-plus'
 import {useRouter} from 'vue-router'
 import {useUserstore} from '@/store/user'
 
-const userStore=useUserstore()
-const router = useRouter()
+const userStore=useUserstore();
+const router = useRouter();
 
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref<FormInstance>();
 
 const ruleForm = reactive({
-  userName: '小明还是小红...',
+  // 【更新】去除了“小明还是小红……”的初始默认值
+  userName: '',
   password: ''
-})
+});
 
 
 const checkUserName = (rule: any, value: any, callback: any) => {
@@ -39,7 +40,21 @@ const rules = reactive<FormRules<typeof ruleForm>>({
 import { TestHello } from "@/request/api";
 import {LoginApi} from "@/request/api";
 import {ElMessage} from 'element-plus'
+import Index from "@/pages/Index.vue";
 
+const successMessage = (userName: string) =>  {
+  ElMessage({
+    message: `欢迎回来，${userName}~`,
+    type: 'success'
+  });
+};
+const failMessage = () => {
+  // TODO：考虑用户登录时跳出 alert 弹窗，而不是上面弹出的消磁
+  ElMessage({
+    message: 'Oops，用户名或密码错误',
+    type: 'warning'
+  });
+}
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
@@ -51,26 +66,42 @@ const submitForm = (formEl: FormInstance | undefined) => {
       });
       console.log(res);
       console.log('登陆结果：' + res.success);
-      alert('登陆成功！console控制台也能看得到后端返回的数据')
+      if (res.success) {
+        successMessage(ruleForm.userName);
+        // alert('登陆成功！console控制台也能看得到后端返回的数据\n' +
+        //     '马上会跳到 index 页面，你可以按回退键回来');
+        await router.push('/index');
+      } else {
+        failMessage();
+        // alert('WTF，登录失败？')
+      }
     } else {
       console.log('表单验证未通过，请重新填写表单');
       let res = await TestHello();
       console.log(res);
-      alert('res: ' + JSON.stringify(res));
+      // alert('res: ' + JSON.stringify(res));
     }
   })
 }
 
-
+// 【更新】可以按"注册"按钮跳转到注册界面
+const jump2Register = () => {
+  router.push('/register');
+}
 
 </script>
 
 <template>
+<!--  【更新】表单：
+      - 按钮颜色调整
+      - 表单域标签放在上方（<label-position>）
+  -->
   <el-form
       ref="ruleFormRef"
       :model="ruleForm"
       :rules="rules"
       style="max-width: 600px"
+      label-position="top"
       label-width="auto"
       class="demo-ruleForm"
   >
@@ -84,8 +115,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
-      <el-button type="warning">注册</el-button>
+<!--      success：绿色；danger：红色  -->
+<!--      https://element-plus.org/zh-CN/component/button.html  -->
+      <el-button type="success" @click="submitForm(ruleFormRef)">登录</el-button>
+      <el-button type="danger" @click="jump2Register">注册</el-button>
     </el-form-item>
 
   </el-form>
