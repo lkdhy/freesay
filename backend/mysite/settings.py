@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls',
 ]
 
 MIDDLEWARE = [
@@ -73,13 +74,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+'default': {
+'ENGINE': 'django.db.backends.mysql',#数据库的类型
+'NAME': 'django', #所使用的的数据库的名字
+'USER': 'root', #数据库服务器的用户
+'PASSWORD': 'Wsh123456+', #密码
+'HOST': '127.0.0.1', #主机
+'PORT': '3306', #端口
 }
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
