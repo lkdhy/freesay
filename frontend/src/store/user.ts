@@ -5,7 +5,8 @@ export const useUserstore = defineStore(
     {
         state() {
             return {
-                userName:'userName'
+                // initial: empty string
+                userName: ''
             }
         }
     }

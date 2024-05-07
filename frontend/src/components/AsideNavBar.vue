@@ -20,22 +20,26 @@ function change(key: string, keyPath: string[]) {
   >
     <el-menu-item index="/index/">
       <el-icon><icon-menu/></el-icon>
-      <span>个人信息</span>
+      <span>（我暂时没用）个人信息</span>
     </el-menu-item>
 
     <el-menu-item index="/index/checkUserInfo">
       <el-icon><document/></el-icon>
-      <span>查看用户信息</span>
+      <span>（我暂时没用）查看用户信息</span>
     </el-menu-item>
 
     <el-menu-item index="/index/addUser">
       <el-icon><setting/></el-icon>
-      <span>添加用户</span>
+      <span>（我暂时没用）添加用户</span>
     </el-menu-item>
 
     <el-menu-item index="/index/plaza">
 
       <span>点我去往广场</span>
+    </el-menu-item>
+
+    <el-menu-item index="/index/profile">
+      <span>点我显示你的 profile</span>
     </el-menu-item>
 
     <el-menu-item index="/index/test">

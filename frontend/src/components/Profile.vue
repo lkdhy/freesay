@@ -11,14 +11,15 @@ let user = ref({
   first_name: '',
   last_name: '',
   email: '',
-  avatar: 'https://img2.imgtp.com/2024/04/05/QUYeUsws.jpg', // 假设的头像URL
+  // 假设的头像URL
+  avatar: 'https://img2.imgtp.com/2024/04/05/QUYeUsws.jpg',
 });
 
 async function getUserInfo() {
   let res = await GetUserInfoByUserName({
     userName: userStore.userName
   });
-  // console.log(res)
+  console.log('查询个人信息：', res)
   if (res.success) {
     user.value.username = res.user.username
     if (res.user.email === "")
@@ -41,8 +42,12 @@ onBeforeMount(() => {
 <template>
   <div class="user-profile">
     <img :src="user.avatar" alt="User Avatar" class="avatar"/>
+
     <h2>{{ user.username }}</h2>
-    <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <p>
+      <strong>Full Name:</strong>
+      {{ user.first_name }} {{ user.last_name }}
+    </p>
     <p><strong>Email:</strong> {{ user.email }}</p>
   </div>
 </template>

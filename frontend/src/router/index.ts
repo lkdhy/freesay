@@ -5,22 +5,20 @@ import Index from '@/pages/Index.vue';
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
 import Plaza from "@/pages/Plaza.vue";
+import Profile from "@/components/Profile.vue";
 
 const routes =
     [
         {
-            path: '/test',
-            name: 'Test',
+            path: '/test', name: 'Test',
             component: Test
         },
         {
-            path: '/',
-            name: 'Login',
+            path: '/', name: 'Login',
             component: Login
         },
         {
-            path: '/index',
-            name: 'Index',
+            path: '/index', name: 'Index',
             component: Index,
             children: [
                 {
@@ -30,12 +28,15 @@ const routes =
                 {
                     path: 'test', name: 'Test',
                     component: Test
+                },
+                {
+                    path: 'profile', name: 'Profile',
+                    component: Profile
                 }
             ]
         },
         {
-            path: '/register',
-            name: 'Register',
+            path: '/register', name: 'Register',
             component: Register
         }
     ];

@@ -4,7 +4,10 @@ import type {FormInstance, FormRules} from 'element-plus'
 import {useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {RegisterApi} from "@/request/api";
+import {useUserstore} from "@/store/user";
+
 const router = useRouter()
+const userStore = useUserstore();
 
 const ruleFormRef = ref<FormInstance>()
 
@@ -24,7 +27,7 @@ const successMessage = (userName: string, num: number) =>  {
   });
 };
 const failMessage = () => {
-  // TODO：考虑用户登录时跳出 alert 弹窗，而不是上面弹出的消磁
+  // TODO：可以考虑用户登录时跳出 alert 弹窗，而不是上面弹出的消磁
   ElMessage({
     message: 'Oops，出错了',
     type: 'warning'
@@ -45,6 +48,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log(res);
       if (res.success) {
         successMessage(registerForm.userName, res.total_users);
+        userStore.userName = registerForm.userName;
+        jump2Register();
       } else {
         failMessage();
       }

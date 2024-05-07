@@ -11,8 +11,9 @@ const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 
 const ruleForm = reactive({
-  // 【更新】去除了“小明还是小红……”的初始默认值
-  userName: '',
+  // 刚刚注册完要登录，自动填上用户名
+  userName: userStore.userName.length ?
+      userStore.userName : '',
   password: ''
 });
 
