@@ -21,9 +21,8 @@ import IndexMain from "@/components/IndexMain.vue";
         <el-container>
           <el-main>
 
-<!--            <index-main></index-main>-->
             <p>
-              我们假设，用户登录后会跳转到满是提问箱的广场。
+              这里一开始是广场！！！！
             </p>
             <router-view></router-view>
           </el-main>

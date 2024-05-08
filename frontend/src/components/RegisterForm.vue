@@ -29,7 +29,7 @@ const successMessage = (userName: string, num: number) =>  {
 const failMessage = () => {
   // TODO：可以考虑用户登录时跳出 alert 弹窗，而不是上面弹出的消磁
   ElMessage({
-    message: 'Oops，出错了',
+    message: 'Oops，该用户名已存在',
     type: 'warning'
   });
 }

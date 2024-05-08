@@ -3,14 +3,11 @@ import {onBeforeMount, ref} from "vue";
 import {GetUserInfoByPageNum} from "@/request/api";
 
 interface User {
-  userName: string
-  first_name: string
-  last_name: string
+  userName: string,
+  first_name: string, last_name: string
   email: string
 }
-
 const tableData = ref<User[]>([]);
-
 let currentPage = ref(1);
 let pageSize = ref(10);
 let total = ref(100);
@@ -22,15 +19,13 @@ onBeforeMount(async () => {
   res.users.forEach(item => {
     tableData.value.push({
       userName: item.username,
-      first_name: item.first_name,
-      last_name: item.last_name,
+      first_name: item.first_name, last_name: item.last_name,
       email: item.email
     });
   });
-  total.value = res.total_users
-  console.log('total_pages.value:',total.value)
+  total.value = res.total_users;
+  console.log('total_pages:', total.value);
 })
-
 
 const handleCurrentChange = (newPage: number) => {
   currentPage.value = newPage;
@@ -40,19 +35,17 @@ const fetchData = async () => {
   // 在这里调用 API 获取数据，使用 currentPage 作为参数
   let res = await GetUserInfoByPageNum({
     pageNumber: currentPage.value
-  })
-  tableData.value=[]
+  });
+  tableData.value = [];
   res.users.forEach(item => {
     tableData.value.push({
       userName: item.username,
-      first_name: item.first_name,
-      last_name: item.last_name,
+      first_name: item.first_name, last_name: item.last_name,
       email: item.email
     });
   });
-  total.value = res.total_users
+  total.value = res.total_users;
 };
-
 
 </script>
 

@@ -18,14 +18,29 @@ function change(key: string, keyPath: string[]) {
       class="el-menu-vertical-demo"
       :router=true
   >
-    <el-menu-item index="/index/">
-      <el-icon><icon-menu/></el-icon>
-      <span>（我暂时没用）个人信息</span>
+
+    <el-menu-item index="/index/plaza">
+
+      <span>点我去往广场</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/checkUserInfo">
+    <el-menu-item index="/index/userList">
       <el-icon><document/></el-icon>
-      <span>（我暂时没用）查看用户信息</span>
+      <span>查看所有用户</span>
+    </el-menu-item>
+
+    <el-menu-item index="/index/profile">
+      <span>（我认为不需要这条）你的 profile</span>
+    </el-menu-item>
+
+    <el-menu-item index="/index/test">
+
+      <span>点我去往 Test</span>
+    </el-menu-item>
+
+    <el-menu-item index="/index/">
+      <el-icon><icon-menu/></el-icon>
+      <span>我不知道这是什么</span>
     </el-menu-item>
 
     <el-menu-item index="/index/addUser">
@@ -33,19 +48,6 @@ function change(key: string, keyPath: string[]) {
       <span>（我暂时没用）添加用户</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/plaza">
-
-      <span>点我去往广场</span>
-    </el-menu-item>
-
-    <el-menu-item index="/index/profile">
-      <span>点我显示你的 profile</span>
-    </el-menu-item>
-
-    <el-menu-item index="/index/test">
-
-      <span>点我去往 Test</span>
-    </el-menu-item>
   </el-menu>
 </template>
 

@@ -68,7 +68,6 @@ export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
     instance.get(`/api/users/list/${params.pageNumber}`, {params});
 
-
 //以下是模板:
 // post请求 ，没参数
 export const LogoutAPI = (): Res<null> =>
