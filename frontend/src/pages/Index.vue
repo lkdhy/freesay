@@ -7,13 +7,14 @@ import IndexMain from "@/components/IndexMain.vue";
 
 <template>
   <div class="common-layout">
+<!--    <el-container style="height: 100%">-->
     <el-container>
       <el-header>
         <Header></Header>
 <!--        我是广场-->
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="300px">
           <AsideNavBar></AsideNavBar>
 <!--          <p>我是侧边栏</p>-->
         </el-aside>

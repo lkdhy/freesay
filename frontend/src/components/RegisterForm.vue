@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
-import type {FormInstance, FormRules} from 'element-plus'
-import {useRouter} from 'vue-router'
-import {ElMessage} from 'element-plus'
+import {reactive, ref} from 'vue';
+import type {FormInstance, FormRules} from 'element-plus';
+import {useRouter} from 'vue-router';
+import {ElMessage} from 'element-plus';
 import {RegisterApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 
-const router = useRouter()
+const router = useRouter();
 const userStore = useUserstore();
 
 const ruleFormRef = ref<FormInstance>()
@@ -49,7 +49,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       if (res.success) {
         successMessage(registerForm.userName, res.total_users);
         userStore.userName = registerForm.userName;
-        jump2Register();
+        jump2Login();
       } else {
         failMessage();
       }
@@ -59,8 +59,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
   })
 }
 
-const jump2Register = () => {
-  router.push('/');
+const jump2Login = () => {
+  router.push('/login');
 }
 
 </script>
@@ -102,7 +102,7 @@ const jump2Register = () => {
 
     <el-form-item>
       <el-button type="danger" @click="submitForm(ruleFormRef)">注册</el-button>
-      <el-button type="success" @click="jump2Register()">登录</el-button>
+      <el-button type="success" @click="jump2Login">登录</el-button>
     </el-form-item>
 
   </el-form>

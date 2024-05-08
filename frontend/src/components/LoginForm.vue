@@ -70,7 +70,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         successMessage(ruleForm.userName);
         // 存下状态
         userStore.userName = ruleForm.userName;
-        await router.push('/index');
+        await router.push('/');
       } else {
         failMessage();
         return false;

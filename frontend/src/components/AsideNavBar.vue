@@ -19,35 +19,35 @@ function change(key: string, keyPath: string[]) {
       :router=true
   >
 
-    <el-menu-item index="/index/plaza">
+    <el-menu-item index="/plaza">
 
       <span>点我去往广场</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/user">
+    <el-menu-item index="/user">
       <span>用户</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/userList">
+    <el-menu-item index="/userList">
       <el-icon><document/></el-icon>
       <span>查看所有用户</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/profile">
+    <el-menu-item index="profile">
       <span>（我认为不需要这条）你的 profile</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/test">
+    <el-menu-item index="/test">
 
       <span>点我去往 Test</span>
     </el-menu-item>
 
-    <el-menu-item index="/index/">
-      <el-icon><icon-menu/></el-icon>
-      <span>我不知道这是什么</span>
-    </el-menu-item>
+<!--    <el-menu-item index="/index/">-->
+<!--      <el-icon><icon-menu/></el-icon>-->
+<!--      <span>我不知道这是什么</span>-->
+<!--    </el-menu-item>-->
 
-    <el-menu-item index="/index/addUser">
+    <el-menu-item index="/addUser">
       <el-icon><setting/></el-icon>
       <span>（我暂时没用）添加用户</span>
     </el-menu-item>

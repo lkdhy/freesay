@@ -13,7 +13,7 @@ async function logout() {
     // reset userStore to an empty string
     userStore.userName = '';
     ElMessage.success("登出成功");
-    await router.push('/');
+    await router.push('/index');
   } else {
     ElMessage.error("Oops，出错了");
   }

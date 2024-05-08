@@ -48,21 +48,27 @@ const fetchData = async () => {
   total.value = res.total_users;
 };
 
+const record = (s: string) => {
+  console.log(s);
+}
+
 </script>
 
 <template>
   <el-row>
     <el-col :span="24">
       <el-table :data="tableData" stripe style="width: 100%">
-<!--        <el-table-column>-->
-<!--          <template #default="scope">-->
-<!--            <profile></profile>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
         <el-table-column prop="userName" label="用户名" width="180"/>
         <el-table-column prop="first_name" label="姓" width="180"/>
         <el-table-column prop="last_name" label="名" width="180"/>
         <el-table-column prop="email" label="邮箱"/>
+        <el-table-column>
+          <template #default="scope">
+            <el-button text @click="record(scope.row.userName)">
+              试着点我 {{ scope.row.userName }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-col>
   </el-row>
