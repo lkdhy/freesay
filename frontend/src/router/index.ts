@@ -48,6 +48,10 @@ const routes =
                 {
                     path: 'profile', name: 'Profile',
                     component: Profile
+                },
+                {
+                    path: '/user/:id', name: 'User',
+                    component: Homepage
                 }
             ]
         },
@@ -55,10 +59,6 @@ const routes =
             path: '/register', name: 'Register',
             component: Register
         },
-        {
-            path: '/user/:id', name: 'User',
-            component: Homepage
-        }
     ];
 
 const router = createRouter({

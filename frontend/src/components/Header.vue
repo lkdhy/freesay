@@ -6,6 +6,11 @@ import {useUserstore} from "@/store/user";
 
 const router = useRouter()
 const userStore = useUserstore();
+
+const jump2MyHompage = () => {
+  router.push(`/user/${userStore.userName}`);
+}
+
 async function logout() {
   let res = await LogoutApi()
   console.log('登出res：', res);
@@ -43,13 +48,13 @@ async function logout() {
 
     <div>
       <p>你是 {{ userStore.userName }}，
-        我之后想靠右边放你的头像等等，右边除了登出按钮，没用</p>
+        我之后想靠右边放你的头像等等，右边只有“创建提问箱”按钮是没用的</p>
     </div>
     <div>
       <el-button type="success">
         创建提问箱
       </el-button>
-      <el-button type="warning">
+      <el-button type="warning" @click="jump2MyHompage">
         我的主页
       </el-button>
     </div>

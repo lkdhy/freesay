@@ -14,7 +14,7 @@ import IndexMain from "@/components/IndexMain.vue";
 <!--        我是广场-->
       </el-header>
       <el-container>
-        <el-aside width="300px">
+        <el-aside width="250px">
           <AsideNavBar></AsideNavBar>
 <!--          <p>我是侧边栏</p>-->
         </el-aside>

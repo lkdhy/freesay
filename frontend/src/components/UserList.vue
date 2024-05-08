@@ -2,6 +2,11 @@
 import {onBeforeMount, ref} from "vue";
 import {GetUserInfoByPageNum} from "@/request/api";
 import Profile from "@/components/Profile.vue";
+import {useUserstore} from '@/store/user'
+import {useRouter} from 'vue-router'
+
+const userStore = useUserstore();
+const router = useRouter();
 
 interface User {
   userName: string,
@@ -52,6 +57,10 @@ const record = (s: string) => {
   console.log(s);
 }
 
+const jump2Homepage = (userName: string) => {
+  router.push(`/user/${userName}`);
+}
+
 </script>
 
 <template>
@@ -62,9 +71,9 @@ const record = (s: string) => {
         <el-table-column prop="first_name" label="姓" width="180"/>
         <el-table-column prop="last_name" label="名" width="180"/>
         <el-table-column prop="email" label="邮箱"/>
-        <el-table-column>
+        <el-table-column label="去往他的个人主页">
           <template #default="scope">
-            <el-button text @click="record(scope.row.userName)">
+            <el-button text @click="jump2Homepage(scope.row.userName)">
               试着点我 {{ scope.row.userName }}
             </el-button>
           </template>
