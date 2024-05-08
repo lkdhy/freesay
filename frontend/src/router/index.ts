@@ -7,6 +7,7 @@ import Register from "@/pages/Register.vue";
 import UserList from "@/components/UserList.vue";
 import Plaza from "@/components/Plaza.vue";
 import Profile from "@/components/Profile.vue";
+import UserListProfile from "@/components/UserListProfile.vue";
 
 const routes =
     [
@@ -25,6 +26,10 @@ const routes =
                 {
                     path: 'userList', name: 'UserList',
                     component: UserList
+                },
+                {
+                    path: 'user', name: 'UserListProfile',
+                    component: UserListProfile
                 },
                 {
                     path: 'plaza', name: 'Plaza',

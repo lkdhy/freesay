@@ -24,6 +24,10 @@ function change(key: string, keyPath: string[]) {
       <span>点我去往广场</span>
     </el-menu-item>
 
+    <el-menu-item index="/index/user">
+      <span>用户</span>
+    </el-menu-item>
+
     <el-menu-item index="/index/userList">
       <el-icon><document/></el-icon>
       <span>查看所有用户</span>

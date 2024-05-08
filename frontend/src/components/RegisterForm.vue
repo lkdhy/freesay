@@ -81,8 +81,10 @@ const jump2Register = () => {
                 placeholder="用户名是你的昵称" autocomplete="off"/>
     </el-form-item>
 
+    <!--      切换密码隐藏与显示（show-password） -->
     <el-form-item label="密码" prop="password">
-      <el-input v-model="registerForm.password" type="password" autocomplete="off"/>
+      <el-input v-model="registerForm.password" type="password"
+                show-password autocomplete="off"/>
     </el-form-item>
 
 <!--    TODO: 把姓、名搞到一行（但有可能有点麻烦）  -->

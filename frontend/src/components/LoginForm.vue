@@ -110,7 +110,9 @@ const jump2Register = () => {
 
 <!--    <el-form-item label="密码" prop="password">-->
     <el-form-item label="你的密码" prop="password">
-      <el-input v-model="ruleForm.password" type="password" autocomplete="off"/>
+<!--      切换密码隐藏与显示（show-password） -->
+      <el-input v-model="ruleForm.password" type="password"
+                show-password autocomplete="off"/>
     </el-form-item>
 
     <el-form-item>

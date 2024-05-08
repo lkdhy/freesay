@@ -20,10 +20,7 @@ import IndexMain from "@/components/IndexMain.vue";
 
         <el-container>
           <el-main>
-
-            <p>
-              这里一开始是广场！！！！
-            </p>
+<!--            <p>这里一开始是广场！！！！</p>-->
             <router-view></router-view>
           </el-main>
         </el-container>

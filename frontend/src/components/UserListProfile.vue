@@ -51,21 +51,56 @@ const fetchData = async () => {
 </script>
 
 <template>
-  <el-row>
-    <el-col :span="24">
-      <el-table :data="tableData" stripe style="width: 100%">
+<!--  <el-row>-->
+<!--    <el-col :span="24">-->
+
+<!--      不要 stripe（斑马纹）  -->
+<!--   仅是排版，故不显示顶部的表头 -->
+<!--  <el-scrollbar>-->
+<!--  TODO: 优化高度计算的逻辑 -->
+      <el-table
+          :data="tableData"
+          :show-header="false"
+          style="width: 100%"
+          max-height="575"
+      >
+        <el-table-column label="哈哈哈，我不会被显示出来">
+          <template #default="scope">
+            <profile></profile>
+          </template>
+        </el-table-column>
+        <el-table-column>
+          <template #default="scope">
+            <profile></profile>
+          </template>
+        </el-table-column>
+        <el-table-column>
+          <template #default="scope">
+            <profile></profile>
+          </template>
+        </el-table-column>
+
+        <el-table-column>
+          <template #default="scope">
+            <profile></profile>
+          </template>
+        </el-table-column>
 <!--        <el-table-column>-->
 <!--          <template #default="scope">-->
 <!--            <profile></profile>-->
 <!--          </template>-->
 <!--        </el-table-column>-->
-        <el-table-column prop="userName" label="用户名" width="180"/>
-        <el-table-column prop="first_name" label="姓" width="180"/>
-        <el-table-column prop="last_name" label="名" width="180"/>
-        <el-table-column prop="email" label="邮箱"/>
+<!--        <el-table-column>-->
+<!--          <template #default="scope">-->
+<!--            <profile></profile>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column prop="userName" label="用户名" width="180"/>-->
+<!--        <el-table-column prop="email" label="邮箱"/>-->
       </el-table>
-    </el-col>
-  </el-row>
+<!--  </el-scrollbar>-->
+<!--    </el-col>-->
+<!--  </el-row>-->
 
   <el-pagination
       @current-change="handleCurrentChange"
