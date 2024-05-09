@@ -6,7 +6,8 @@ export const useUserstore = defineStore(
         state() {
             return {
                 // initial: empty string
-                userName: ''
+                userName: '',
+                visitedUserName: ''
             }
         }
     }

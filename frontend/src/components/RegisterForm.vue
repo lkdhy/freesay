@@ -9,7 +9,7 @@ import {useUserstore} from "@/store/user";
 const router = useRouter();
 const userStore = useUserstore();
 
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref<FormInstance>();
 
 const registerForm = reactive({
   userName: '',
@@ -34,7 +34,7 @@ const failMessage = () => {
   });
 }
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
+  if (!formEl) returncls;
   formEl.validate(async (valid) => {
     if (valid) {
       console.log('注册表单验证通过，可以提交');

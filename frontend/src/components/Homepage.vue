@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import {RegisterApi} from "@/request/api";
@@ -9,10 +9,11 @@ import PostDialog from "@/components/PostDialog.vue";
 const router = useRouter();
 const userStore = useUserstore();
 
-// console.log(`当前登录用户${userStore.userName}`)
+console.log(`当前访问用户是${userStore.visitedUserName}`);
+console.log(`你是${userStore.userName}`);
+
 const curUser = ref<string>(userStore.userName);
 // const visUser = ref<string>($route.params.id);
-
 // console.log(visUser);
 
 </script>

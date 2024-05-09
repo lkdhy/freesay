@@ -58,6 +58,7 @@ const record = (s: string) => {
 }
 
 const jump2Homepage = (userName: string) => {
+  userStore.visitedUserName = userName;
   router.push(`/user/${userName}`);
 }
 

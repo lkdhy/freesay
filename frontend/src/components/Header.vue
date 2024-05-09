@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, reactive } from "vue";
 import {ElMessage, ElNotification as notify} from 'element-plus';
 import {LogoutApi} from "@/request/api";
 import {useRouter} from 'vue-router';
@@ -10,6 +11,8 @@ const userStore = useUserstore();
 const jump2MyHompage = () => {
   router.push(`/user/${userStore.userName}`);
 }
+
+const createBox = ref(false);
 
 async function logout() {
   let res = await LogoutApi()
@@ -51,9 +54,12 @@ async function logout() {
         我之后想靠右边放你的头像等等，右边只有“创建提问箱”按钮是没用的</p>
     </div>
     <div>
-      <el-button type="success">
-        创建提问箱
+
+<!--      TODO  -->
+      <el-button type="success" @click="createBox = true;">
+        分享提问箱
       </el-button>
+
       <el-button type="warning" @click="jump2MyHompage">
         我的主页
       </el-button>
@@ -64,6 +70,15 @@ async function logout() {
         退出登录
       </el-button>
     </div>
+
+    <el-dialog v-model="createBox">
+      <template #header="{ titleClass }" >
+        <h3>
+          分享提问箱让大家来问你问题吧！
+        </h3>
+      </template>
+      <el-form ref=""></el-form>
+    </el-dialog>
 
   </div>
 </template>
