@@ -65,7 +65,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         password: ruleForm.password
       });
       console.log(res);
-      console.log('登陆结果：' + res.success);
+      console.log('登录结果：' + res.success);
       if (res.success) {
         successMessage(ruleForm.userName);
         // 存下状态
