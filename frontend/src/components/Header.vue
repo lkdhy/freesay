@@ -52,6 +52,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
           message: '提问箱已分享到广场',
           type: 'success'
         });
+        console.log('我要刷新界面喽！')
+        updatePage();
       } else {
         console.log('WTF，提问箱分享失败');
       }
@@ -59,6 +61,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('share表单验证不通过');
     }
   });
+}
+
+const updatePage = () => {
+  if (router.currentRoute.value.path === '/plaza') {
+    router.replace('/plaza');
+    // router.push('/plaza');
+  }
+  router.currentRoute.value.fullPath
 }
 
 </script>

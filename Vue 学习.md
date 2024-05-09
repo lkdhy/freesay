@@ -459,6 +459,10 @@ Vue 生态是指与 Vue.js 框架相关的生态系统，包括各种工具、�
 
 这些工具和库构成了 Vue 生态系统，为 Vue.js 开发者提供了完整的解决方案，帮助他们更高效地构建现代 Web 应用程序。
 
+#### Element Plus
+
+Element UI的布局组件中，容器组件（Container）默认是撑满宽度的，但并没有默认撑满高度的组件。如果需要撑满高度，可以通过设置样式来实现。
+
 #### Vue Router
 
 在 Vue.js 中，可以通过嵌套 `<router-view>` 标签来实现嵌套路由。下面是一个例子：
@@ -508,25 +512,25 @@ const routes = [
 > ```vue
 > <!-- App.vue -->
 > <template>
->   <div id="app">
->     <h1>主页</h1>
->     <router-view></router-view>
->   </div>
+> <div id="app">
+>  <h1>主页</h1>
+>  <router-view></router-view>
+> </div>
 > </template>
 > 
 > <!-- Home.vue -->
 > <template>
->   <div>
->     <h2>Home页面</h2>
->     <router-view></router-view>
->   </div>
+> <div>
+>  <h2>Home页面</h2>
+>  <router-view></router-view>
+> </div>
 > </template>
 > 
 > <!-- About.vue -->
 > <template>
->   <div>
->     <h2>About页面</h2>
->   </div>
+> <div>
+>  <h2>About页面</h2>
+> </div>
 > </template>
 > 
 > <!-- router/index.js -->
@@ -538,24 +542,72 @@ const routes = [
 > Vue.use(Router)
 > 
 > const router = new Router({
->   routes: [
->     {
->       path: '/',
->       component: Home,
->       children: [
->         {
->           path: 'about',
->           component: About
->         }
->       ]
->     }
->   ]
+> routes: [
+>  {
+>    path: '/',
+>    component: Home,
+>    children: [
+>      {
+>        path: 'about',
+>        component: About
+>      }
+>    ]
+>  }
+> ]
 > })
 > 
 > export default router
 > ```
 >
 > 在这个例子中，<router-view> 标签嵌套在 Home.vue 组件内部，用于显示子路由 About.vue 的内容。当访问根路由 '/' 时，会先加载 Home.vue 组件，然后根据子路由 '/about' 加载 About.vue 组件
+
+**Vue Router 的 .push 和 .replace，以及是否有其它实用方法**
+
+Vue Router 的 .push 和 .replace 是用于导航的方法。
+
+.push 方法用于向 history 堆栈添加一个新的记录，当用户点击浏览器后退按钮时，他们将返回之前的位置。这个方法的参数可以是一个字符串路径，或者一个描述地址的对象。例如：
+
+```typescript
+// 字符串
+router.push('home')
+
+// 对象
+router.push({ path: 'home' })
+
+// 带查询参数，变成 /register?plan=private
+router.push({ path: 'register', query: { plan: 'private' }})
+```
+
+.replace 方法和 .push 很像，唯一的不同就是，它不会向 history 添加新记录，而是替换掉当前的 history 记录。例如：
+
+```typescript
+// 跳转到 home 并替换当前记录
+router.replace('home')
+```
+
+除了 .push 和 .replace，Vue Router 还有一些其他的实用方法，如：
+
+- .go(n)：这个方法的参数是一个整数，意思是在 history 记录中向前或者向后多少步，类似 window.history.go(n)。
+- .back()：导航到上一步记录，等同于 .go(-1)。
+- .forward()：导航到下一步记录，等同于 .go(1)。
+- .addRoutes(routes)：动态地添加更多的路由到已有的路由表。
+- .resolve()：解析目标位置，获取需要导航的路由信息。
+- .onReady(callback)：在初始化和解析路由完成后，调用回调函数。
+
+> Vue Router 中的 `.push` 和 `.replace` 是用于导航到不同路由的方法。
+>
+> - `.push` 方法将新的路由添加到路由历史记录中，允许用户返回上一个路由。
+> - `.replace` 方法将当前路由替换为新的路由，不会在路由历史记录中创建新的条目。
+>
+> 除了这两个方法，Vue Router 还提供了其他有用的方法，例如：
+>
+> - `.go` 方法用于在路由历史记录中前进或后退多个步骤。
+> - `.back` 方法用于返回上一个路由。
+> - `.forward` 方法用于前进到下一个路由。
+> - `.getMatchedComponents` 方法用于获取当前路由匹配的组件。
+> - `.beforeEach` 方法用于在导航之前执行一些逻辑，例如进行身份验证。
+>
+> 这些方法可以根据你的需求来决定使用哪个。你可以在 Vue Router 的官方文档中找到更多详细的信息和示例。
 
 #### axios
 

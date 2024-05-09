@@ -33,11 +33,27 @@ interface User {
     last_name: string
 }
 
+interface Box {
+    username: string,
+    description: string
+}
+
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
-type Res_2<T> = Promise<ItypeAPI_2<T>>;
+type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
+interface BoxItypeAPI<T> {
+    success: string | null // 返回状态码的信息，如请求成功等;
+    result: T,//请求的数据，用泛型
+    msg: string | null // 返回状态码的信息，如请求成功等
+    message: string
+    code: number //返回后端自c定义的200，404，500这种状态码
+    box: Box
+    boxes: Box[]
+    total_boxes: number
+    // total_pages: number
+}
 interface ItypeAPI<T> {
     success: string | null // 返回状态码的信息，如请求成功等;
     result: T,//请求的数据，用泛型
@@ -49,7 +65,6 @@ interface ItypeAPI<T> {
     total_users: number
     total_pages: number
 }
-
 interface ItypeAPI_2<T> {
     success: string | null
     msg: string | null
@@ -57,6 +72,8 @@ interface ItypeAPI_2<T> {
 //     TODO
 }
 
+export const GetBoxApi = (): BoxRes<null> =>
+    instance.get('/api/box');
 export const ShareApi = (data: ReqShare): Res<null> =>
     instance.post('/api/share', data);
 

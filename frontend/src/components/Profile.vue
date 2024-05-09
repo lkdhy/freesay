@@ -19,7 +19,7 @@ async function getUserInfo() {
   let res = await GetUserInfoByUserName({
     userName: userStore.userName
   });
-  console.log('查询个人信息：', res)
+  // console.log('查询个人信息：', res)
   if (res.success) {
     user.value.username = res.user.username
     if (res.user.email === "")
