@@ -274,6 +274,140 @@ Vue路由，全称为Vue Router，是一个专门为Vue.js设计的路由系统�
 
 ### Vue 特性与用法
 
+在 Vue.js 中，父组件向子组件传递数据可以通过 props 来实现。下面是一个简单的例子：
+
+父组件 Parent.vue 文件：
+
+```
+<template>
+  <div>
+    <child-component :myData="parentData"></child-component>
+  </div>
+</template>
+
+<script>
+import ChildComponent from './ChildComponent.vue'
+
+export default {
+  components: {
+    ChildComponent
+  },
+  data() {
+    return {
+      parentData: 'This is data from parent component'
+    }
+  }
+}
+</script>
+```
+
+
+
+在上面的代码中，`:myData="parentData"` 是向子组件传递数据的语法。其中，`myData` 是在子组件中接收数据的 prop 的名字，`parentData` 是父组件中的数据。
+
+子组件 ChildComponent.vue 文件：
+
+```
+<template>
+  <div>{{ myData }}</div>
+</template>
+
+<script>
+export default {
+  props: {
+    myData: String
+  },
+  mounted() {
+    console.log(this.myData); // 在控制台打印父组件传递过来的数据
+  }
+}
+</script>
+```
+
+
+
+
+
+
+
+在子组件中，我们通过 `props` 来接收父组件传递过来的数据。然后在 `mounted` 生命周期钩子中，使用 `console.log(this.myData)` 来打印父组件传递过来的数据。
+
+注意：在 Vue.js 中，父组件向子组件传递的数据应当是单向数据流，也就是说，子组件不应该修改从父组件接收的 prop。如果子组件需要修改这个数据，应当将其复制到子组件的本地数据中。
+
+
+
+
+
+---
+
+Vue3 的 composition 写法中，v-for 进行父组件的操作和 Vue2 的写法类似，只是在 setup 方法中进行数据和方法的定义。下面是一种可能的实现方式。
+
+首先，定义父组件：
+
+```
+<template>
+  <div>
+    <child-component
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
+    />
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+import ChildComponent from './ChildComponent.vue';
+
+export default {
+  components: {
+    ChildComponent
+  },
+  setup() {
+    const items = ref([
+      { id: 1, name: 'Item 1' },
+      { id: 2, name: 'Item 2' },
+      { id: 3, name: 'Item 3' },
+      // ...
+    ]);
+
+    return {
+      items
+    }
+  }
+}
+</script>
+```
+
+
+
+然后，定义子组件，接收从父组件传递过来的数据：
+
+```
+<template>
+  <div>{{ item.name }}</div>
+</template>
+
+<script>
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
+```
+
+
+
+在这个示例中，父组件使用 v-for 迭代一个数组，每个数组元素都会作为一个单独的数据对象传递给子组件。子组件接收这个数据对象作为一个 prop，并显示它的 name 属性。
+
+---
+
+
+
 #### `import` 导入
 
 import 是 ES6 中用于导入模块的关键字。在使用 Vue.js 进行开发时，我们通常会用到 import，比如导入组件、函数库等。

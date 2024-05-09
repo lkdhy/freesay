@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import {ref, reactive, onBeforeMount, onBeforeUpdate, onUpdated} from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
@@ -7,58 +7,95 @@ import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 import BoxCard from "@/components/BoxCard.vue";
 
-const userStore = useUserstore();
-const router = useRouter();
+export default {
+  components: {
+    BoxCard
+  },
+  setup() {
+    const userStore = useUserstore();
+    const router = useRouter();
 
-interface Box {
-  username: string,
-  description: string
+    interface Box {
+      username: string,
+      description: string
+    }
+
+    const boxData = ref<Box[]>([]);
+    const total = ref(100);
+
+    onBeforeMount(async () => {
+      console.log('onBeforeMount: 即将发送获取所有 res 的请求');
+      let res = await GetBoxApi();
+      console.log(res);
+      if (res.success) {
+        res.boxes.forEach(box => {
+          boxData.value.push({
+            username: box.username,
+            description: box.description
+          });
+        })
+        total.value = res.total_boxes;
+        // console.log(router.currentRoute.value);
+      } else {
+        ElMessage.error('WTF, Boxes 请求失败')
+      }
+    });
+    return {
+      boxData
+    }
+  },
 }
-let boxData = ref<Box[]>([]);
-const total = ref(100);
-
-onBeforeMount(async () => {
-  console.log('onBeforeMount: 即将发送获取所有 res 的请求');
-  let res = await GetBoxApi();
-  console.log(res);
-  if (res.success) {
-    res.boxes.forEach(box => {
-      boxData.value.push({
-        username: box.username,
-        description: box.description
-      });
-    })
-    total.value = res.total_boxes;
-    // console.log(router.currentRoute.value);
-  } else {
-    ElMessage.error('WTF, Boxes 请求失败')
-  }
-});
-
 </script>
 
 <template>
-  <h1>
+  <h2>
     我是广场
-  </h1>
-  <p>
-    这里之后全都是别人分享的提问箱哦~
-  </p>
+  </h2>
+
 <!--  <ul>-->
 <!--    <li v-for="box of boxData">-->
 <!--      <h3> {{ box.username }} </h3>-->
 <!--      <p> {{ box.description }}</p>-->
 <!--    </li>-->
 <!--  </ul>-->
-  <div v-for="box of boxData">
-    <div style="display: flex; width: 100%">
-      <box-card></box-card>
-      <box-card></box-card>
-      <box-card></box-card>
+  <div v-for="box of boxData" class="canvas">
+    <div class="boxRow">
+      <box-card :father-data="box.username">
+        <template #desc>
+          {{ box.description }}
+        </template>
+        <template #hostInfo>
+          {{ box.username }}
+        </template>
+      </box-card>
+<!--      <box-card>-->
+<!--        <template #desc>-->
+<!--          hahaha-->
+<!--        </template>-->
+<!--        <template #hostInfo>-->
+<!--          我是用户信息-->
+<!--        </template>-->
+<!--      </box-card>-->
+<!--      <box-card>-->
+<!--        <template #desc>-->
+<!--          hahaha-->
+<!--        </template>-->
+<!--        <template #hostInfo>-->
+<!--          我是用户信息-->
+<!--        </template>-->
+<!--      </box-card>-->
     </div>
   </div>
 </template>
 
 <style scoped>
-
+.canvas {
+  display: flex;
+  justify-content: center;
+}
+.boxRow {
+  display: flex;
+  justify-content: space-between;
+  width: 95%
+}
 </style>
