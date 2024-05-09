@@ -30,7 +30,7 @@ onBeforeMount(async () => {
     });
   });
   total.value = res.total_users;
-  console.log('total_pages:', total.value);
+  // console.log('total_pages:', total.value);
 })
 
 const handleCurrentChange = (newPage: number) => {
@@ -53,9 +53,9 @@ const fetchData = async () => {
   total.value = res.total_users;
 };
 
-const record = (s: string) => {
-  console.log(s);
-}
+// const record = (s: string) => {
+//   console.log(s);
+// }
 
 const jump2Homepage = (userName: string) => {
   userStore.visitedUserName = userName;

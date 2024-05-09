@@ -1,5 +1,9 @@
 import instance from "@/request/http";
 
+interface ReqShare {
+    username: string
+    description: string
+}
 //一般情况下，接口类型会放到一个文件
 // 下面两个TS接口，表示要传的参数
 interface ReqLogin {
@@ -10,8 +14,8 @@ interface ReqLogin {
 interface ReqRegister {
     username: string
     password: string
-    first_name: string,
-    last_name: string,
+    first_name: string
+    last_name: string
     email: string
 }
 
@@ -28,8 +32,10 @@ interface User {
     first_name: string,
     last_name: string
 }
+
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
+type Res_2<T> = Promise<ItypeAPI_2<T>>;
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface ItypeAPI<T> {
@@ -43,6 +49,16 @@ interface ItypeAPI<T> {
     total_users: number
     total_pages: number
 }
+
+interface ItypeAPI_2<T> {
+    success: string | null
+    msg: string | null
+    code: number
+//     TODO
+}
+
+export const ShareApi = (data: ReqShare): Res<null> =>
+    instance.post('/api/share', data);
 
 //测试hello api
 export const TestHello = (): Res<null> =>

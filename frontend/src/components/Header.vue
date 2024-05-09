@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import {LogoutApi, PostAPI} from "@/request/api";
+import {LogoutApi, PostAPI, ShareApi} from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 
@@ -39,24 +39,24 @@ const submitForm = (formEl: FormInstance | undefined) => {
   console.log('准备 share 提问箱到广场');
   formEl.validate(async (valid) => {
     if (valid) {
-      console.log('post表单验证通过，准备提交');
+      console.log('分享提问箱表单验证通过，准备提交');
       console.log(shareForm);
-      // let res = await PostAPI({
-      //   username: shareForm.username,
-      //   description: shareForm.description
-      // });
-      // console.log('post结果', res);
-      // if (res.success) {
-      //   console.log('post表单提交成功');
-      // } else {
-      //   console.log('WTF');
-      //   ElMessage({
-      //     message: 'post 成功',
-      //     type: 'success'
-      //   });
-      // }
+      let res = await ShareApi({
+        username: shareForm.username,
+        description: shareForm.description
+      });
+      console.log('share结果', res);
+      if (res.success) {
+        console.log('share表单提交成功');
+        ElMessage({
+          message: '提问箱已分享到广场',
+          type: 'success'
+        });
+      } else {
+        console.log('WTF，提问箱分享失败');
+      }
     } else {
-      console.log('post表单验证不通过');
+      console.log('share表单验证不通过');
     }
   });
 }
