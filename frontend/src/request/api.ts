@@ -37,6 +37,11 @@ interface Box {
     username: string,
     description: string
 }
+interface Post {
+    username: string,
+    hostUsername: string,
+    question: string
+}
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
@@ -72,10 +77,13 @@ interface ItypeAPI_2<T> {
 //     TODO
 }
 
+// my APIs
 export const GetBoxApi = (): BoxRes<null> =>
     instance.get('/api/box');
 export const ShareApi = (data: ReqShare): Res<null> =>
     instance.post('/api/share', data);
+export const PostApi = (data: Post): Res<null> =>
+    instance.post(`/api/post`, data);
 
 //测试hello api
 export const TestHello = (): Res<null> =>
@@ -100,13 +108,6 @@ export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =
 //根据pageNumber查询用户信息api  get
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
     instance.get(`/api/users/list/${params.pageNumber}`, {params});
-
-export const PostAPI = (params: {
-        username: string,
-        hostUsername: string,
-        question: string
-    }): Res<null> =>
-    instance.post(`/api/post`, params);
 
 //以下是模板:
 // post请求 ，没参数
