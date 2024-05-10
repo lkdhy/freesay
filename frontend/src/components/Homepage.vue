@@ -23,6 +23,7 @@ console.log('bedfasf');
 // console.log(visUser);
 
 onBeforeMount(async () => {
+  console.log('即将请求这个用户相关的帖子!')
 })
 
 </script>

@@ -1,10 +1,12 @@
 <script lang="ts">
-import { ref, reactive } from "vue";
+import {ref, reactive, onBeforeMount} from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import {LogoutApi, PostApi, ShareApi} from "@/request/api";
+import { GetHostPostApi } from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
+
+const router = useRouter();
 
 export default {
   props: {
@@ -25,15 +27,15 @@ export default {
       answer: '我是tmp用户回答！！'
     });
     const submitForm = (formEl: FormInstance | undefined) => {
+      return
+      /*
       if (!formEl) return;
       console.log('准备answer问题');
       formEl.validate(async (valid) => {
         if (valid) {
           console.log('answer问题表单验证通过，准备提交');
           console.log(answerForm);
-          let res = await PostApi({
-            id: post_id,
-            answer: answerForm.answer
+          let res = await ({
           });
           console.log('answer结果', res);
           if (res.success) {
@@ -48,7 +50,9 @@ export default {
         } else {
           console.log('answer表单验证不通过');
         }
-      });
+      });;
+
+       */
     }
     return {
       question,
@@ -98,7 +102,7 @@ export default {
                 type="primary"
                 @click="submitForm(ruleFormRef);
                         AnswerVisible=false;">
-              发送提问
+              发送回答
             </el-button>
             <el-button @click="AnswerVisible = false;">
               取消
