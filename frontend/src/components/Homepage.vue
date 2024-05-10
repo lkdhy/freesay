@@ -49,6 +49,7 @@ onBeforeMount(async () => {
       {{ $route.params.id }}
     </el-descriptions-item>
     <el-descriptions-item label="姓名"></el-descriptions-item>
+<!--    TODO: 增加个性签名  -->
     <el-descriptions-item label="Place">
       这些东西后面再仔细搞！！！
     </el-descriptions-item>
@@ -80,7 +81,7 @@ onBeforeMount(async () => {
 
       </el-tab-pane>
 
-      <el-tab-pane label="已回答">
+      <el-tab-pane label="已答">
 
       </el-tab-pane>
 

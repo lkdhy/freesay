@@ -47,6 +47,7 @@ interface GetPost {
     hostUsername: string,
     public: boolean,
     answered: boolean
+    answer: string
 }
 interface GotPost {
     question: string,
@@ -56,6 +57,7 @@ interface GotPost {
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
 type BoxRes<T> = Promise<BoxItypeAPI<T>>;
+type PostRes<T> = Promise<PostItypeAPI<T>>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface PostItypeAPI<T> {
