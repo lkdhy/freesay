@@ -62,13 +62,17 @@ export default {
 <template>
   <el-card class="boxCard">
     <template #header>
-      <div @click="console.log(`按下了${hostName}`);
+      <el-tooltip
+        content="点击向TA提问"
+      >
+        <div @click="console.log(`按下了${hostName}`);
             PostVisible = true;">
-        <p>
-          <slot name="desc">
-          </slot>
-        </p>
-      </div>
+          <p>
+            <slot name="desc">
+            </slot>
+          </p>
+        </div>
+      </el-tooltip>
     </template>
 
     <div class="hostInfo">

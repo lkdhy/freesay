@@ -51,41 +51,37 @@ export default {
   <h2>
     我是广场
   </h2>
-
-<!--  <ul>-->
-<!--    <li v-for="box of boxData">-->
-<!--      <h3> {{ box.username }} </h3>-->
-<!--      <p> {{ box.description }}</p>-->
-<!--    </li>-->
-<!--  </ul>-->
-  <div v-for="box of boxData" class="canvas">
-    <div class="boxRow">
-      <box-card :host-name="box.username">
-        <template #desc>
-          {{ box.description }}
-        </template>
-        <template #hostInfo>
-          {{ box.username }}
-        </template>
-      </box-card>
-<!--      <box-card>-->
-<!--        <template #desc>-->
-<!--          hahaha-->
-<!--        </template>-->
-<!--        <template #hostInfo>-->
-<!--          我是用户信息-->
-<!--        </template>-->
-<!--      </box-card>-->
-<!--      <box-card>-->
-<!--        <template #desc>-->
-<!--          hahaha-->
-<!--        </template>-->
-<!--        <template #hostInfo>-->
-<!--          我是用户信息-->
-<!--        </template>-->
-<!--      </box-card>-->
+  <el-scrollbar height="550px">
+    <div v-for="box of boxData" class="canvas">
+      <div class="boxRow">
+        <box-card :host-name="box.username">
+          <template #desc>
+            {{ box.description }}
+          </template>
+          <template #hostInfo>
+            {{ box.username }}
+          </template>
+        </box-card>
+        <box-card :host-name="box.username">
+          <template #desc>
+            {{ box.description }}
+          </template>
+          <template #hostInfo>
+            {{ box.username }}
+          </template>
+        </box-card>
+        <box-card :host-name="box.username">
+          <template #desc>
+            {{ box.description }}
+          </template>
+          <template #hostInfo>
+            {{ box.username }}
+          </template>
+        </box-card>
+      </div>
     </div>
-  </div>
+  </el-scrollbar>
+
 </template>
 
 <style scoped>
