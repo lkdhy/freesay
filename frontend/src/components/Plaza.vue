@@ -60,7 +60,7 @@ export default {
 <!--  </ul>-->
   <div v-for="box of boxData" class="canvas">
     <div class="boxRow">
-      <box-card :father-data="box.username">
+      <box-card :host-name=box.username>
         <template #desc>
           {{ box.description }}
         </template>

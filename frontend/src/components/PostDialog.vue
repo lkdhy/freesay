@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import { ref, reactive } from 'vue';
 import type {FormInstance, FormRules} from 'element-plus';
 import { useRouter } from "vue-router";
@@ -6,46 +6,55 @@ import { useUserstore } from "@/store/user.js";
 import { PostAPI } from "@/request/api.js";
 import { ElMessage } from "element-plus";
 
-const router = useRouter();
-const userStore = useUserstore();
+export default {
+  props: {
+    hostName: String
+  },
+  setup(props) {
+    const router = useRouter();
+    const userStore = useUserstore();
 
-// console.log(`你想要给${userStore.visitedUserName}发问题吗`);
-
-const dialogVisible = ref(false);
-
-const ruleFormRef = ref<FormInstance>();
-const postForm = reactive({
-  username: userStore.userName,
-  hostUsername: userStore.visitedUserName,
-  question: ''
-});
-
-const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  console.log('准备 post 帖子');
-  formEl.validate(async (valid) => {
-    if (valid) {
-      console.log('post表单验证通过，准备提交');
-      console.log(postForm);
-      let res = await PostAPI({
-        username: postForm.username,
-        hostUsername: postForm.hostUsername,
-        question: postForm.question
+    const dialogVisible = ref(false);
+    const ruleFormRef = ref<FormInstance>();
+    const postForm = reactive({
+      username: userStore.userName,
+      hostUsername: userStore.visitedUserName,
+      question: ''
+    });
+    const submitForm = (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      console.log('准备 post 帖子');
+      formEl.validate(async (valid) => {
+        if (valid) {
+          console.log('post表单验证通过，准备提交');
+          console.log(postForm);
+          let res = await PostAPI({
+            username: postForm.username,
+            hostUsername: postForm.hostUsername,
+            question: postForm.question
+          });
+          console.log('post结果', res);
+          if (res.success) {
+            console.log('post表单提交成功');
+          } else {
+            console.log('WTF');
+            ElMessage({
+              message: 'post 成功',
+              type: 'success'
+            });
+          }
+        } else {
+          console.log('post表单验证不通过');
+        }
       });
-      console.log('post结果', res);
-      if (res.success) {
-        console.log('post表单提交成功');
-      } else {
-        console.log('WTF');
-        ElMessage({
-          message: 'post 成功',
-          type: 'success'
-        });
-      }
-    } else {
-      console.log('post表单验证不通过');
     }
-  });
+    return {
+      dialogVisible,
+      postForm,
+      submitForm,
+      ruleFormRef
+    }
+  }
 }
 
 </script>
@@ -79,7 +88,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
     </el-form>
     <template #footer>
       <div>
-        <el-button type="primary" @click="submitForm(ruleFormRef); dialogVisible=false;">
+        <el-button type="primary" @click="submitForm(ruleFormRef);
+                  dialogVisible=false;">
           提交问题
         </el-button>
         <el-button @click="dialogVisible = false">

@@ -3,18 +3,19 @@ import { ElMessage } from "element-plus";
 import { defineComponent } from "vue";
 export default {
   props: {
-    fatherData: String
+    hostName: String
   },
   setup(props) {
     console.log('请见下面！！！！')
-    console.log(props.fatherData);
+    console.log(props.hostName);
+    return props.hostName;
   }
 }
 
 </script>
 
 <template>
-  <el-card class="boxCard" @click="console.log(`按下了${fatherData}`);">
+  <el-card class="boxCard" @click="console.log(`按下了${hostName}`);">
     <template #header>
         <p>
           <slot name="desc">
