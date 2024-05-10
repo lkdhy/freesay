@@ -5,6 +5,7 @@ import {ElMessage} from 'element-plus';
 import {RegisterApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
+import tmp from "@/components/tmp.vue";
 
 const router = useRouter();
 const userStore = useUserstore();
@@ -12,16 +13,27 @@ const userStore = useUserstore();
 console.log(`当前访问用户是${userStore.visitedUserName}`);
 console.log(`你是${userStore.userName}`);
 
+
 const curUser = ref<string>(userStore.userName);
+const visitedUser = ref<string>(userStore.visitedUserName);
+const isMine = ref<boolean>(curUser.value === visitedUser.value);
+console.log(isMine.value);
+console.log('bedfasf');
 // const visUser = ref<string>($route.params.id);
 // console.log(visUser);
+
+onBeforeMount(async () => {
+})
 
 </script>
 
 <template>
-
-  <h2>我是个人主页</h2>
-
+  <h2 v-if="isMine">
+    我的主页
+  </h2>
+  <h2 v-else>
+    {{ visitedUser }} 的主页
+  </h2>
   <h3>
     你好 {{ curUser }}
   </h3>
@@ -52,20 +64,34 @@ const curUser = ref<string>(userStore.userName);
 <!--    向他提问-->
 <!--  </el-button>-->
 
-  <post-dialog>
+  <post-dialog v-if="!isMine">
     <template v-slot:hostName>
       {{ $route.params.id }}
     </template>
   </post-dialog>
 
 <!--  TODO  -->
+<!--  <h2>-->
+<!--    他的回答-->
+<!--  </h2>-->
   <div>
-    <h2>
-      他的回答
-    </h2>
-    <p>
-      ……………………………………
-    </p>
+    <el-tabs>
+      <el-tab-pane label="未答" v-if="isMine">
+
+      </el-tab-pane>
+
+      <el-tab-pane label="已回答">
+
+      </el-tab-pane>
+
+      <el-tab-pane label="有回答" v-if="isMine">
+
+      </el-tab-pane>
+
+      <el-tab-pane label="未回答" v-if="isMine">
+
+      </el-tab-pane>
+    </el-tabs>
   </div>
 
 </template>

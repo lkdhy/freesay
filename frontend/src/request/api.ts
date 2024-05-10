@@ -43,12 +43,32 @@ interface Post {
     hostUsername: string,
     question: string
 }
+interface GetPost {
+    hostUsername: string,
+    public: boolean,
+    answered: boolean
+}
+interface GotPost {
+    question: string,
+    answer: string
+}
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
 type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
+interface PostItypeAPI<T> {
+    success: string | null // 返回状态码的信息，如请求成功等;
+    result: T,//请求的数据，用泛型
+    msg: string | null // 返回状态码的信息，如请求成功等
+    message: string
+    code: number //返回后端自c定义的200，404，500这种状态码
+    post: Post
+    boxes: Box[]
+    total_boxes: number
+    // total_pages: number
+}
 interface BoxItypeAPI<T> {
     success: string | null // 返回状态码的信息，如请求成功等;
     result: T,//请求的数据，用泛型
@@ -85,6 +105,7 @@ export const ShareApi = (data: ReqShare): Res<null> =>
     instance.post('/api/share', data);
 export const PostApi = (data: Post): Res<null> =>
     instance.post(`/api/post`, data);
+// GetPostApi
 
 //测试hello api
 export const TestHello = (): Res<null> =>

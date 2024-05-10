@@ -60,71 +60,74 @@ export default {
 </script>
 
 <template>
-  <el-card class="boxCard">
-    <template #header>
-      <el-tooltip
-        content="点击向TA提问"
-      >
-        <div @click="console.log(`按下了${hostName}`);
-            PostVisible = true;">
-          <p>
-            <slot name="desc">
-            </slot>
-          </p>
-        </div>
-      </el-tooltip>
-    </template>
-
-    <div class="hostInfo">
-<!--      我想在这里放用户名等用户相关的东西-->
-      <slot name="hostInfo"></slot>
-    </div>
-
-    <el-dialog v-model="PostVisible">
-      <template #header="{ titleClass }" >
-        <h3>
-          向 {{ hostName }} 提问
-        </h3>
+  <div class="boxCard">
+    <el-card>
+      <template #header>
+        <el-tooltip
+          content="点击向TA提问"
+        >
+          <div @click="console.log(`按下了${hostName}`);
+              PostVisible = true;">
+            <p>
+              <slot name="desc">
+              </slot>
+            </p>
+          </div>
+        </el-tooltip>
       </template>
-      <el-form
-          ref="ruleFormRef"
-          :model="postForm"
-      >
-        <el-form-item prop="message">
-          <!--          TODO: 调整 min/maxRows  -->
-          <el-input
-              v-model="postForm.question"
-              type="textarea"
-              :autosize="{ minRows: 10, maxRows: 100 }"
-          >
-            <!--  placeholder="来问我问题吧~"-->
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div>
-          <el-button
-              type="primary"
-              @click="submitForm(ruleFormRef);
-                      PostVisible=false;">
-            发送提问
-          </el-button>
-          <el-button @click="PostVisible = false;">
-            取消
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
-  </el-card>
+
+      <div class="hostInfo">
+  <!--      我想在这里放用户名等用户相关的东西-->
+        <slot name="hostInfo"></slot>
+      </div>
+
+      <el-dialog v-model="PostVisible">
+        <template #header="{ titleClass }" >
+          <h3>
+            向 {{ hostName }} 提问
+          </h3>
+        </template>
+        <el-form
+            ref="ruleFormRef"
+            :model="postForm"
+        >
+          <el-form-item prop="message">
+            <!--          TODO: 调整 min/maxRows  -->
+            <el-input
+                v-model="postForm.question"
+                type="textarea"
+                :autosize="{ minRows: 10, maxRows: 100 }"
+            >
+              <!--  placeholder="来问我问题吧~"-->
+            </el-input>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <div>
+            <el-button
+                type="primary"
+                @click="submitForm(ruleFormRef);
+                        PostVisible=false;">
+              发送提问
+            </el-button>
+            <el-button @click="PostVisible = false;">
+              取消
+            </el-button>
+          </div>
+        </template>
+      </el-dialog>
+    </el-card>
+  </div>
 </template>
 
 <style scoped>
 /*  TODO
 */
 .boxCard {
-  width: 30%;
-  margin-left: 0.5em;
-  margin-bottom: 1em;
+  width: 300px;
+  height: 40px;
+  margin-left: 5em;
+  margin-bottom: 10em;
 }
 .hostInfo {
   text-align: center;

@@ -51,7 +51,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-  <el-button @click="dialogVisible = true">点击我</el-button>
+  <el-button @click="dialogVisible = true">在这里向我提问</el-button>
   <el-dialog
       v-model="dialogVisible"
   >

@@ -52,24 +52,8 @@ export default {
     我是广场
   </h2>
   <el-scrollbar height="550px">
-    <div v-for="box of boxData" class="canvas">
-      <div class="boxRow">
-        <box-card :host-name="box.username">
-          <template #desc>
-            {{ box.description }}
-          </template>
-          <template #hostInfo>
-            {{ box.username }}
-          </template>
-        </box-card>
-        <box-card :host-name="box.username">
-          <template #desc>
-            {{ box.description }}
-          </template>
-          <template #hostInfo>
-            {{ box.username }}
-          </template>
-        </box-card>
+    <div class="canvas">
+      <div v-for="box of boxData">
         <box-card :host-name="box.username">
           <template #desc>
             {{ box.description }}
@@ -80,6 +64,24 @@ export default {
         </box-card>
       </div>
     </div>
+<!--      <div class="boxRow">-->
+<!--        <box-card :host-name="box.username">-->
+<!--          <template #desc>-->
+<!--            {{ box.description }}-->
+<!--          </template>-->
+<!--          <template #hostInfo>-->
+<!--            {{ box.username }}-->
+<!--          </template>-->
+<!--        </box-card>-->
+<!--        <box-card :host-name="box.username">-->
+<!--          <template #desc>-->
+<!--            {{ box.description }}-->
+<!--          </template>-->
+<!--          <template #hostInfo>-->
+<!--            {{ box.username }}-->
+<!--          </template>-->
+<!--        </box-card>-->
+<!--      </div>-->
   </el-scrollbar>
 
 </template>
@@ -87,7 +89,9 @@ export default {
 <style scoped>
 .canvas {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
 }
 .boxRow {
   display: flex;

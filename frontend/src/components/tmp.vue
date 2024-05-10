@@ -7,7 +7,9 @@ export default defineComponent({
 </script>
 
 <template>
-
+<h1>
+  我是tmp
+</h1>
 </template>
 
 <style scoped>
