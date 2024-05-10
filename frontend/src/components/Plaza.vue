@@ -64,24 +64,6 @@ export default {
         </box-card>
       </div>
     </div>
-<!--      <div class="boxRow">-->
-<!--        <box-card :host-name="box.username">-->
-<!--          <template #desc>-->
-<!--            {{ box.description }}-->
-<!--          </template>-->
-<!--          <template #hostInfo>-->
-<!--            {{ box.username }}-->
-<!--          </template>-->
-<!--        </box-card>-->
-<!--        <box-card :host-name="box.username">-->
-<!--          <template #desc>-->
-<!--            {{ box.description }}-->
-<!--          </template>-->
-<!--          <template #hostInfo>-->
-<!--            {{ box.username }}-->
-<!--          </template>-->
-<!--        </box-card>-->
-<!--      </div>-->
   </el-scrollbar>
 
 </template>

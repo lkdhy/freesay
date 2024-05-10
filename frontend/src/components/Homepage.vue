@@ -1,30 +1,68 @@
-<script setup lang="ts">
+<script lang="ts">
 import {onBeforeMount, reactive, ref} from "vue";
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
-import {RegisterApi} from "@/request/api";
+import { GetHostPostApi } from "@/request/api";
 import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
 import tmp from "@/components/tmp.vue";
+import UnansweredCard from "@/components/UnansweredCard.vue";
 
-const router = useRouter();
-const userStore = useUserstore();
+export default {
+  components: {
+    UnansweredCard
+  },
+  setup() {
+    const router = useRouter();
+    const userStore = useUserstore();
+    console.log(`当前访问用户是${userStore.visitedUserName}`);
+    console.log(`你是${userStore.userName}`);
+    interface GotPost {
+      id: number
+      username: string
+      question: string
+      answer: string
+    }
+    const curUser = ref<string>(userStore.userName);
+    const visitedUser = ref<string>(userStore.visitedUserName);
+    const isMine = ref<boolean>(curUser.value === visitedUser.value);
+    const p1 = ref<GotPost[]>([]);
+    const p2 = ref<GotPost[]>([]);
+    const p3 = ref<GotPost[]>([]);
+    const p4 = ref<GotPost[]>([]);
+    console.log(isMine.value);
 
-console.log(`当前访问用户是${userStore.visitedUserName}`);
-console.log(`你是${userStore.userName}`);
-
-
-const curUser = ref<string>(userStore.userName);
-const visitedUser = ref<string>(userStore.visitedUserName);
-const isMine = ref<boolean>(curUser.value === visitedUser.value);
-console.log(isMine.value);
-console.log('bedfasf');
-// const visUser = ref<string>($route.params.id);
-// console.log(visUser);
-
-onBeforeMount(async () => {
-  console.log('即将请求这个用户相关的帖子!')
-})
+    onBeforeMount(async () => {
+      console.log('即将请求这个用户相关的帖子!')
+      let res = await GetHostPostApi({
+        username: curUser.value
+      });
+      console.log(res);
+      if (res.success) {
+        console.log('cool!!')
+        res.posts.forEach(post => {
+          if (!isMine.value) {
+            if (post.answer.length) {
+              p1.value.push(post);
+            }
+          } else {
+            if (post.answer.length) {
+              p1.value.push(post);
+            } else {
+              p2.value.push(post);
+            }
+          }
+        })
+      } else {
+        console.log('WTF, host posts 请求失败')
+      }
+    })
+    return {
+      isMine, visitedUser, curUser,
+      p1, p2, p3, p4
+    }
+  }
+}
 
 </script>
 
@@ -77,9 +115,19 @@ onBeforeMount(async () => {
 <!--    他的回答-->
 <!--  </h2>-->
   <div>
+
     <el-tabs>
       <el-tab-pane label="未答" v-if="isMine">
-
+        <el-scrollbar height="400px">
+          <div class="canvas">
+            <div v-for="post of p1">
+              <unanswered-card
+                  :post_id="post.id"
+                  :question="post.question">
+              </unanswered-card>
+            </div>
+          </div>
+        </el-scrollbar>
       </el-tab-pane>
 
       <el-tab-pane label="已答">

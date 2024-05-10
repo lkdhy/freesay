@@ -2,9 +2,10 @@
 import {ref, reactive, onBeforeMount} from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import { GetHostPostApi } from "@/request/api";
+import { AnswerApi } from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
+import tmp from "@/components/tmp.vue";
 
 const router = useRouter();
 
@@ -12,36 +13,36 @@ export default {
   props: {
     post_id: Number,
     question: String,
-    // answer: String,
   },
   setup(props) {
     const userStore = useUserstore();
     const AnswerVisible = ref(false)
 
-    const post_id = ref(Number)
+    console.log('post_id', props.post_id);
+    const post_id = ref(props.post_id)
     const question = ref(props.question)
-    // const answer = ref<string>()
     const ruleFormRef = ref<FormInstance>();
     const answerForm = reactive({
-      post_id: Number,
       answer: '我是tmp用户回答！！'
     });
     const submitForm = (formEl: FormInstance | undefined) => {
-      return
-      /*
       if (!formEl) return;
       console.log('准备answer问题');
       formEl.validate(async (valid) => {
         if (valid) {
           console.log('answer问题表单验证通过，准备提交');
           console.log(answerForm);
-          let res = await ({
+          let tmpid = props.post_id != undefined ? props.post_id : 0;
+          console.log(tmpid);
+          let res = await AnswerApi({
+            id: tmpid,
+            answer: answerForm.answer
           });
           console.log('answer结果', res);
           if (res.success) {
             console.log('answer表单提交成功');
             ElMessage({
-              message: '已回复',
+              message: '已发送回答',
               type: 'success'
             });
           } else {
@@ -50,9 +51,7 @@ export default {
         } else {
           console.log('answer表单验证不通过');
         }
-      });;
-
-       */
+      });
     }
     return {
       question,
@@ -68,13 +67,11 @@ export default {
   <div class="unansweredCard">
     <el-card>
         <el-tooltip
-          content="点击向回答问题"
+          content="点击回答TA的问题"
         >
           <div @click="
               AnswerVisible = true;">
             <p>
-<!--              <slot name="desc">-->
-<!--              </slot>-->
               {{ question }}
             </p>
           </div>

@@ -110,10 +110,12 @@ export const ShareApi = (data: ReqShare): Res<null> =>
 export const PostApi = (data: Post): Res<null> =>
     instance.post(`/api/post`, data);
 export const GetPostApi = (params: { 'username': string } ): GotPostRes<null> =>
-    instance.get('/api/getpost')
+    instance.get('/api/getpost', {params})
+export const AnswerApi = (params: { 'id': number, 'answer': string } ): Res<null> =>
+    instance.post('/api/answer', params)
 
 export const GetHostPostApi = (params: { 'username': string } ): GotPostRes<null> =>
-    instance.get('/api/gethostpost')
+    instance.get('/api/gethostpost', {params})
 
 //测试hello api
 export const TestHello = (): Res<null> =>
