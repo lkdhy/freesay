@@ -34,7 +34,7 @@ const failMessage = () => {
   });
 }
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) returncls;
+  if (!formEl) return;
   formEl.validate(async (valid) => {
     if (valid) {
       console.log('注册表单验证通过，可以提交');

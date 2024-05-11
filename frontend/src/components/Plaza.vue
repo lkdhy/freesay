@@ -48,8 +48,9 @@ export default {
 </script>
 
 <template>
-  <h2>
-    我是广场
+  <h2 style="text-align: center;
+margin-bottom: 1em">
+    广场
   </h2>
   <el-scrollbar height="550px">
     <div class="canvas">

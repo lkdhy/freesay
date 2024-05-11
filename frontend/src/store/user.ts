@@ -7,6 +7,7 @@ export const useUserstore = defineStore(
             return {
                 // initial: empty string
                 userName: '',
+                isAdmin: false,
                 visitedUserName: ''
             }
         }

@@ -21,6 +21,7 @@ async function logout() {
     // TODO: 清空路由，避免直接退回回到之前登录时看到的界面
     // reset userStore to an empty string
     userStore.userName = '';
+    userStore.isAdmin = false;
     ElMessage.success("登出成功");
     await router.push('/index');
   } else {

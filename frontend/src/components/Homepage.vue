@@ -51,6 +51,7 @@ export default {
                 && (post.is_public || post.username===curUser.value)) {
               p2.value.push(post);
             }
+            console.log('p2:', p2.value);
           } else {
             if (!post.answer.length) {
               p1.value.push(post);

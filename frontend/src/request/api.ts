@@ -31,7 +31,8 @@ interface User {
     is_superuser: boolean,
     first_name: string,
     last_name: string
-    signature: string
+    signature: string,
+    isAdmin: boolean
 }
 
 interface Box {
@@ -95,6 +96,7 @@ interface ItypeAPI<T> {
     users: User[]
     total_users: number
     total_pages: number
+    isAdmin: boolean
 }
 interface ItypeAPI_2<T> {
     success: string | null
