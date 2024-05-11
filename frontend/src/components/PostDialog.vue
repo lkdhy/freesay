@@ -9,8 +9,6 @@ import { ElMessage } from "element-plus";
 const router = useRouter();
 const userStore = useUserstore();
 
-// console.log(`你想要给${userStore.visitedUserName}发问题吗`);
-
 const dialogVisible = ref(false);
 
 const ruleFormRef = ref<FormInstance>();
@@ -35,6 +33,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('post结果', res);
       if (res.success) {
         console.log('post表单提交成功');
+        ElMessage({
+          message: '已向TA发送提问',
+          type: 'success'
+        });
       } else {
         console.log('WTF');
         ElMessage({
@@ -89,35 +91,3 @@ const submitForm = (formEl: FormInstance | undefined) => {
     </template>
   </el-dialog>
 </template>
-
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      dialogVisible: false,-->
-<!--      form: {-->
-<!--        name: '',-->
-<!--        // 更多表单数据...-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-<!--    submitForm(formName) {-->
-<!--      this.$refs[formName].validate((valid) => {-->
-<!--        if (valid) {-->
-<!--          alert('submit!');-->
-<!--        } else {-->
-<!--          console.log('error submit!!');-->
-<!--          return false;-->
-<!--        }-->
-<!--      });-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style>-->
-<!--.inputQuestion {-->
-<!--  height: 200px;-->
-<!--}-->
-<!--</style>-->

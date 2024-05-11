@@ -2,10 +2,6 @@
 import {ref, reactive, onBeforeMount} from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import { AnswerApi } from "@/request/api";
-import {useRouter} from 'vue-router';
-import {useUserstore} from "@/store/user";
-import tmp from "@/components/tmp.vue";
 
 export default {
   props: {

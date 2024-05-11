@@ -3,7 +3,6 @@ import { ref, reactive } from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import {LogoutApi, PostApi, ShareApi} from "@/request/api";
-import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 
 export default {

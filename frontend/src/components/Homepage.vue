@@ -14,6 +14,7 @@ export default {
     signature: String
   },
   components: {
+    PostDialog,
     PostCard,
     UnansweredCard,
   },
