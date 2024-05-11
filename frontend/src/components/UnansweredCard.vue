@@ -7,7 +7,7 @@ import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 import tmp from "@/components/tmp.vue";
 
-const router = useRouter();
+// const router = useRouter();
 
 export default {
   props: {
@@ -23,8 +23,9 @@ export default {
     const question = ref(props.question)
     const ruleFormRef = ref<FormInstance>();
     const answerForm = reactive({
-      answer: '我是tmp用户回答！！'
+      answer: '', public: true
     });
+    // const willPublic = ref(true);
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return;
       console.log('准备answer问题');
@@ -36,7 +37,8 @@ export default {
           console.log(tmpid);
           let res = await AnswerApi({
             id: tmpid,
-            answer: answerForm.answer
+            answer: answerForm.answer,
+            is_public: answerForm.public
           });
           console.log('answer结果', res);
           if (res.success) {
@@ -65,34 +67,47 @@ export default {
 
 <template>
   <div class="unansweredCard">
-    <el-card>
+    <el-card shadow="hover">
         <el-tooltip
           content="点击回答TA的问题"
         >
           <div @click="
               AnswerVisible = true;">
-            <p>
+            <p class="textCenter">
               {{ question }}
             </p>
           </div>
         </el-tooltip>
 
-      <el-dialog v-model="AnswerVisible">
-        <el-form
-            ref="ruleFormRef"
-            :model="answerForm"
-        >
-          <el-form-item prop="message">
-            <!--          TODO: 调整 min/maxRows  -->
-            <el-input
-                v-model="answerForm.answer"
-                type="textarea"
-                :autosize="{ minRows: 8, maxRows: 12 }"
-            >
-              <!--  placeholder="来问我问题吧~"-->
-            </el-input>
-          </el-form-item>
-        </el-form>
+      <el-dialog v-model="AnswerVisible" >
+        <div style="display: flex; flex-direction: column;
+          justify-content: space-between">
+          <el-card shadow="never" class="textCenter">
+            <p>
+              {{ question }}
+            </p>
+          </el-card>
+          <div>
+            <p>是否公开：</p>
+            <el-switch v-model="answerForm.public">
+            </el-switch>
+          </div>
+          <el-form
+              ref="ruleFormRef"
+              :model="answerForm"
+          >
+            <el-form-item prop="message">
+              <!--          TODO: 调整 min/maxRows  -->
+              <el-input
+                  v-model="answerForm.answer"
+                  type="textarea"
+                  :autosize="{ minRows: 3, maxRows: 5 }"
+              >
+                <!--  placeholder="来问我问题吧~"-->
+              </el-input>
+            </el-form-item>
+          </el-form>
+        </div>
         <template #footer>
           <div>
             <el-button
@@ -120,5 +135,7 @@ export default {
   margin-left: 5em;
   margin-bottom: 10em;
 }
-
+.textCenter {
+  text-align: center;
+}
 </style>

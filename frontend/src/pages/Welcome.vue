@@ -26,7 +26,6 @@ const jump2Register = () => {
                  alt="Logo" style="height: 50px;">
             <img src="@/assets/icons/chat-icon.svg"
                  alt="Logo" style="height: 40px;">
-            <p>FDU Tape</p>
           </div>
 
           <div>
@@ -39,15 +38,18 @@ const jump2Register = () => {
           </div>
         </div>
 
-        <el-main>
+        <el-main class="tmp">
           <h1>
-            欢迎！
+            欢迎来到复旦大学 Tape 提问箱
           </h1>
-          <h2>
-            我是还没登陆的地方，我是 /index 哦~
-          </h2>
+          <h3>
+            卿云烂兮，乣缦缦兮
+          </h3>
+          <h3>
+            日月光华，旦复旦兮
+          </h3>
           <p>
-            请右上角点击登录 / 注册吧
+            请在右上角点击登录 / 注册
           </p>
         </el-main>
       </el-header>
@@ -55,5 +57,12 @@ const jump2Register = () => {
 </template>
 
 <style scoped>
-
+.tmp {
+  display: flex;
+  flex-direction: column;
+}
+* {
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
 </style>

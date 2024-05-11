@@ -88,15 +88,17 @@ const updatePage = () => {
     ">
       <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
            alt="Logo" style="height: 50px;">
+
+      <p>FDU Tape</p>
+
       <img src="@/assets/icons/chat-icon.svg"
            alt="Logo" style="height: 40px;">
-      <p>FDU Tape</p>
 
     </div>
 
     <div>
-      <p>你是 {{ userStore.userName }}，
-        我之后想靠右边放你的头像等等，右边只有“创建提问箱”按钮是没用的</p>
+      <p>你好！{{ userStore.userName }}</p>
+<!--        我之后想靠右边放你的头像等等，右边只有“创建提问箱”按钮是没用的</p>-->
     </div>
     <div>
 

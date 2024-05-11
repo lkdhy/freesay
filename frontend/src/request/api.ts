@@ -31,7 +31,7 @@ interface User {
     is_superuser: boolean,
     first_name: string,
     last_name: string
-    // signature: string
+    signature: string
 }
 
 interface Box {
@@ -54,6 +54,7 @@ interface GotPost {
     username: string
     question: string
     answer: string
+    is_public: boolean
 }
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
@@ -111,7 +112,7 @@ export const PostApi = (data: Post): Res<null> =>
     instance.post(`/api/post`, data);
 export const GetPostApi = (params: { 'username': string } ): GotPostRes<null> =>
     instance.get('/api/getpost', {params})
-export const AnswerApi = (params: { 'id': number, 'answer': string } ): Res<null> =>
+export const AnswerApi = (params: { 'id': number, 'answer': string, 'is_public': boolean } ): Res<null> =>
     instance.post('/api/answer', params)
 
 export const GetHostPostApi = (params: { 'username': string } ): GotPostRes<null> =>

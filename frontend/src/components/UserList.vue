@@ -12,6 +12,7 @@ interface User {
   userName: string,
   first_name: string, last_name: string
   email: string
+  signature: string
 }
 const tableData = ref<User[]>([]);
 let currentPage = ref(1);
@@ -26,7 +27,7 @@ onBeforeMount(async () => {
     tableData.value.push({
       userName: item.username,
       first_name: item.first_name, last_name: item.last_name,
-      email: item.email
+      email: item.email, signature: item.signature
     });
   });
   total.value = res.total_users;
@@ -42,12 +43,13 @@ const fetchData = async () => {
   let res = await GetUserInfoByPageNum({
     pageNumber: currentPage.value
   });
+  console.log(res);
   tableData.value = [];
   res.users.forEach(item => {
     tableData.value.push({
       userName: item.username,
       first_name: item.first_name, last_name: item.last_name,
-      email: item.email
+      email: item.email, signature: item.signature
     });
   });
   total.value = res.total_users;
@@ -68,14 +70,16 @@ const jump2Homepage = (userName: string) => {
   <el-row>
     <el-col :span="24">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="userName" label="用户名" width="180"/>
-        <el-table-column prop="first_name" label="姓" width="180"/>
-        <el-table-column prop="last_name" label="名" width="180"/>
+        <el-table-column prop="userName" label="用户名" width="130"/>
+<!--        <el-table-column prop="first_name" label="姓" width="180"/>-->
+<!--        <el-table-column prop="last_name" label="名" width="180"/>-->
+        <el-table-column prop="signature" label="个性签名" width="300"/>
+
         <el-table-column prop="email" label="邮箱"/>
         <el-table-column label="去往他的个人主页">
           <template #default="scope">
             <el-button text @click="jump2Homepage(scope.row.userName)">
-              试着点我 {{ scope.row.userName }}
+              {{ scope.row.userName }} 的个人主页
             </el-button>
           </template>
         </el-table-column>

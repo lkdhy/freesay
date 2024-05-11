@@ -19,7 +19,7 @@ export default {
     const ruleFormRef = ref<FormInstance>();
     const postForm = reactive({
       username: userStore.userName,
-      question: '我是从广场提问箱的tmp问题'
+      question: '你想问TA…'
     });
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return;
@@ -61,7 +61,7 @@ export default {
 
 <template>
   <div class="boxCard">
-    <el-card>
+    <el-card shadow="hover">
       <template #header>
         <el-tooltip
           content="点击向TA提问"
