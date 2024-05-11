@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import AsideNavBar from "@/components/AsideNavBar.vue";
 import Header from "@/components/Header.vue";
-import IndexMain from "@/components/IndexMain.vue";
+import {useUserstore} from "@/store/user";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+const userStore = useUserstore();
+
+if (!userStore.userName.length) {
+  router.replace('/index');
+}
 
 </script>
 
 <template>
   <div class="common-layout">
-<!--    <el-container style="height: 100%">-->
     <el-container>
       <el-header>
         <Header></Header>

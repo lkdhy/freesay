@@ -79,31 +79,30 @@ const updatePage = () => {
 <!--  此处设置了元素均匀分散（space-between） -->
   <div style="
     display: flex;
-    /*justify-content: center;*/
     justify-content: space-between;
     align-items: center;">
     <div style="
       display: flex;
       flex-direction: row;
       align-items: center;
-    ">
-      <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
+    ;">
+      <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg" class="Icon"
            alt="Logo" style="height: 50px;">
 
-      <p>FDU Tape</p>
+      <p class="Icon" style="font-size: 28px">
+        FDU Tape
+      </p>
 
-      <img src="@/assets/icons/chat-icon.svg"
+      <img src="@/assets/icons/chat-icon.svg" class="Icon"
            alt="Logo" style="height: 40px;">
 
     </div>
 
     <div>
-      <p>你好！{{ userStore.userName }}</p>
-<!--        我之后想靠右边放你的头像等等，右边只有“创建提问箱”按钮是没用的</p>-->
+      <p style="font-size: 20px">你好！{{ userStore.userName }}</p>
     </div>
     <div>
 
-<!--      TODO  -->
       <el-button type="success" @click="createBoxVisible = true;">
         分享我的提问箱
       </el-button>
@@ -113,7 +112,6 @@ const updatePage = () => {
       </el-button>
     </div>
     <div>
-<!--      <el-button type="info" @click="logout">-->
 
       <el-button type="primary" @click="logout">
         退出登录
@@ -160,5 +158,7 @@ const updatePage = () => {
 </template>
 
 <style scoped>
-
+.Icon {
+  margin-right: 10px;
+}
 </style>

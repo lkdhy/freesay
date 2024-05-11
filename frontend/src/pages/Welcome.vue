@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import {useRouter} from 'vue-router';
-// import {useUserstore} from "@/store/user";
+import {useUserstore} from "@/store/user";
 
-// const userStore=useUserstore();
+const userStore=useUserstore();
 const router = useRouter();
+
+console.log('hhhh');
+console.log(router.currentRoute.value);
+
+if (userStore.userName.length) {
+  console.log('用户登录了，故应跳转到广场')
+}
 
 const jump2Login = () => {
   router.push('/login');
@@ -38,18 +45,18 @@ const jump2Register = () => {
           </div>
         </div>
 
-        <el-main class="tmp">
-          <h1>
-            欢迎来到复旦大学 Tape 提问箱
-          </h1>
-          <h3>
+        <el-main class="desc">
+          <h2 class="title">
+            复旦大学 Tape 匿名提问箱
+          </h2>
+          <h3 class="poem">
             卿云烂兮，乣缦缦兮
           </h3>
-          <h3>
+          <h3 class="poem">
             日月光华，旦复旦兮
           </h3>
-          <p>
-            请在右上角点击登录 / 注册
+          <p class="loginTip">
+            （右上角点击登录 / 注册）
           </p>
         </el-main>
       </el-header>
@@ -57,12 +64,23 @@ const jump2Register = () => {
 </template>
 
 <style scoped>
-.tmp {
+.desc {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
-* {
-  margin-bottom: 30px;
-  margin-left: 10px;
+.title {
+  font-size: 60px;
+  margin-bottom: 100px;
+  font-family: 华文细黑;
 }
+.poem {
+  font-size: 30px;
+  font-family: 华文中宋;
+  margin-bottom: 10px;
+}
+.loginTip {
+  margin-top: 100px;
+}
+
 </style>
