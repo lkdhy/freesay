@@ -108,23 +108,10 @@ export default {
     <el-descriptions-item label="Username">
       {{ $route.params.id }}
     </el-descriptions-item>
-<!--    <el-descriptions-item label="姓名"></el-descriptions-item>-->
-<!--    TODO: 增加个性签名  -->
-        这个人很懒，什么都没有写
     <el-descriptions-item label="个性签名">
-      这里放个性签名？？？？？
+        这个人很懒，什么都没有写
     </el-descriptions-item>
-<!--    <el-descriptions-item label="Remarks">-->
-<!--      <el-tag size="small">School</el-tag>-->
-<!--    </el-descriptions-item>-->
-<!--    <el-descriptions-item label="Address">-->
-<!--      这里放个性签名？？？？？-->
-<!--    </el-descriptions-item>-->
   </el-descriptions>
-
-<!--  <el-button type="primary">-->
-<!--    向他提问-->
-<!--  </el-button>-->
 
   <post-dialog v-if="!isMine">
     <template v-slot:hostName>
@@ -132,10 +119,6 @@ export default {
     </template>
   </post-dialog>
 
-<!--  TODO  -->
-<!--  <h2>-->
-<!--    他的回答-->
-<!--  </h2>-->
   <div>
 
     <el-tabs>

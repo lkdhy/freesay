@@ -11,17 +11,14 @@ import IndexMain from "@/components/IndexMain.vue";
     <el-container>
       <el-header>
         <Header></Header>
-<!--        我是广场-->
       </el-header>
       <el-container>
         <el-aside>
           <AsideNavBar></AsideNavBar>
-<!--          <p>我是侧边栏</p>-->
         </el-aside>
 
         <el-container>
           <el-main>
-<!--            <p>这里一开始是广场！！！！</p>-->
             <router-view></router-view>
           </el-main>
         </el-container>
