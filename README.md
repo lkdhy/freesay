@@ -8,6 +8,8 @@ Freesay is where you can chat and share freely.
 >
 > wsh：https://github.com/formula12
 
+<img src="./assets/index_pic.PNG"  style="zoom: 50%;">
+
 ## [TODO]下一步计划
 
 - [x] 0505周日晚 21:35 编（已删除）
@@ -29,96 +31,19 @@ Freesay is where you can chat and share freely.
 
 ### 前端
 
-* IDE：建议使用 WebStorm。如果使用 VSCode，可能要安装一些插件。所以，直接用 WebStorm 打开整个 `freesay` 项目文件夹
-* （打开 WebStorm 下的终端）==建议用 Windows CMD（即 “Command Prompt”）==，而不是 “Windows PowerShell”
-
-1. 进入前端目录
-
-   `cd frontend`
-
-2. 检查是否安装了包管理器 npm
-
-   ```cmd
-   D:\freesay\frontend>npm --version 
-   10.5.0
-   ```
-
-3. 用 npm 安装项目依赖
-
-   * 可以打开文件 `package.json` 查看。实际上，`npm install` 应该会安装所有 “dependencies”
-
-   * IDE 界面右下角可能也会跳出来安装提示
-
-   * 命令行输入 `npm install` 安装项目依赖
-
-     ```cmd
-     D:\freesay\frontend>npm install
-     npm WARN deprecated @types/vue@2.0.0: This is a stub types definition for vuejs (https://github.com/vuejs/vue). vuejs provides its own type definitions, so you don't need @types/vu
-     e installed!
-     
-     added 100 packages, and audited 101 packages in 25s
-     
-     15 packages are looking for funding
-       run `npm fund` for details
-     
-     found 0 vulnerabilities
-     
-     ```
-
-4. 运行项目
-
-   ```cmd
-   D:\freesay\frontend>npm run dev
-   
-   > vue-project@0.0.0 dev
-   > vite
-   
-   
-     VITE v5.2.8  ready in 509 ms
-   
-     ➜  Local:   http://localhost:5173/
-     ➜  Network: use --host to expose
-     ➜  press h + enter to show help
-   
-   ```
-
-   此时，浏览器输入 http://localhost:5173/ 即可。
-
-   * 界面：主页
-   * 点击可进入登录、注册界面
-   
-5. 退出（关闭前端服务器）方法：终端输入 q，回车
+​	已删
 
 ### 后端
 
-没写数据库，没啥别的。
-
-看一下 `views.py` 和 `urls.py` 的内容，即可。
-
-*注意：`views.py` 用到了 Python 的  `json` 包，因此，需要确保安装了 `json`*
-
-* 启动后端服务器（都懂的）：
-
-  ```cmd
-  D:\freesay\backend>python manage.py runserver
-  ```
-
-退出方法：Ctrl + C
+​	已删
 
 ### 登录过程（前后端交互）
 
-在前端的登录界面（打开调试控制台）
+在前端的登录界面：打开开发者界面，看 “调试控制台”、“网络“ 等
 
-有以下两个尝试：
-
-1. 填用户名，但密码不填，点击登录，观察弹出的信息和调试控制台
-2. 用户名和密码都随便填，点击登录，观察弹出的信息和调试控制台
-
-OK！
+​	已删
 
 ---
-
-
 
 ## 功能与创新性
 
