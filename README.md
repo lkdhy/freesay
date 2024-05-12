@@ -8,28 +8,11 @@ Freesay is where you can chat and share freely.
 >
 > wsh：https://github.com/formula12
 
-## [TODO]下一步计划_ 0505周日晚 21:35 编
+## [TODO]下一步计划
 
-##### 功能上本周的目标（lch 的数据库 PJ）
+- [x] 0505周日晚 21:35 编（已删除）
 
-> lch 数据库 PJ1 的要求文档：本仓库的 [lhc数据库_PJ1_要求.docx](./lhc数据库_PJ1_要求.docx)
-
-💥💥💥 <u>*实现 “popi 提问箱 的基本功能”*</u>！ 💥💥💥
-
-##### @lch
-
-- [ ] 安装 mysql
-- [ ] 继续实践助教 Vue 讲座上提及的内容
-- [ ] 构思前端界面
-- [ ] element-plus 组件调研
-- [ ] ~~学习 bserv~~
-- [ ] ……
-
-##### @wsh
-
-- [ ] 完成后端的：与数据库交互进行 “登录” 
-- [ ] 设计前端 *发帖子并回复* 相关的 *关系数据库表格*<u>（可以一起讨论）</u>
-- [ ] ……
+[TODO]
 
 ## 本项目目录结构
 
@@ -47,7 +30,7 @@ Freesay is where you can chat and share freely.
 ### 前端
 
 * IDE：建议使用 WebStorm。如果使用 VSCode，可能要安装一些插件。所以，直接用 WebStorm 打开整个 `freesay` 项目文件夹
-* （打开 WebStorm 下的终端）建议用 Windows CMD（即 “Command Prompt”），而不是 “Windows PowerShell”
+* （打开 WebStorm 下的终端）==建议用 Windows CMD（即 “Command Prompt”）==，而不是 “Windows PowerShell”
 
 1. 进入前端目录
 
@@ -101,8 +84,8 @@ Freesay is where you can chat and share freely.
 
    此时，浏览器输入 http://localhost:5173/ 即可。
 
-   * 界面：登录界面
-   * “你的用户名” 一栏有默认值 “小明还是小红...”
+   * 界面：主页
+   * 点击可进入登录、注册界面
    
 5. 退出（关闭前端服务器）方法：终端输入 q，回车
 
