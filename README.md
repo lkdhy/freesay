@@ -1,5 +1,3 @@
-
-
 # freesay
 
 Freesay is where you can chat and share freely. 
@@ -12,9 +10,18 @@ Freesay is where you can chat and share freely.
 
 ## [TODO]下一步计划
 
-- [x] 0505周日晚 21:35 编（已删除）
+- [x] ~~0505周日晚 21:35 （已删除）~~
 
-[TODO]
+- [ ] ==0514周二晚==
+
+  > （Ctrl+，）去往 [./数据库设计与前后端交互接口说明.md](./数据库设计与前后端交互接口说明.md)
+  >
+  > 或：Typora 左边导航栏中点击打开
+  
+  > 完成了可以前面打✔
+  
+  - [ ] 【TODO】Django + Mysql 完整创建三张数据库表
+  - [ ] 【TODO】逐一说明各个接口的意义，并进行后端实现
 
 ## 本项目目录结构
 
