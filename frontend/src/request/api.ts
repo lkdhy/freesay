@@ -141,8 +141,8 @@ export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =
     instance.get(`/api/find/${params.userName}`, {params});
 
 //根据pageNumber查询用户信息api  get
-export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get(`/api/users/list/${params.pageNumber}`, {params});
+export const GetUserInfoByPageNum = (params: { 'pageNumber': number, 'number': number}): Res<null> =>
+    instance.post(`/api/users/list`, params);
 
 //以下是模板:
 // post请求 ，没参数

@@ -13,9 +13,9 @@ def login(request):
     data = json.loads(request.body)
     u = data.get('username', 'WTF, no username?!')
     p = data.get('password', 'WTF, no password?!')
-    print(1, u, p)
-    find_user = StudentInfo.objects.filter(stu_name=u, stu_pwd=p).count()
-    print(find_user)
+    #print(1, u, p)
+    find_user = User.objects.filter(user_name=u, user_pwd=p).count()
+    #print(find_user)
     if find_user > 0:
         return JsonResponse({
             'success': True,
@@ -32,20 +32,23 @@ def login(request):
         })
 
 def hello(request):
-    print(2)
+    #print(2)
     return JsonResponse({
         'success': True, 
         'message': '你好，我是用 Django 写的后端。我们交互成功了！'
     })
 
 def register(request):
-    print(3)
+    #print(3)
     data = json.loads(request.body)
-    u = data.get('username', 'WTF, no username?!')
-    p = data.get('password', 'WTF, no password?!')
-    print(u, p)
-    if u and p:
-        stu = StudentInfo(stu_name=u, stu_pwd=p)
+    username = data.get('username', 'WTF, no username?!')
+    pwd = data.get('password', 'WTF, no password?!')
+    first_name = data.get('first_name', '')
+    last_name = data.get('last_name', '')
+    email = data.get('email', '')
+    #print(u, p)
+    if username and pwd:
+        stu = User(user_name=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
         stu.save()
         return JsonResponse({
             'success': True,
@@ -56,3 +59,8 @@ def register(request):
             'success': False,
             'message': '请输入完整信息！'
         })
+
+# def userslist(request):
+#     data = json.loads(request.body)
+#     pageNumber = data.get('pageNumber')
+#     number = data.get('number')

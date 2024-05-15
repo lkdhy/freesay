@@ -11,5 +11,9 @@
     <p><lable>密码：</lable><input name="pwd"/></p>
     <input type="submit" value="提交">
 </form>
+<form action="/polls/toregister/" method="post">
+    {% csrf_token %}
+    <input type="submit" value="注册账户">
+</form>
 </body>
 </html>
