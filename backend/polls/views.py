@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 from .models import *
+from django.core.serializers import serialize
 # Create your views here.
 
 # def index(request):
@@ -14,7 +15,7 @@ def login(request):
     u = data.get('username', 'WTF, no username?!')
     p = data.get('password', 'WTF, no password?!')
     #print(1, u, p)
-    find_user = User.objects.filter(user_name=u, user_pwd=p).count()
+    find_user = User.objects.filter(username=u, user_pwd=p).count()
     #print(find_user)
     if find_user > 0:
         return JsonResponse({
@@ -60,7 +61,27 @@ def register(request):
             'message': '请输入完整信息！'
         })
 
-# def userslist(request):
-#     data = json.loads(request.body)
-#     pageNumber = data.get('pageNumber')
-#     number = data.get('number')
+def userslist(request):
+    print('enter userslist')
+    data = json.loads(request.body)
+    pageNumber = data.get('pageNumber')
+    number = data.get('number')
+    records = User.objects.all().order_by('-user_id')[number * (pageNumber - 1): number * pageNumber]
+    print("number:", number)
+    #print(records)
+    data = serialize('json', records)
+    print(data)
+    json_data = json.loads(data)
+    # 提取每个对象中的 "fields" 字段
+    fields_list = []
+    for obj in json_data:
+        fields_list.append(obj['fields'])
+    # data = serialize('array', records)
+    count = User.objects.count()
+    print("count:", count)
+    return JsonResponse({
+        'success': True,
+        'total_users': count,
+        'users': fields_list
+    })
+

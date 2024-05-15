@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)  # 自增主键
-    user_name = models.CharField(max_length=30, unique=True, null=False)
+    username = models.CharField(max_length=30, unique=True, null=False)
     user_pwd = models.CharField(max_length=30, null=False)
     is_superuser = models.BooleanField(default=False)
     first_name = models.CharField(max_length=30, null=False)
