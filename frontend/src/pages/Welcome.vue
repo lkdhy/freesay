@@ -5,19 +5,15 @@ import {useUserstore} from "@/store/user";
 const userStore=useUserstore();
 const router = useRouter();
 
-console.log('hhhh');
-console.log(router.currentRoute.value);
+console.log('欢迎页：', router.currentRoute.value);
 
+// 现在下面可认为没用
 if (userStore.userName.length) {
   console.log('用户登录了，故应跳转到广场')
 }
 
-const jump2Login = () => {
-  router.push('/login');
-}
-const jump2Register = () => {
-  router.push('/register');
-}
+const jump2Login = () => { router.push('/login'); }
+const jump2Register = () => { router.push('/register'); }
 </script>
 
 <template>
@@ -28,7 +24,7 @@ const jump2Register = () => {
           justify-content: space-between;
           align-items: center;"
         >
-          <div>
+          <div class="Icons">
             <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
                  alt="Logo" style="height: 50px;">
             <img src="@/assets/icons/chat-icon.svg"
@@ -81,6 +77,16 @@ const jump2Register = () => {
 }
 .loginTip {
   margin-top: 100px;
+}
+/*
+.Icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+ */
+.Icons > * {
+  margin-right: 10px;
 }
 
 </style>

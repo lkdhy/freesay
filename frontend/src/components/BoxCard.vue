@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import {LogoutApi, PostApi, ShareApi} from "@/request/api";
+import {PostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 
 export default {
@@ -10,7 +10,6 @@ export default {
     hostName: String
   },
   setup(props) {
-    console.log('请见下面！！！！',props.hostName)
     const userStore = useUserstore();
     const PostVisible = ref(false)
 
@@ -67,10 +66,7 @@ export default {
         >
           <div @click="console.log(`按下了${hostName}`);
               PostVisible = true;">
-            <p>
-              <slot name="desc">
-              </slot>
-            </p>
+            <p><slot name="desc"></slot></p>
           </div>
         </el-tooltip>
       </template>

@@ -81,38 +81,30 @@ const updatePage = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;">
-    <div style="
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+    <div class="Icons" style="
     ;">
-      <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg" class="Icon"
-           alt="Logo" style="height: 50px;">
-
-      <p class="Icon" style="font-size: 28px">
+      <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
+           alt="FDU" style="height: 50px;">
+      <p style="font-size: 28px;">
         FDU Tape
       </p>
-
-      <img src="@/assets/icons/chat-icon.svg" class="Icon"
+      <img src="@/assets/icons/chat-icon.svg"
            alt="Logo" style="height: 40px;">
-
     </div>
 
     <div>
       <p style="font-size: 20px">你好！{{ userStore.userName }}</p>
     </div>
     <div>
-
       <el-button type="success" @click="createBoxVisible = true;">
         分享我的提问箱
       </el-button>
-
       <el-button type="warning" @click="jump2MyHomepage">
         我的主页
       </el-button>
     </div>
-    <div>
 
+    <div>
       <el-button type="primary" @click="logout">
         退出登录
       </el-button>
@@ -158,7 +150,12 @@ const updatePage = () => {
 </template>
 
 <style scoped>
-.Icon {
+.Icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Icons > * {
   margin-right: 10px;
 }
 </style>

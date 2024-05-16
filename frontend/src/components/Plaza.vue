@@ -16,8 +16,7 @@ export default {
     const router = useRouter();
 
     interface Box {
-      username: string,
-      description: string
+      username: string, description: string
     }
 
     const boxData = ref<Box[]>([]);
@@ -30,12 +29,10 @@ export default {
       if (res.success) {
         res.boxes.forEach(box => {
           boxData.value.push({
-            username: box.username,
-            description: box.description
+            username: box.username, description: box.description
           });
         })
         total.value = res.total_boxes;
-        // console.log(router.currentRoute.value);
       } else {
         ElMessage.error('WTF, Boxes 请求失败')
       }

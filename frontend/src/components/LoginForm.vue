@@ -4,44 +4,42 @@ import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import {useRouter} from 'vue-router'
 import {useUserstore} from '@/store/user'
+import {LoginApi} from "@/request/api";
+import {ElMessage} from 'element-plus'
 
 const userStore=useUserstore();
 const router = useRouter();
 
 const ruleFormRef = ref<FormInstance>();
-
+// const ruleForm = reactive<RuleForm>({
 const ruleForm = reactive({
   // 刚刚注册完要登录，自动填上用户名
-  userName: userStore.userName.length ?
-      userStore.userName : '',
+  userName: userStore.userName.length ? userStore.userName : '',
   password: ''
 });
 
 const checkUserName = (rule: any, value: any, callback: any) => {
   if (value === '') {
     return callback(new Error('请输入用户名'))
-  } else {
-    callback()
-  }
+  } else { callback() }
 }
-
 const checkPassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('请输入密码'))
-  } else {
-    callback()
-  }
+  } else { callback() }
 }
 
 const rules = reactive<FormRules<typeof ruleForm>>({
   userName: [{validator: checkUserName, trigger: 'blur'}],
   password: [{validator: checkPassword, trigger: 'blur'}],
+  // [modified] 不用 validator 的写法（这样标签名前面会有红色的星号，太难看）
+  // userName: [
+  //   { required: false, message: '请输入用户名' }
+  // ],
+  // password: [
+  //   { required: true, message: '请输入密码' }
+  // ]
 })
-import { TestHello } from "@/request/api";
-import {LoginApi} from "@/request/api";
-import {ElMessage} from 'element-plus'
-import Index from "@/pages/Index.vue";
-
 const successMessage = (userName: string) =>  {
   ElMessage({
     message: `欢迎回来，${userName}~`,
@@ -61,14 +59,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       console.log('表单验证通过，可以提交')
       let res = await LoginApi({
-        username: ruleForm.userName,
-        password: ruleForm.password
+        username: ruleForm.userName, password: ruleForm.password
       });
-      console.log(res);
-      console.log('登录结果：' + res.success);
+      console.log('登录结果：', res);
       if (res.success) {
         successMessage(ruleForm.userName);
-        // 存下状态
         userStore.userName = ruleForm.userName;
         userStore.isAdmin = res.isAdmin;
         await router.push('/plaza');
@@ -78,8 +73,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
       }
     } else {
       console.log('登录表单验证未通过，请重新填写表单');
-      // let res = await TestHello();
-      // console.log(res);
     }
   })
 }
@@ -92,24 +85,18 @@ const jump2Register = () => {
 </script>
 
 <template>
-<!--  【更新】表单：
-      - 按钮颜色调整
-      - 表单域标签放在上方（<label-position>）
-  -->
-  <el-form
-      ref="ruleFormRef"
-      :model="ruleForm"
-      :rules="rules"
+<!--  https://element-plus.org/zh-CN/component/form.html#%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C-->
+<!--  Form 组件提供了表单验证的功能，
+  只需为 rules 属性传入约定的验证规则，并将 form-Item 的 prop 属性设置为需要验证的特殊键值即可。-->
+  <el-form ref="ruleFormRef"
+      :model="ruleForm" :rules="rules"
       style="max-width: 600px"
-      label-position="top"
-      label-width="auto"
-      class="demo-ruleForm"
+      label-position="top" label-width="auto"
   >
     <el-form-item label="你的用户名" prop="userName">
       <el-input v-model="ruleForm.userName" type="text" autocomplete="off"/>
     </el-form-item>
 
-<!--    <el-form-item label="密码" prop="password">-->
     <el-form-item label="你的密码" prop="password">
 <!--      切换密码隐藏与显示（show-password） -->
       <el-input v-model="ruleForm.password" type="password"
