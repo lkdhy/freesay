@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  Document, Menu as IconMenu, Setting,
+  User, Compass
 } from '@element-plus/icons-vue';
 import {useRouter} from 'vue-router';
 
@@ -20,7 +20,8 @@ function change(key: string, keyPath: string[]) {
   >
 
     <el-menu-item index="/plaza">
-      <span>去往广场</span>
+      <el-icon><Compass /></el-icon>
+      <span style="text-align: center;">去往广场</span>
     </el-menu-item>
 
 <!--    <el-menu-item index="/user">-->
@@ -28,7 +29,7 @@ function change(key: string, keyPath: string[]) {
 <!--    </el-menu-item>-->
 
     <el-menu-item index="/userList">
-<!--      <el-icon><document/></el-icon>-->
+      <el-icon><User /></el-icon>
       <span>看看有谁！</span>
     </el-menu-item>
 
