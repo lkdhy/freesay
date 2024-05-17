@@ -10,6 +10,18 @@ from django.core.serializers import serialize
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
 
+def logout(request):
+    if 1 > 0:
+        return JsonResponse({
+            'success': True,
+            'message': '登出成功'
+        })
+    else:
+        return JsonResponse({
+            'success': False,
+            'message': '莫名其妙地登出失败'
+        })
+
 def login(request):
     data = json.loads(request.body)
     u = data.get('username', 'WTF, no username?!')
@@ -20,14 +32,14 @@ def login(request):
     if find_user > 0:
         return JsonResponse({
             'success': True,
-            'messsage': '恭喜！登陆成功~',
+            'message': '恭喜！登陆成功~',
             'username': data.get('username', 'WTF, no username?!'),
             'password': data.get('password', 'WTF, no password?!')
         })
     else:
         return JsonResponse({
             'success': False,
-            'messsage': '骚瑞，密码或用户名错误了~',
+            'message': '骚瑞，密码或用户名错误了~',
             'username': data.get('username', 'WTF, no username?!'),
             'password': data.get('password', 'WTF, no password?!')
         })
