@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import {LogoutApi, PostApi, ShareApi} from "@/request/api";
+import {PostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 
 export default {
@@ -10,7 +10,6 @@ export default {
     hostName: String
   },
   setup(props) {
-    console.log('请见下面！！！！',props.hostName)
     const userStore = useUserstore();
     const PostVisible = ref(false)
 
@@ -67,15 +66,15 @@ export default {
         >
           <div @click="console.log(`按下了${hostName}`);
               PostVisible = true;">
-            <p>
-              <slot name="desc">
-              </slot>
-            </p>
+            <p><slot name="desc"></slot></p>
           </div>
         </el-tooltip>
       </template>
 
-      <div class="hostInfo">
+      <div class="hostInfo"
+           style="
+            max-height: 5px; display: flex; flex-direction: column; justify-content: center;
+           ">
   <!--      我想在这里放用户名等用户相关的东西-->
         <slot name="hostInfo"></slot>
       </div>
@@ -120,13 +119,12 @@ export default {
 </template>
 
 <style scoped>
-/*  TODO
-*/
+/*  TODO */
 .boxCard {
   width: 300px;
-  height: 40px;
+  max-height: 40px;
   margin-left: 5em;
-  margin-bottom: 10em;
+  margin-bottom: 8em;
 }
 .hostInfo {
   text-align: center;

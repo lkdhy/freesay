@@ -1,6 +1,5 @@
 <script lang="ts">
 import {ref, reactive, onBeforeMount, onBeforeUpdate, onUpdated} from "vue";
-import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import { GetBoxApi } from "@/request/api";
 import {useRouter} from 'vue-router';
@@ -8,41 +7,30 @@ import {useUserstore} from "@/store/user";
 import BoxCard from "@/components/BoxCard.vue";
 
 export default {
-  components: {
-    BoxCard
-  },
+  components: { BoxCard },
   setup() {
-    const userStore = useUserstore();
-    const router = useRouter();
-
     interface Box {
-      username: string,
-      description: string
+      username: string, description: string
     }
-
     const boxData = ref<Box[]>([]);
     const total = ref(100);
 
     onBeforeMount(async () => {
-      console.log('onBeforeMount: 即将发送获取所有 res 的请求');
+      console.log('onBeforeMount: 即将发送获取所有 boxes 的请求');
       let res = await GetBoxApi();
-      console.log(res);
+      console.log('boxes请求结果：', res);
       if (res.success) {
         res.boxes.forEach(box => {
           boxData.value.push({
-            username: box.username,
-            description: box.description
+            username: box.username, description: box.description
           });
         })
         total.value = res.total_boxes;
-        // console.log(router.currentRoute.value);
       } else {
         ElMessage.error('WTF, Boxes 请求失败')
       }
     });
-    return {
-      boxData
-    }
+    return { boxData }
   },
 }
 </script>
@@ -54,8 +42,9 @@ margin-bottom: 1em">
   </h2>
   <el-scrollbar height="550px">
     <div class="canvas">
-      <div v-for="box of boxData">
-        <box-card :host-name="box.username">
+<!--      <div v-for="box of boxData">-->
+        <box-card v-for="box of boxData"
+            :host-name="box.username">
           <template #desc>
             {{ box.description }}
           </template>
@@ -63,7 +52,7 @@ margin-bottom: 1em">
             {{ box.username }}
           </template>
         </box-card>
-      </div>
+<!--      </div>-->
     </div>
   </el-scrollbar>
 
@@ -72,13 +61,9 @@ margin-bottom: 1em">
 <style scoped>
 .canvas {
   display: flex;
+  /* flex-wrap: 自动换行往里面堆 */
   flex-wrap: wrap;
-  align-items: center;
-  width: 100%;
-}
-.boxRow {
-  display: flex;
-  justify-content: space-between;
-  width: 95%
+  /* align-items: center; */
+  /* width: 100%; */
 }
 </style>
