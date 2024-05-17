@@ -78,7 +78,7 @@ WSGI_APPLICATION = "demotest.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        'NAME': 'django',
+        'NAME': 'polls',
         'USER': 'root',
         'PASSWORD': 'Wsh123456+',
         'HOST': '127.0.0.1',

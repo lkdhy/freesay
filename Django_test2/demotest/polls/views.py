@@ -11,7 +11,7 @@ def Login_view(request):
     u = request.POST.get('user', '')
     p = request.POST.get('pwd', '')
     if u and p:
-        find_user = StudentInfo.objects.filter(stu_name=u, stu_pwd=p).count()
+        find_user = User.objects.filter(stu_name=u, stu_pwd=p).count()
         if find_user:
             return HttpResponse('登陆成功')
         else:
@@ -27,7 +27,7 @@ def register_view(request):
     u = request.POST.get('user', '')
     p = request.POST.get('pwd', '')
     if u and p:
-        stu = StudentInfo(stu_id=str(random.randrange(1111, 9999)), stu_name=u, stu_pwd=p)
+        stu = User(stu_id=str(random.randrange(1111, 9999)), stu_name=u, stu_pwd=p)
         stu.save()
         return HttpResponse('注册成功~')
     else:

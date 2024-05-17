@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 from .models import *
+from django.core.serializers import serialize
 # Create your views here.
 
 # def index(request):
@@ -13,9 +14,9 @@ def login(request):
     data = json.loads(request.body)
     u = data.get('username', 'WTF, no username?!')
     p = data.get('password', 'WTF, no password?!')
-    print(1, u, p)
-    find_user = StudentInfo.objects.filter(stu_name=u, stu_pwd=p).count()
-    print(find_user)
+    #print(1, u, p)
+    find_user = User.objects.filter(username=u, user_pwd=p).count()
+    #print(find_user)
     if find_user > 0:
         return JsonResponse({
             'success': True,
@@ -32,20 +33,23 @@ def login(request):
         })
 
 def hello(request):
-    print(2)
+    #print(2)
     return JsonResponse({
         'success': True, 
         'message': '你好，我是用 Django 写的后端。我们交互成功了！'
     })
 
 def register(request):
-    print(3)
+    #print(3)
     data = json.loads(request.body)
-    u = data.get('username', 'WTF, no username?!')
-    p = data.get('password', 'WTF, no password?!')
-    print(u, p)
-    if u and p:
-        stu = StudentInfo(stu_name=u, stu_pwd=p)
+    username = data.get('username', 'WTF, no username?!')
+    pwd = data.get('password', 'WTF, no password?!')
+    first_name = data.get('first_name', '')
+    last_name = data.get('last_name', '')
+    email = data.get('email', '')
+    #print(u, p)
+    if username and pwd:
+        stu = User(user_name=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
         stu.save()
         return JsonResponse({
             'success': True,
@@ -56,3 +60,28 @@ def register(request):
             'success': False,
             'message': '请输入完整信息！'
         })
+
+def userslist(request):
+    print('enter userslist')
+    data = json.loads(request.body)
+    pageNumber = data.get('pageNumber')
+    number = data.get('number')
+    records = User.objects.all().order_by('-user_id')[number * (pageNumber - 1): number * pageNumber]
+    print("number:", number)
+    #print(records)
+    data = serialize('json', records)
+    print(data)
+    json_data = json.loads(data)
+    # 提取每个对象中的 "fields" 字段
+    fields_list = []
+    for obj in json_data:
+        fields_list.append(obj['fields'])
+    # data = serialize('array', records)
+    count = User.objects.count()
+    print("count:", count)
+    return JsonResponse({
+        'success': True,
+        'total_users': count,
+        'users': fields_list
+    })
+
