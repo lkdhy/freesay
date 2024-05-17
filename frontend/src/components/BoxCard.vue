@@ -71,7 +71,10 @@ export default {
         </el-tooltip>
       </template>
 
-      <div class="hostInfo">
+      <div class="hostInfo"
+           style="
+            max-height: 5px; display: flex; flex-direction: column; justify-content: center;
+           ">
   <!--      我想在这里放用户名等用户相关的东西-->
         <slot name="hostInfo"></slot>
       </div>
@@ -116,13 +119,12 @@ export default {
 </template>
 
 <style scoped>
-/*  TODO
-*/
+/*  TODO */
 .boxCard {
   width: 300px;
-  height: 40px;
+  max-height: 40px;
   margin-left: 5em;
-  margin-bottom: 10em;
+  margin-bottom: 8em;
 }
 .hostInfo {
   text-align: center;

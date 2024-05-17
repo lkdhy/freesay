@@ -18,7 +18,10 @@ const registerForm = reactive({
 // TODO: 完善注册表单验证规则，比如二次验证密码，对密码提要求等
 const rules = reactive<FormRules<typeof registerForm>>({
   userName: [{ required: true, message: '请输入用户名'}],
-  password: [{ required: true, message: '请输入密码'}],
+  password: [
+    { required: true, message: '请输入密码'},
+    { min: 6, max: 18, message: '请输入6位至16位的密码'}
+  ],
   first_name: [{ required: true, message: '请输入'}],
   last_name: [{ required: true, message: '请输入'}],
   email: [{required: true, message: '请输入邮箱'}]
@@ -80,11 +83,12 @@ const jump2Login = () => {
 
     <el-form-item label="用户名" prop="userName">
       <el-input v-model="registerForm.userName" type="text"
-                placeholder="用户名是你的昵称" autocomplete="off"/>
+                placeholder="用户名是你的昵称，支持中文" autocomplete="off"/>
     </el-form-item>
     <!--      切换密码隐藏与显示（show-password） -->
     <el-form-item label="密码" prop="password">
       <el-input v-model="registerForm.password" type="password"
+                placeholder="6位至16位，建议字母、数字（开发时取111111这种就行了）"
                 show-password autocomplete="off"/>
     </el-form-item>
 <!--    TODO: 把姓、名搞到一行（但有可能有点麻烦）  -->
@@ -98,11 +102,14 @@ const jump2Login = () => {
       <el-input v-model="registerForm.email" type="text" autocomplete="off"/>
     </el-form-item>
 
-    <el-form-item>
+    <!--   用 div 而不是 el-form-item 则可使其居中 -->
+<!--    <el-form-item>-->
+    <div style="display: flex; justify-content: center">
       <el-button type="danger" @click="submitForm(ruleFormRef)">注册</el-button>
       <el-button type="success" @click="jump2Login">登录</el-button>
-    </el-form-item>
-
+    </div>
+<!--    </el-form-item>-->
+    <p style="text-align: center">[TODO]已有账号？登录</p>
   </el-form>
 </template>
 

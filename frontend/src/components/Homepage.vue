@@ -1,11 +1,9 @@
 <script lang="ts">
 import {onBeforeMount, reactive, ref} from "vue";
 import {useRouter} from 'vue-router';
-import {ElMessage} from 'element-plus';
 import {GetHostPostApi, GetPostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
-import tmp from "@/components/tmp.vue";
 import UnansweredCard from "@/components/UnansweredCard.vue";
 import PostCard from "@/components/PostCard.vue";
 
@@ -103,8 +101,7 @@ export default {
 <!--  </h3>-->
 
   <el-descriptions
-      title=""
-      border
+      title="" border
   >
     <el-descriptions-item label="Username">
       {{ $route.params.id }}
@@ -186,7 +183,8 @@ export default {
 
 <style scoped>
 /* TODO */
-* {
-  margin: 10px;
+.canvas {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

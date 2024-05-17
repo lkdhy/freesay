@@ -103,12 +103,16 @@ const jump2Register = () => {
                 show-password autocomplete="off"/>
     </el-form-item>
 
-    <el-form-item>
+<!--    <el-form-item>-->
+    <div style="display: flex; justify-content: center;">
 <!--      success：绿色；danger：红色  -->
 <!--      https://element-plus.org/zh-CN/component/button.html  -->
       <el-button type="success" @click="submitForm(ruleFormRef)">登录</el-button>
       <el-button type="danger" @click="jump2Register">注册</el-button>
-    </el-form-item>
+    </div>
+
+    <p style="text-align: center">[TODO]没有账号？注册</p>
+<!--    </el-form-item>-->
 
   </el-form>
 </template>
