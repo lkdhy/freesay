@@ -61,7 +61,7 @@ def register(request):
     email = data.get('email', '')
     #print(u, p)
     if username and pwd:
-        stu = User(user_name=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
+        stu = User(username=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
         stu.save()
         return JsonResponse({
             'success': True,
