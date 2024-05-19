@@ -11,6 +11,7 @@ const userStore = useUserstore();
 
 const jump2MyHomepage = () => {
   userStore.visitedUserName = userStore.userName;
+  console.log('on header: ', userStore.visitedUserName)
   router.push(`/user/${userStore.userName}`);
 }
 

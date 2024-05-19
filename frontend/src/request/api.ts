@@ -111,7 +111,7 @@ export const GetBoxApi = (): BoxRes<null> =>
 export const ShareApi = (data: ReqShare): Res<null> =>
     instance.post('/api/share', data);
 export const PostApi = (data: Post): Res<null> =>
-    instance.post(`/api/post`, data);
+    instance.post('/api/post', data);
 export const GetPostApi = (params: { 'username': string } ): GotPostRes<null> =>
     instance.get('/api/getpost', {params})
 export const AnswerApi = (params: { 'id': number, 'answer': string, 'is_public': boolean } ): Res<null> =>

@@ -29,6 +29,7 @@ export default {
     }
     const curUser = ref<string>(userStore.userName);
     const visitedUser = ref<string>(userStore.visitedUserName);
+    console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
     const isMine = ref<boolean>(curUser.value === visitedUser.value);
     const p1 = ref<GotPost[]>([]);
     const p2 = ref<GotPost[]>([]);
@@ -87,12 +88,8 @@ export default {
 </script>
 
 <template>
-  <h2 v-if="isMine">
-    我的主页
-  </h2>
-  <h2 v-else>
-    {{ visitedUser }} 的主页
-  </h2>
+  <h2 v-if="isMine">我的主页</h2>
+  <h2 v-else>{{ visitedUser }} 的主页</h2>
   <h3>
     你好 {{ curUser }}
   </h3>

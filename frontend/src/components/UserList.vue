@@ -16,12 +16,12 @@ interface User {
 }
 const tableData = ref<User[]>([]);
 let currentPage = ref(1);
-let pageSize = ref(10);
+let pageSize = ref(8);
 let total = ref(100);
 
 onBeforeMount(async () => {
   let res = await GetUserInfoByPageNum({
-    pageNumber: 1, number: 10
+    pageNumber: 1, number: pageSize.value
   })
   res.users.forEach(item => {
     tableData.value.push({
@@ -42,7 +42,7 @@ const fetchData = async () => {
   // 在这里调用 API 获取数据，使用 currentPage 作为参数
   let res = await GetUserInfoByPageNum({
     pageNumber: currentPage.value,
-    number: 10
+    number: pageSize.value
   });
   console.log(res);
   tableData.value = [];

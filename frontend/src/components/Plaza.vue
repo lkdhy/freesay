@@ -15,7 +15,7 @@ export default {
     const boxData = ref<Box[]>([]);
     const total = ref(100);
 
-    onBeforeMount(async () => {
+    const fetchBoxData = async () => {
       console.log('onBeforeMount: 即将发送获取所有 boxes 的请求');
       let res = await GetBoxApi();
       console.log('boxes请求结果：', res);
@@ -29,7 +29,10 @@ export default {
       } else {
         ElMessage.error('WTF, Boxes 请求失败')
       }
-    });
+    }
+
+    onBeforeMount(fetchBoxData)
+
     return { boxData }
   },
 }
