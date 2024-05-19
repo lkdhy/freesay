@@ -795,7 +795,34 @@ axios.post('/user', {
 
 在JS/TS语言中，当函数实参前面加上 `async` 关键字时，表示该函数是一个异步函数。异步函数将返回一个 `Promise` 对象，可以使用 `await` 关键字来等待异步操作的完成。这样可以避免阻塞主线程，提高代码的异步执行效率。异步函数的实现方式是通过将函数的执行过程分为多个阶段，每个阶段都会将结果保存在一个任务队列中，然后在空闲时执行这些任务，从而达到异步执行的效果。
 
-
+> 在TypeScript或JavaScript的异步编程中，`await`关键字用于等待`Promise`对象的完成。在异步函数中，如果Promise前面不加`await`，那么函数将不会等待Promise的完成，而是立即返回Promise对象。这可能会导致在你需要Promise的结果的地方获取到的是一个未解析的Promise对象，而不是你期望的结果。
+>
+> 如果你在Promise前面加上`await`，那么函数将会等待Promise的完成，然后返回结果。这样可以保证你在需要结果的地方获取到的是结果，而不是未解析的Promise对象。
+>
+> 以下是示例：
+>
+> ```typescript
+> async function withoutAwait() {
+>     const promise = new Promise((resolve, reject) => {
+>         setTimeout(() => resolve("Hello, World!"), 1000);
+>     });
+> 
+>     return promise;
+> }
+> 
+> async function withAwait() {
+>     const promise = new Promise((resolve, reject) => {
+>         setTimeout(() => resolve("Hello, World!"), 1000);
+>     });
+> 
+>     return await promise;
+> }
+> 
+> withoutAwait().then(console.log); // 输出：Promise {<pending>}
+> withAwait().then(console.log); // 输出：Hello, World!
+> ```
+>
+> 在上面的示例中，`withoutAwait`函数返回的是一个未解析的Promise对象，而`withAwait`函数返回的是Promise解析后的结果。
 
 axios 是一个基于 Promise 的 HTTP 请求库，用于发送异步请求。它可以与 Vue.js 框架很好地配合使用。
 
@@ -1154,4 +1181,55 @@ Python 的 -m 选项是用来运行库模块作为脚本。
 
 
 
-![image-20240504224306421](C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20240504224306421.png)
+
+
+
+
+---
+
+是的，Element Plus组件库中的"el-select"组件支持这样的功能。你可以通过设置该组件的"filterable"和"allow-create"属性来实现一个输入框既可以手动输入任意值，又可以在显示出的选项中选。
+
+示例代码：
+
+```
+<template>
+  <el-select v-model="value" filterable allow-create placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      options: [{
+        value: 'Option1',
+        label: 'Option1'
+      }, {
+        value: 'Option2',
+        label: 'Option2'
+      }, {
+        value: 'Option3',
+        label: 'Option3'
+      }, {
+        value: 'Option4',
+        label: 'Option4'
+      }, {
+        value: 'Option5',
+        label: 'Option5'
+      }],
+      value: ''
+    }
+  }
+}
+</script>
+```
+
+
+
+在以上代码中，"el-select"组件的"filterable"属性使其具有搜索过滤功能，"allow-create"属性使其可以创建未在选项中的值。
