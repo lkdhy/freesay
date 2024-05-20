@@ -5,9 +5,7 @@ import {ElMessage, ElNotification as notify } from 'element-plus';
 import { AnswerApi } from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
-import tmp from "@/components/tmp.vue";
 
-// const router = useRouter();
 
 export default {
   props: {
@@ -16,6 +14,7 @@ export default {
   },
   setup(props) {
     const userStore = useUserstore();
+    const router = useRouter();
     const AnswerVisible = ref(false)
 
     console.log('post_id', props.post_id);
@@ -24,7 +23,13 @@ export default {
     const ruleFormRef = ref<FormInstance>();
     const answerForm = reactive({
       answer: '', public: true
-    });
+  });
+    const refresh = () => {
+      let curPath = router.currentRoute.value.fullPath
+      router.push('/empty').then(() => {
+        router.replace(curPath)
+      })
+    }
     // const willPublic = ref(true);
     const submitForm = (formEl: FormInstance | undefined) => {
       if (!formEl) return;
@@ -47,6 +52,7 @@ export default {
               message: '已发送回答',
               type: 'success'
             });
+            refresh()
           } else {
             console.log('WTF, answer提问失败');
           }

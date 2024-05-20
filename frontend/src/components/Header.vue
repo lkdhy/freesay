@@ -15,6 +15,13 @@ const jump2MyHomepage = () => {
   router.push(`/user/${userStore.userName}`);
 }
 
+const refresh = () => {
+  let curPath = router.currentRoute.value.fullPath
+  router.push('/empty').then(() => {
+    router.replace(curPath)
+  })
+}
+
 async function logout() {
   let res = await LogoutApi()
   console.log('登出res：', res);
@@ -55,8 +62,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
           message: '提问箱已分享到广场',
           type: 'success'
         });
-        console.log('我要刷新界面喽！')
-        updatePage();
+        console.log('提问箱分享成功，我要刷新界面喽！')
+        refresh();
+        console.log('刷新完毕！应该能看到刚刚分享的提问箱')
       } else {
         console.log('WTF，提问箱分享失败');
       }
@@ -66,13 +74,13 @@ const submitForm = (formEl: FormInstance | undefined) => {
   });
 }
 
-const updatePage = () => {
-  if (router.currentRoute.value.path === '/plaza') {
-    router.replace('/plaza');
-    // router.push('/plaza');
-  }
-  router.currentRoute.value.fullPath
-}
+// const updatePage = () => {
+//   if (router.currentRoute.value.path === '/plaza') {
+//     router.replace('/plaza');
+//     // router.push('/plaza');
+//   }
+//   router.currentRoute.value.fullPath
+// }
 
 </script>
 

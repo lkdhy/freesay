@@ -1,18 +1,28 @@
 <script setup lang="ts">
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
+// import { jump2Login } from "@/utils/common"
 
 const userStore=useUserstore();
 const router = useRouter();
 
 console.log('欢迎页：', router.currentRoute.value);
+// console.log('【学习用】router的值：', router);
+console.log('currentRoute 的 name：', router.currentRoute.value.name)
+console.log('fullPath:', router.currentRoute.value.fullPath)
 
 // 现在下面可认为没用
 if (userStore.userName.length) {
   console.log('用户登录了，故应跳转到广场')
 }
 
-const jump2Login = () => { router.push('/login'); }
+const refresh = () => {
+  let curPath = router.currentRoute.value.fullPath
+  router.push('/empty').then(() => {
+  router.replace(curPath)
+  })
+}
+const jump2Login = () => { router.push('login') }
 const jump2Register = () => { router.push('/register'); }
 </script>
 

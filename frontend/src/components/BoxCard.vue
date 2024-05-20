@@ -9,7 +9,7 @@ export default {
   props: {
     hostName: String
   },
-  setup(props) {
+  setup(props, context) {
     const userStore = useUserstore();
     const PostVisible = ref(false)
 
@@ -39,6 +39,7 @@ export default {
               message: '已向TA发送提问',
               type: 'success'
             });
+            context.emit('boxesGot', 'hhhhfhf');
           } else {
             console.log('WTF，post提问失败');
           }
