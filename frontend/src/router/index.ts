@@ -12,9 +12,14 @@ import UserListProfile from "@/components/UserListProfile.vue";
 import Homepage from "@/components/Homepage.vue";
 import Empty from "@/components/Empty.vue";
 import tmp2 from "@/pages/tmp2.vue"
+import BackgroundSwiper from "@/components/BackgroundSwiper.vue";
 
 const routes =
     [
+        {
+            path: '/tmp3', name: 'background',
+            component: BackgroundSwiper
+        },
         {
             path: '/empty', name: 'forRefresh',
             component: Empty
