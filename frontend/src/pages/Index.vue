@@ -21,7 +21,7 @@ if (!userStore.userName.length) {
         <Header></Header>
       </el-header>
       <el-container>
-        <el-aside>
+        <el-aside width="12%">
           <AsideNavBar></AsideNavBar>
         </el-aside>
 

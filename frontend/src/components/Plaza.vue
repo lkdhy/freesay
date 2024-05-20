@@ -2,8 +2,6 @@
 import {ref, reactive, onBeforeMount, onBeforeUpdate, onUpdated} from "vue";
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import { GetBoxApi } from "@/request/api";
-import {useRouter} from 'vue-router';
-import {useUserstore} from "@/store/user";
 import BoxCard from "@/components/BoxCard.vue";
 
 export default {
@@ -14,11 +12,10 @@ export default {
     }
     const boxData = ref<Box[]>([]);
     const total = ref(100);
-
     const fetchBoxData = async () => {
-      console.log('onBeforeMount: 即将发送获取所有 boxes 的请求');
+      console.log('即将发送获取所有 boxes 的请求');
       let res = await GetBoxApi();
-      console.log('boxes请求结果：', res);
+      console.log('boxes请求完毕，结果是：', res);
       if (res.success) {
         res.boxes.forEach(box => {
           boxData.value.push({
@@ -58,7 +55,6 @@ margin-bottom: 1em">
 <!--      </div>-->
     </div>
   </el-scrollbar>
-
 </template>
 
 <style scoped>

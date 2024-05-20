@@ -10,9 +10,15 @@ import Plaza from "@/components/Plaza.vue";
 import Profile from "@/components/Profile.vue";
 import UserListProfile from "@/components/UserListProfile.vue";
 import Homepage from "@/components/Homepage.vue";
+import Empty from "@/components/Empty.vue";
+import tmp2 from "@/pages/tmp2.vue"
 
 const routes =
     [
+        {
+            path: '/empty', name: 'forRefresh',
+            component: Empty
+        },
         {
             path: '/index', name: 'Welcome',
             component: Welcome
@@ -59,6 +65,10 @@ const routes =
             path: '/register', name: 'Register',
             component: Register
         },
+        {
+            path: '/tmp', name: 'Swiper',
+            component: tmp2
+        }
     ];
 
 const router = createRouter({
