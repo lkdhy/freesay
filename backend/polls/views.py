@@ -60,12 +60,19 @@ def register(request):
     last_name = data.get('last_name', '')
     email = data.get('email', '')
     #print(u, p)
-    if username and pwd:
+    if username and pwd and first_name and last_name and email:
+        find_user = User.objects.filter(username=username).count()
+        if find_user > 0:
+            return JsonResponse({
+                'success': False,
+                'message': 'sorry~ 该用户名已被注册，请重新输入~'
+            })
         stu = User(username=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
         stu.save()
         return JsonResponse({
             'success': True,
-            'message': '你好，我是用 Django 写的后端。我们交互成功了！'
+            'message': '你好，我是用 Django 写的后端。我们交互成功了！',
+            'total_users': User.objects.count()
         })
     else:
         return JsonResponse({
@@ -79,10 +86,10 @@ def userslist(request):
     pageNumber = data.get('pageNumber')
     number = data.get('number')
     records = User.objects.all().order_by('-user_id')[number * (pageNumber - 1): number * pageNumber]
-    print("number:", number)
+    #print("number:", number)
     #print(records)
     data = serialize('json', records)
-    print(data)
+    #print(data)
     json_data = json.loads(data)
     # 提取每个对象中的 "fields" 字段
     fields_list = []
@@ -90,10 +97,9 @@ def userslist(request):
         fields_list.append(obj['fields'])
     # data = serialize('array', records)
     count = User.objects.count()
-    print("count:", count)
+    #print("count:", count)
     return JsonResponse({
         'success': True,
         'total_users': count,
         'users': fields_list
     })
-
