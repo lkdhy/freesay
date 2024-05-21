@@ -13,12 +13,23 @@ import Homepage from "@/components/Homepage.vue";
 import Empty from "@/components/Empty.vue";
 import tmp2 from "@/pages/tmp2.vue"
 import BackgroundSwiper from "@/components/BackgroundSwiper.vue";
+import Partcs from "@/pages/Partcs.vue";
+import Pacts2 from "@/pages/Pacts2.vue";
+import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
 
 const routes =
     [
         {
             path: '/tmp3', name: 'background',
-            component: BackgroundSwiper
+            component: ColorfulBubblesParticles
+        },
+        {
+            path: '/particles', name: 'particles',
+            component: Partcs
+        },
+        {
+            path: '/particles2', name: 'particles2',
+            component: Pacts2
         },
         {
             path: '/empty', name: 'forRefresh',

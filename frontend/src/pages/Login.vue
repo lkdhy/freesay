@@ -1,6 +1,6 @@
 <script setup lang="ts">
-
 import LoginForm from "@/components/LoginForm.vue";
+import Pacts2 from "@/pages/Pacts2.vue";
 </script>
 
 <template>
@@ -13,6 +13,13 @@ import LoginForm from "@/components/LoginForm.vue";
     <div class="background">
       <LoginForm class="form-container"></LoginForm>
     </div>
+
+    <pacts2></pacts2>
+
+<!--    <div class="background">-->
+<!--      <LoginForm class="form-container"></LoginForm>-->
+<!--    </div>-->
+
   </div>
 </template>
 
@@ -22,7 +29,7 @@ import LoginForm from "@/components/LoginForm.vue";
 }
 
 .container {
-  background-image: url('@/assets/images/background.jpeg');
+  /* background-image: url('@/assets/images/background.jpeg'); */
   background-size: cover;
   background-position: center;
   display: flex;
