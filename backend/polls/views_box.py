@@ -81,27 +81,52 @@ def gethostpost(request):
     print('enter gethostpost')
     username = request.GET.get('username', None)
     host_id = User.objects.get(username=username).user_id
-    print(host_id)
-    posts = Post.objects.get(host_id=host_id).order_by('-post_id')
-    # posts = Post.objects.filter(host_id=host_id).order_by('-post_id')
-    print(posts)
-    # posts_list = list(posts.values())
+    posts = Post.objects.filter(host_id=host_id).order_by('-post_id')
+    posts_list = list(posts.values())
     # posts_json = json.dumps(posts_list, cls=DjangoJSONEncoder)
     # print(posts_json)
-    # updated_data = []
-    # for item in posts_json:
-    #     updated_item = {
-    #         'id': item.get('post_id'),
-    #         'username': username,
-    #         'question': item.get('question'),
-    #         'answer': item.get('answer'),
-    #         'is_public': item.get('is_public')
-    #     }
-    #     updated_data.append(updated_item)
-    # print(posts_json)
-    # count = Post.objects.filter(host_id=host_id).count()
-    # return JsonResponse({
-    #     'success': True,
-    #     'posts': posts_json,
-    #     'total_posts': count
-    # })
+    updated_data = []
+    for item in posts_list:
+        updated_item = {
+            'id': item.get('post_id'),
+            'username': username,
+            'question': item.get('question'),
+            'answer': item.get('answer'),
+            'is_public': item.get('is_public')
+        }
+        updated_data.append(updated_item)
+    #print(updated_data)
+    count = Post.objects.filter(host_id=host_id).count()
+    #print(count)
+    return JsonResponse({
+        'success': True,
+        'posts': updated_data,
+        'total_posts': count
+    })
+
+def getpost(request):
+    print('enter getpost')
+    username = request.GET.get('username', None)
+    poster_id = User.objects.get(username=username).user_id
+    posts = Post.objects.filter(poster_id=poster_id).order_by('-post_id')
+    posts_list = list(posts.values())
+    print(posts_list)
+    updated_data = []
+    for item in posts_list:
+        hostname = User.objects.get(user_id = item.get('host_id')).username
+        updated_item = {
+            'id': item.get('post_id'),
+            'username': hostname, ##???
+            'question': item.get('question'),
+            'answer': item.get('answer'),
+            'is_public': item.get('is_public')
+        }
+        updated_data.append(updated_item)
+    count = Post.objects.filter(poster_id=poster_id).count()
+    print(updated_data)
+    print(count)
+    return JsonResponse({
+        'success': True,
+        'posts': updated_data,
+        'total_posts': count
+    })
