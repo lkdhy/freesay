@@ -5,7 +5,8 @@ const particlesLoaded = async container => {
 const options = {
   fpsLimit: 50,
   background: {
-    color: "#FFFFFF"
+    // color: rgb(12, 12, 29)
+    color: "#0c0c1d"
   },
   fullScreen: {
     enable: true,
@@ -28,7 +29,7 @@ const options = {
         default: "destroy"
       },
       random: true,
-      speed: 3,
+      speed: 2,
       straight: false
     },
     number: {
@@ -45,23 +46,22 @@ const options = {
       type: "circle"
     },
     size: {
-      value: 30,
+      value: { min: 5, max: 25 },
       animation: {
         startValue: "min",
         enable: true,
-        minimumValue: 1,
         speed: 2,
         destroy: "max",
         sync: true
       }
     }
   },
-  // detectRetina: true,
-  emitters: [{
+  detectRetina: true,
+  emitters: {
     direction: "none",
     rate: {
-      quantity: 3,
-      delay: 0.3
+      quantity: 5,
+      delay: 0.6
     },
     size: {
       width: 0, height: 0
@@ -69,7 +69,7 @@ const options = {
     position: {
       x: 50, y: 50
     }
-  }]
+  }
 }
 </script>
 

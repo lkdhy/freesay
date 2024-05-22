@@ -1,4 +1,5 @@
 <script setup lang="ts">
+declare module "@tsparticles/vue3";
 const particlesLoaded = async container => {
   console.log("Particles container loaded", container)
 }

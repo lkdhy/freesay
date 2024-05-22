@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import RegisterForm from "@/components/RegisterForm.vue";
-import Partcs from "@/pages/Partcs.vue"
+import SnowParticles from "@/components/Particles/SnowParticles.vue";
 import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
 
 </script>
 
 <template>
-<!--  <partcs></partcs>-->
-  <colorful-bubbles-particles></colorful-bubbles-particles>
+  <snow-particles></snow-particles>
 
   <div class="container">
     <header id="welcomeTitle">

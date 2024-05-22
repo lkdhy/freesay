@@ -16,12 +16,17 @@ import BackgroundSwiper from "@/components/BackgroundSwiper.vue";
 import Partcs from "@/pages/Partcs.vue";
 import Pacts2 from "@/pages/Pacts2.vue";
 import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
+import SnowParticles from "@/components/Particles/SnowParticles.vue";
 
 const routes =
     [
         {
             path: '/tmp3', name: 'background',
             component: ColorfulBubblesParticles
+        },
+        {
+            path: '/snow', name: 'Snow',
+            component: SnowParticles
         },
         {
             path: '/particles', name: 'particles',

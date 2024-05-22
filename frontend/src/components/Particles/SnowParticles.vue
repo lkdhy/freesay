@@ -3,6 +3,9 @@ const particlesLoaded = async container => {
   console.log("Particles container loaded", container)
 }
 const options = {
+  background: {
+    color: "#000", // this sets a background color for the canvas
+  },
   particles: {
     number: {
       value: 300,
