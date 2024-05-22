@@ -71,7 +71,7 @@ const jump2Homepage = (userName: string) => {
   <el-row>
     <el-col :span="24">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="userName" label="用户名" width="130"/>
+        <el-table-column prop="userName" label="用户名" width="250"/>
 <!--        <el-table-column prop="first_name" label="姓" width="180"/>-->
 <!--        <el-table-column prop="last_name" label="名" width="180"/>-->
         <el-table-column prop="signature" label="个性签名" width="300"/>

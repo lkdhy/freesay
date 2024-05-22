@@ -7,6 +7,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
 <template>
 
   <div class="container">
+    <colorful-bubbles-particles></colorful-bubbles-particles>
+
     <header id="welcomeTitle">
       <h1>欢迎来到复旦大学提问箱</h1>
     </header>
@@ -14,9 +16,6 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
     <div class="background">
       <LoginForm class="form-container"></LoginForm>
     </div>
-
-<!--    <pacts2></pacts2>-->
-    <colorful-bubbles-particles></colorful-bubbles-particles>
 
 <!--    <div class="background">-->
 <!--      <LoginForm class="form-container"></LoginForm>-->

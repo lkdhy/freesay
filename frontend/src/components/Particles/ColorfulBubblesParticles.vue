@@ -46,7 +46,7 @@ const options = {
       type: "circle"
     },
     size: {
-      value: { min: 5, max: 25 },
+      value: { min: 5, max: 35 },
       animation: {
         startValue: "min",
         enable: true,
