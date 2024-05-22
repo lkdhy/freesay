@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import RegisterForm from "@/components/RegisterForm.vue";
+import SnowParticles from "@/components/Particles/SnowParticles.vue";
+import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
+
 </script>
 
 <template>
+  <snow-particles></snow-particles>
+
   <div class="container">
     <header id="welcomeTitle">
       <h1>欢迎来到复旦大学提问箱</h1>
@@ -20,7 +25,7 @@ import RegisterForm from "@/components/RegisterForm.vue";
 }
 
 .container {
-  background-image: url('@/assets/images/background.jpeg');
+  /* background-image: url('@/assets/images/background.jpeg'); */
   background-size: cover; /* 让背景图片覆盖整个屏幕 */
   background-position: center; /* 让背景图片居中显示 */
   display: flex;

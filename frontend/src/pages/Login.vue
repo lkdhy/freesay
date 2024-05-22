@@ -1,6 +1,7 @@
 <script setup lang="ts">
-
 import LoginForm from "@/components/LoginForm.vue";
+import Pacts2 from "@/pages/Pacts2.vue";
+import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
 </script>
 
 <template>
@@ -13,6 +14,14 @@ import LoginForm from "@/components/LoginForm.vue";
     <div class="background">
       <LoginForm class="form-container"></LoginForm>
     </div>
+
+<!--    <pacts2></pacts2>-->
+    <colorful-bubbles-particles></colorful-bubbles-particles>
+
+<!--    <div class="background">-->
+<!--      <LoginForm class="form-container"></LoginForm>-->
+<!--    </div>-->
+
   </div>
 </template>
 
@@ -22,7 +31,7 @@ import LoginForm from "@/components/LoginForm.vue";
 }
 
 .container {
-  background-image: url('@/assets/images/background.jpeg');
+  /* background-image: url('@/assets/images/background.jpeg'); */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -34,7 +43,7 @@ import LoginForm from "@/components/LoginForm.vue";
 
 .background {
   /* 设置背景颜色为白色，透明度为0.5 */
-  background-color: rgba(103, 186, 239, 0.9);
+  background-color: rgba(103, 186, 239, 1);
   /* 其他样式，例如内边距、边框圆角等 */
   padding: 20px;
   border-radius: 12px;

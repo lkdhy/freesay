@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Test from "./pages/Test.vue";
+import Partcs from "@/pages/Partcs.vue";
 </script>
 
 <template>
