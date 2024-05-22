@@ -14,4 +14,5 @@ urlpatterns = [
     path("post", views_box.post, name="post"),
     path("gethostpost", views_box.gethostpost, name="gethostpost"),
     path("getpost", views_box.getpost, name="getpost"),
+    path("answer", views_box.answer, name="answer"),
 ]

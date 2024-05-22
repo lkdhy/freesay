@@ -110,7 +110,7 @@ def getpost(request):
     poster_id = User.objects.get(username=username).user_id
     posts = Post.objects.filter(poster_id=poster_id).order_by('-post_id')
     posts_list = list(posts.values())
-    print(posts_list)
+    #print(posts_list)
     updated_data = []
     for item in posts_list:
         hostname = User.objects.get(user_id = item.get('host_id')).username
@@ -123,10 +123,28 @@ def getpost(request):
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(poster_id=poster_id).count()
-    print(updated_data)
-    print(count)
+    #print(updated_data)
+    #print(count)
     return JsonResponse({
         'success': True,
         'posts': updated_data,
         'total_posts': count
     })
+
+def answer(request):
+    print('enter answer')
+    data = json.loads(request.body)
+    post_id = data.get('id')
+    answer = data.get('answer')
+    is_public = data.get('is_public')
+    if post:
+        Post.objects.filter(post_id=post_id).update(answer=answer, is_public=is_public)
+        return JsonResponse({
+            'success': True,
+            'message': "收到回答并保存成功"
+        })
+    else:
+        return JsonResponse({
+            'success': False,
+            'message': '未找到post'
+        })
