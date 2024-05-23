@@ -24,3 +24,12 @@ class Post(models.Model):
     question = models.TextField(null=False)
     answer = models.TextField()
     is_public = models.BooleanField(default=True)
+
+class Tag(models.Model):
+    tag_id = models.AutoField(primary_key=True)
+    tag_name = models.CharField(max_length=30, unique=True, null=False)
+
+class with_tag(models.Model):
+    with_tag_id = models.AutoField(primary_key=True)
+    post_id_with = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_id_with')
+    tag_id_with = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='tag_id_with')
