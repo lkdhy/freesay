@@ -15,7 +15,7 @@ let total = ref(100);
 
 onBeforeMount(async () => {
   let res = await GetUserInfoByPageNum({
-    pageNumber: 1
+    pageNumber: 1, number: 15
   })
   res.users.forEach(item => {
     tableData.value.push({
@@ -35,7 +35,7 @@ const handleCurrentChange = (newPage: number) => {
 const fetchData = async () => {
   // 在这里调用 API 获取数据，使用 currentPage 作为参数
   let res = await GetUserInfoByPageNum({
-    pageNumber: currentPage.value
+    pageNumber: currentPage.value, number: 15
   });
   tableData.value = [];
   res.users.forEach(item => {

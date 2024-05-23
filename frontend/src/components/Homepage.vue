@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import {onBeforeMount, reactive, ref} from "vue";
 import {useRouter} from 'vue-router';
 import {GetHostPostApi, GetPostApi} from "@/request/api";
@@ -6,84 +6,70 @@ import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
 import UnansweredCard from "@/components/UnansweredCard.vue";
 import PostCard from "@/components/PostCard.vue";
+// props
+const props = defineProps({
+})
 
-export default {
-  props: {
-    signature: String
-  },
-  components: {
-    PostDialog,
-    PostCard,
-    UnansweredCard,
-  },
-  setup() {
-    const router = useRouter();
-    const userStore = useUserstore();
-    console.log(`当前访问用户是${userStore.visitedUserName}`);
-    console.log(`你是${userStore.userName}`);
-    interface GotPost {
-      id: number
-      username: string
-      question: string
-      answer: string
-    }
-    const curUser = ref<string>(userStore.userName);
-    const visitedUser = ref<string>(userStore.visitedUserName);
-    console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
-    const isMine = ref<boolean>(curUser.value === visitedUser.value);
-    const p1 = ref<GotPost[]>([]);
-    const p2 = ref<GotPost[]>([]);
-    const p3 = ref<GotPost[]>([]);
-    const p4 = ref<GotPost[]>([]);
-    console.log(isMine.value);
+const router = useRouter();
+const userStore = useUserstore();
+console.log(`当前访问用户是${userStore.visitedUserName}`);
+console.log(`你是${userStore.userName}`);
+interface GotPost {
+  id: number
+  username: string
+  question: string
+  answer: string
+}
+const curUser = ref<string>(userStore.userName);
+const visitedUser = ref<string>(userStore.visitedUserName);
+console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
+const isMine = curUser.value === visitedUser.value;
+const p1 = ref<GotPost[]>([]);
+const p2 = ref<GotPost[]>([]);
+const p3 = ref<GotPost[]>([]);
+const p4 = ref<GotPost[]>([]);
+// console.log(isMine.value);
 
-    onBeforeMount(async () => {
-      console.log('即将请求这个用户相关的帖子!')
-      let res = await GetHostPostApi({
-        username: visitedUser.value
-      });
-      console.log(res);
-      if (res.success) {
-        console.log('cool!!')
-        res.posts.forEach(post => {
-          if (!isMine.value) {
-            if (post.answer.length
-                && (post.is_public || post.username===curUser.value)) {
-              p2.value.push(post);
-            }
-            console.log('p2:', p2.value);
-          } else {
-            if (!post.answer.length) {
-              p1.value.push(post);
-            } else {
-              p2.value.push(post);
-              console.log(post);
-            }
-          }
-        })
+onBeforeMount(async () => {
+  console.log('即将请求这个用户相关的帖子!')
+  let res = await GetHostPostApi({
+    username: visitedUser.value
+  });
+  console.log('这个用户的帖子请求结果：', res);
+  if (res.success) {
+    res.posts.forEach(post => {
+      if (!isMine) {
+        if (post.answer.length
+            && (post.is_public || post.username===curUser.value)) {
+          p2.value.push(post);
+        }
+        console.log('p2:', p2.value);
       } else {
-        console.log('WTF, host posts 请求失败')
-      }
-      if (!isMine.value) return
-      let res2 = await GetPostApi({
-        username: visitedUser.value
-      });
-      if (res2.success) {
-        res2.posts.forEach(post => {
-          if (post.answer.length) {
-            p3.value.push(post);
-          } else {
-            p4.value.push(post);
-          }
-        })
+        if (!post.answer.length) {
+          p1.value.push(post);
+        } else {
+          p2.value.push(post);
+          console.log(post);
+        }
       }
     })
-    return {
-      isMine, visitedUser, curUser,
-      p1, p2, p3, p4
-    }
+  } else {
+    console.log('WTF, host posts 请求失败')
   }
-}
+  if (!isMine) return
+  let res2 = await GetPostApi({
+    username: visitedUser.value
+  });
+  if (res2.success) {
+    res2.posts.forEach(post => {
+      if (post.answer.length) {
+        p3.value.push(post);
+      } else {
+        p4.value.push(post);
+      }
+    })
+  }
+})
 
 </script>
 
@@ -93,9 +79,6 @@ export default {
   <h3>
     你好 {{ curUser }}
   </h3>
-<!--  <h3>-->
-<!--    这里是 {{ $route.params.id }} 的个人主页-->
-<!--  </h3>-->
 
   <el-descriptions
       title="" border

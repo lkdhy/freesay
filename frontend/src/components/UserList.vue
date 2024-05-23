@@ -16,7 +16,7 @@ interface User {
 }
 const tableData = ref<User[]>([]);
 let currentPage = ref(1);
-let pageSize = ref(8);
+let pageSize = ref(10);
 let total = ref(100);
 
 onBeforeMount(async () => {
@@ -55,10 +55,6 @@ const fetchData = async () => {
   });
   total.value = res.total_users;
 };
-
-// const record = (s: string) => {
-//   console.log(s);
-// }
 
 const jump2Homepage = (userName: string) => {
   userStore.visitedUserName = userName;

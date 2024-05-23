@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import {ref, reactive, onBeforeMount} from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
@@ -6,67 +6,54 @@ import { AnswerApi } from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 
+// props
+const props = defineProps({
+  post_id: Number,
+  question: String,
+})
 
-export default {
-  props: {
-    post_id: Number,
-    question: String,
-  },
-  setup(props) {
-    const userStore = useUserstore();
-    const router = useRouter();
-    const AnswerVisible = ref(false)
-
-    console.log('post_id', props.post_id);
-    const post_id = ref(props.post_id)
-    const question = ref(props.question)
-    const ruleFormRef = ref<FormInstance>();
-    const answerForm = reactive({
-      answer: '', public: true
-  });
-    const refresh = () => {
-      let curPath = router.currentRoute.value.fullPath
-      router.push('/empty').then(() => {
-        router.replace(curPath)
-      })
-    }
-    // const willPublic = ref(true);
-    const submitForm = (formEl: FormInstance | undefined) => {
-      if (!formEl) return;
-      console.log('准备answer问题');
-      formEl.validate(async (valid) => {
-        if (valid) {
-          console.log('answer问题表单验证通过，准备提交');
-          console.log(answerForm);
-          let tmpid = props.post_id != undefined ? props.post_id : 0;
-          console.log(tmpid);
-          let res = await AnswerApi({
-            id: tmpid,
-            answer: answerForm.answer,
-            is_public: answerForm.public
-          });
-          console.log('answer结果', res);
-          if (res.success) {
-            console.log('answer表单提交成功');
-            ElMessage({
-              message: '已发送回答',
-              type: 'success'
-            });
-            refresh()
-          } else {
-            console.log('WTF, answer提问失败');
-          }
-        } else {
-          console.log('answer表单验证不通过');
-        }
+const router = useRouter();
+const AnswerVisible = ref(false)
+console.log('post_id', props.post_id);
+const ruleFormRef = ref<FormInstance>();
+const answerForm = reactive({
+  answer: '', public: true
+});
+const refresh = () => {
+  let curPath = router.currentRoute.value.fullPath
+  router.push('/empty').then(() => {
+    router.replace(curPath)
+  })
+}
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  console.log('准备answer问题');
+  formEl.validate(async (valid) => {
+    if (valid) {
+      console.log('answer问题表单验证通过，准备提交');
+      console.log(answerForm);
+      console.log(props.post_id);
+      let tmpid = props.post_id != undefined ? props.post_id : 0;
+      let res = await AnswerApi({
+        id: tmpid,
+        answer: answerForm.answer,
+        is_public: answerForm.public
       });
+      console.log('answer结果', res);
+      if (res.success) {
+        console.log('answer表单提交成功');
+        ElMessage({
+          message: '已发送回答',
+          type: 'success'
+        });
+        refresh()
+      } else {
+        console.log('WTF, answer提问失败');
+      }
+    } else {
+      console.log('answer表单验证不通过');
     }
-    return {
-      question,
-      AnswerVisible, answerForm,
-      submitForm, ruleFormRef
-    };
-  }
+  });
 }
 
 </script>
