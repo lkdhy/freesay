@@ -35,19 +35,16 @@ margin-bottom: 1em">
     广场
   </h2>
   <el-scrollbar height="550px">
-    <div class="canvas">
+    <el-space wrap :size="20" alignment="center">
 <!--      <div v-for="box of boxData">-->
         <box-card v-for="box of boxData"
             :host-name="box.username">
           <template #desc>
             {{ box.description }}
           </template>
-          <template #hostInfo>
-            {{ box.username }}
-          </template>
         </box-card>
+    </el-space>
 <!--      </div>-->
-    </div>
   </el-scrollbar>
 </template>
 

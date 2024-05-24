@@ -6,7 +6,7 @@ import Index from '@/pages/Index.vue';
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
 import UserList from "@/components/UserList.vue";
-import Plaza from "@/components/Plaza.vue";
+import Plaza from "@/components/plaza/Plaza.vue";
 import Profile from "@/components/Profile.vue";
 import UserListProfile from "@/components/UserListProfile.vue";
 import Homepage from "@/components/Homepage.vue";

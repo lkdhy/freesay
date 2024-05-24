@@ -9,6 +9,7 @@ import { loadFull } from "tsparticles";
 import { loadSlim } from "@tsparticles/slim";
 
 const app = createApp(App)
+// const vuetify = createVuetify()
 const pinia = createPinia()
 
 app.use(ElementPlus)
