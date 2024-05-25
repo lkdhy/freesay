@@ -9,7 +9,7 @@ const userStore = useUserstore();
 
 // 如果直接访问 “http://localhost:5173/”，则会跳到欢迎页 “http://localhost:5173/index”
 if (!userStore.userName.length) {
-  router.replace('/index');
+  // router.replace('/index');
 }
 
 </script>
