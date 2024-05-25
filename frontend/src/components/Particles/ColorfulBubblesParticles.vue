@@ -60,8 +60,8 @@ const options = {
   emitters: {
     direction: "none",
     rate: {
-      quantity: 5,
-      delay: 0.6
+      quantity: 3,
+      delay: 0.3
     },
     size: {
       width: 0, height: 0

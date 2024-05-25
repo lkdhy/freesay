@@ -3,8 +3,10 @@ import { UserFilled } from "@element-plus/icons-vue"
 import HoverUserinfo from "@/components/user/HoverUserinfo.vue";
 // props
 const props = defineProps({
-  hostName: String
+  hostName: String,
+  hostSignature: String
 })
+console.log(props.hostName?.valueOf(),props.hostSignature?.valueOf())
 </script>
 
 <template>
@@ -25,7 +27,7 @@ const props = defineProps({
         </el-space>
       </template>
 
-      <hover-userinfo :host-name="props.hostName">
+      <hover-userinfo :host-name="props.hostName" :host-signature="hostSignature">
       </hover-userinfo>
 
     </el-popover>

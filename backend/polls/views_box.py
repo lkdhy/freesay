@@ -41,16 +41,19 @@ def box(request):
         try:
             user = User.objects.get(user_id=host_id)
             username = user.username
+            signature = user.signature
         except User.DoesNotExist:
             username = None
         updated_item = {
             'username': username,
+            'hostSignature': signature,
             'description': item.get('descr')
         }
         updated_data.append(updated_item)
     count = Box.objects.count()
     return JsonResponse({
         'success': True,
+        'message': '成功请求所有分享广场的提问箱',
         'boxes': updated_data,
         'total_boxes': count
     })
