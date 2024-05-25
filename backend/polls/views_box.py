@@ -41,16 +41,19 @@ def box(request):
         try:
             user = User.objects.get(user_id=host_id)
             username = user.username
+            signature = user.signature
         except User.DoesNotExist:
             username = None
         updated_item = {
             'username': username,
+            'hostSignature': signature,
             'description': item.get('descr')
         }
         updated_data.append(updated_item)
     count = Box.objects.count()
     return JsonResponse({
         'success': True,
+        'message': '成功请求所有分享广场的提问箱',
         'boxes': updated_data,
         'total_boxes': count
     })
@@ -61,6 +64,7 @@ def post(request):
     username = data.get('username')
     hostUsername = data.get('hostUsername')
     question = data.get('question')
+
     try:
         poster = User.objects.get(username=username)
         poster_id = poster.user_id
@@ -73,6 +77,20 @@ def post(request):
         host_id = None
     post_new = Post(question=question, is_public=True, host_id=host_id, poster_id=poster_id)
     post_new.save()
+    ## add; haven't test
+
+    post_id = post_new.post_id #不知道对不对
+    ## post_id = Post.objects.filter(question=question).post_id
+    tags = data.get('tags')
+    for tag in tags:
+        find_tag = Tag.objects.filter(tag_name=tag).count()
+        if find_tag == 0:
+            Tag(tag_name=tag).save()
+        tag_id = Tag.objects.filter(tag_name=tag).tag_id
+        with_tag = with_tag(post_id_with_id=post_id, tag_id_with_id=tag_id)
+        with_tag.save()
+
+    ##
     return JsonResponse({
         'success': True
     })

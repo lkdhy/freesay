@@ -5,7 +5,9 @@ import { GetBoxApi } from "@/request/api";
 import BoxCard from "@/components/BoxCard.vue";
 
 interface Box {
-  username: string, description: string
+  username: string,
+  hostSignature: string,
+  description: string
 }
 const boxData = ref<Box[]>([]);
 const total = ref(100);
@@ -16,7 +18,9 @@ const fetchBoxData = async () => {
   if (res.success) {
     res.boxes.forEach(box => {
       boxData.value.push({
-        username: box.username, description: box.description
+        username: box.username,
+        hostSignature: box.hostSignature,
+        description: box.description
       });
     })
     total.value = res.total_boxes;
@@ -37,8 +41,11 @@ margin-bottom: 1em">
   <el-scrollbar height="550px">
     <el-space wrap :size="20" alignment="center">
 <!--      <div v-for="box of boxData">-->
-        <box-card v-for="box of boxData"
-            :host-name="box.username">
+        <box-card
+            v-for="box of boxData"
+            :host-name="box.username"
+            :host-signature="box.hostSignature"
+        >
           <template #desc>
             {{ box.description }}
           </template>

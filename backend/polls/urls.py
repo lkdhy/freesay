@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 from . import views_box
+from . import views_post
 
 urlpatterns = [
     path("hello", views.hello, name="helloTest"),
@@ -15,4 +16,5 @@ urlpatterns = [
     path("gethostpost", views_box.gethostpost, name="gethostpost"),
     path("getpost", views_box.getpost, name="getpost"),
     path("answer", views_box.answer, name="answer"),
+    path("setsignature", views_post.setsignature, name="setsignature"),
 ]

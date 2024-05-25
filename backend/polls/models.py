@@ -24,6 +24,7 @@ class Post(models.Model):
     question = models.TextField(null=False)
     answer = models.TextField()
     is_public = models.BooleanField(default=True)
+    is_anonymous = models.BooleanField(default=True)
 
 class Tag(models.Model):
     tag_id = models.AutoField(primary_key=True)
