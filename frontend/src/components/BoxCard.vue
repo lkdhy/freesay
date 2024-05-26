@@ -4,6 +4,7 @@ import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import {PostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
+import {useRouter} from "vue-router";
 import AvatarUsername from "@/components/user/AvatarUsername.vue";
 // props
 // const props = defineProps(['hostName'])
@@ -13,12 +14,17 @@ const props = defineProps({
 })
 
 const userStore = useUserstore();
+const router = useRouter()
 const PostVisible = ref(false)
 const ruleFormRef = ref<FormInstance>();
 const postForm = reactive({
   username: userStore.userName,
   question: '你想问TA…'
 });
+
+const jump2userBox = (hostName: string) => {
+  router.push(`/user2/${hostName}`)
+}
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -57,8 +63,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       <el-tooltip
         content="点击向TA提问"
       >
-        <div @click="console.log(`按下了“${hostName}”`);
-            PostVisible = true;">
+        <div @click="jump2userBox(<string>hostName)">
           <p><slot name="desc"></slot></p>
         </div>
       </el-tooltip>
@@ -69,7 +74,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 <!--          &lt;!&ndash;      我想在这里放用户名等用户相关的东西&ndash;&gt;-->
 <!--          <span>{{ hostName }}</span>-->
 <!--        </div>-->
-        <avatar-username :host-name="hostName" :host-signature="hostSignature"
+        <avatar-username :host-name="hostName" :host-signature="hostSignature">
         </avatar-username>
       </template>
     </el-card>

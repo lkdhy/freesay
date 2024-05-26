@@ -16,7 +16,7 @@ import Partcs from "@/pages/Partcs.vue"
 import Pacts2 from "@/pages/Pacts2.vue"
 import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue"
 import SnowParticles from "@/components/Particles/SnowParticles.vue"
-import userBox from "@/components/user_box/userBox.vue"
+import UserBox from "@/components/user_box/UserBox.vue";
 
 const routes =
     [
@@ -58,7 +58,7 @@ const routes =
             children: [
                 {
                     path: 'userBox', name: 'UserBox',
-                    component: userBox
+                    component: UserBox
                 },
                 {
                     path: 'userList', name: 'UserList',
@@ -83,6 +83,10 @@ const routes =
                 {
                     path: '/user/:id', name: 'User',
                     component: Homepage
+                },
+                {
+                    path: '/user2/:username', name: 'User2',
+                    component: UserBox
                 }
             ]
         },

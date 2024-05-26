@@ -50,6 +50,7 @@ interface GotPost {
     username: string
     question: string
     answer: string
+    is_anonymous: boolean
     is_public: boolean
 }
 
@@ -101,6 +102,9 @@ interface ItypeAPI_2<T> {
 }
 
 // my APIs
+export const GetUserInfo = (): Promise<User> =>
+    instance.get('/api/userinfo')
+
 export const GetBoxApi = (): BoxRes<null> =>
     instance.get('/api/box');
 export const ShareApi = (data: ReqShare): Res<null> =>

@@ -92,7 +92,8 @@ def post(request):
 
     ##
     return JsonResponse({
-        'success': True
+        'success': True,
+        'message': '成功post问题及标签（若有）'
     })
 
 def gethostpost(request):
@@ -110,6 +111,7 @@ def gethostpost(request):
             'username': username,
             'question': item.get('question'),
             'answer': item.get('answer'),
+            'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public')
         }
         updated_data.append(updated_item)

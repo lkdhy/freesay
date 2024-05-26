@@ -6,7 +6,6 @@ const props = defineProps({
   hostName: String,
   hostSignature: String
 })
-console.log(props.hostName?.valueOf(),props.hostSignature?.valueOf())
 </script>
 
 <template>
