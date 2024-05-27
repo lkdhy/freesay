@@ -37,6 +37,7 @@ interface User {
 
 interface Box {
     username: string,
+    hostSignature: string,
     description: string
 }
 interface Post {
@@ -44,12 +45,6 @@ interface Post {
     hostUsername: string,
     question: string
 }
-// interface GetPost {
-//     username: string,
-//     public: boolean,
-//     answered: boolean
-//     answer: string
-// }
 interface GotPost {
     id: number
     username: string

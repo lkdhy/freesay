@@ -8,7 +8,8 @@ import AvatarUsername from "@/components/user/AvatarUsername.vue";
 // props
 // const props = defineProps(['hostName'])
 const props = defineProps({
-  hostName: String
+  hostName: String,
+  hostSignature: String
 })
 
 const userStore = useUserstore();
@@ -68,7 +69,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
 <!--          &lt;!&ndash;      我想在这里放用户名等用户相关的东西&ndash;&gt;-->
 <!--          <span>{{ hostName }}</span>-->
 <!--        </div>-->
-        <avatar-username :host-name="hostName"></avatar-username>
+        <avatar-username :host-name="hostName" :host-signature="hostSignature"
+        </avatar-username>
       </template>
     </el-card>
     <el-dialog v-model="PostVisible">

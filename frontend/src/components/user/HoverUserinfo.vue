@@ -3,7 +3,8 @@ import { UserFilled } from "@element-plus/icons-vue"
 import {ref} from "vue";
 // props
 const props = defineProps({
-  hostName: String
+  hostName: String,
+  hostSignature: String
 })
 
 const showRecentAnswer = ref(false)
@@ -21,7 +22,7 @@ const showRecentAnswer = ref(false)
   </el-space>
 
   <div class="signature-container">
-    <p>内心的强大、永远胜过外表的浮华。</p>
+    <p> {{ hostSignature }} </p>
   </div>
 
   <el-button
