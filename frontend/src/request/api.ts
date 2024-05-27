@@ -46,7 +46,7 @@ interface Post {
     question: string
     is_anonymous: boolean
     is_public: boolean
-    tags: []
+    tags: string[]
 }
 interface GotPost {
     id: number

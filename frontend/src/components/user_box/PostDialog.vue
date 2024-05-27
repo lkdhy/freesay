@@ -19,7 +19,7 @@ const submitQuestion = async (question: string) => {
     question: question,
     is_public: is_public.value,
     is_anonymous: is_anonymous.value,
-    tags: []
+    tags: selected_tags.value
   })
   console.log('post结果', res);
   if (res.success) {
@@ -39,6 +39,14 @@ const visible = ref(false)
 const question = ref('')
 const is_public = ref(true)
 const is_anonymous = ref(true)
+// as to tags
+const selected_tags = ref<string[]>([])
+const tag_options = [
+  { tag: '恋爱', label: '恋爱' },
+  { tag: '学习', label: '学习' },
+  { tag: '动漫', label: '动漫' },
+]
+
 // 14 个推荐问题
 let ref_questions = [
     '你现在是单身吗？',
@@ -114,6 +122,34 @@ ref_questions.sort((a, b) => {
 
     </div>
 
+    <div class="tag-select-container">
+      <el-select
+          v-model="selected_tags"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          :reserve-keyword="false"
+          placeholder="选择标签，可以输入新增标签"
+      >
+        <el-option
+            v-for="tag in tag_options"
+            :key="tag.tag"
+            :label="tag.label"
+            :value="tag.tag"
+        />
+
+        <template #tag>
+          <el-tag v-for="tag in selected_tags"
+                  :key="tag"
+                  round
+          >
+            {{ tag }}
+          </el-tag>
+        </template>
+      </el-select>
+    </div>
+
     <div>
       <p>是否匿名</p>
       <el-switch v-model="is_anonymous"
@@ -147,6 +183,9 @@ ref_questions.sort((a, b) => {
 .question-editing-container {
   display: flex;
   justify-content: center;
+}
+.tag-select-container {
+  margin: 20px;
 }
 .input-question-area {
   font-size: 20px;

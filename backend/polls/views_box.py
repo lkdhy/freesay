@@ -87,18 +87,19 @@ def post(request):
         poster_id=poster_id
     )
     post_new.save()
+
     ## add; haven't test
 
-    post_id = post_new.post_id #不知道对不对
-    ## post_id = Post.objects.filter(question=question).post_id
+    # post_id = post_new.post_id #不知道对不对
+    post_id = Post.objects.filter(question=question)[0].post_id
     tags = data.get('tags')
     for tag in tags:
         find_tag = Tag.objects.filter(tag_name=tag).count()
         if find_tag == 0:
             Tag(tag_name=tag).save()
-        tag_id = Tag.objects.filter(tag_name=tag).tag_id
-        with_tag = with_tag(post_id_with_id=post_id, tag_id_with_id=tag_id)
-        with_tag.save()
+        tag_id = Tag.objects.filter(tag_name=tag)[0].tag_id
+        withTag = with_tag(post_id_with_id=post_id, tag_id_with_id=tag_id)
+        withTag.save()
 
     ##
     return JsonResponse({
