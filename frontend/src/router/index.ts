@@ -1,22 +1,22 @@
-import {createRouter, createWebHistory} from "vue-router";
-
-import Test from "@/pages/Test.vue";
-import Welcome from "@/pages/Welcome.vue";
-import Index from '@/pages/Index.vue';
-import Login from "@/pages/Login.vue";
-import Register from "@/pages/Register.vue";
-import UserList from "@/components/UserList.vue";
-import Plaza from "@/components/plaza/Plaza.vue";
-import Profile from "@/components/Profile.vue";
-import UserListProfile from "@/components/UserListProfile.vue";
-import Homepage from "@/components/Homepage.vue";
-import Empty from "@/components/Empty.vue";
+import {createRouter, createWebHistory} from "vue-router"
+import Test from "@/pages/Test.vue"
+import Welcome from "@/pages/Welcome.vue"
+import Index from '@/pages/Index.vue'
+import Login from "@/pages/Login.vue"
+import Register from "@/pages/Register.vue"
+import UserList from "@/components/UserList.vue"
+import Plaza from "@/components/plaza/Plaza.vue"
+import Profile from "@/components/Profile.vue"
+import UserListProfile from "@/components/UserListProfile.vue"
+import Homepage from "@/components/Homepage.vue"
+import Empty from "@/components/Empty.vue"
 import tmp2 from "@/pages/tmp2.vue"
-import BackgroundSwiper from "@/components/BackgroundSwiper.vue";
-import Partcs from "@/pages/Partcs.vue";
-import Pacts2 from "@/pages/Pacts2.vue";
-import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
-import SnowParticles from "@/components/Particles/SnowParticles.vue";
+import BackgroundSwiper from "@/components/BackgroundSwiper.vue"
+import Partcs from "@/pages/Partcs.vue"
+import Pacts2 from "@/pages/Pacts2.vue"
+import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue"
+import SnowParticles from "@/components/Particles/SnowParticles.vue"
+import UserBox from "@/components/user_box/UserBox.vue";
 
 const routes =
     [
@@ -57,6 +57,10 @@ const routes =
             component: Index,
             children: [
                 {
+                    path: 'userBox', name: 'UserBox',
+                    component: UserBox
+                },
+                {
                     path: 'userList', name: 'UserList',
                     component: UserList
                 },
@@ -79,6 +83,10 @@ const routes =
                 {
                     path: '/user/:id', name: 'User',
                     component: Homepage
+                },
+                {
+                    path: '/user2/:username', name: 'User2',
+                    component: UserBox
                 }
             ]
         },
