@@ -16,6 +16,12 @@ class Box(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='host_id')
     descr = models.TextField()
 
+# 定义thread表
+class Thread(models.Model):
+    thread_id = models.AutoField(primary_key=True)
+    content = models.TextField(null=False)
+    nxt = models.IntegerField(default=0)
+
 # 定义帖子表
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True)
@@ -25,6 +31,7 @@ class Post(models.Model):
     answer = models.TextField()
     is_public = models.BooleanField(default=True)
     is_anonymous = models.BooleanField(default=True)
+    head_thread = models.IntegerField(default=0)
 
 class Tag(models.Model):
     tag_id = models.AutoField(primary_key=True)
@@ -34,3 +41,5 @@ class with_tag(models.Model):
     with_tag_id = models.AutoField(primary_key=True)
     post_id_with = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_id_with')
     tag_id_with = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='tag_id_with')
+
+

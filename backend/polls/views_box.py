@@ -112,7 +112,6 @@ def gethostpost(request):
     host_id = User.objects.get(username=username).user_id
     posts = Post.objects.filter(host_id=host_id).order_by('-post_id')
     posts_list = list(posts.values())
-    # posts_json = json.dumps(posts_list, cls=DjangoJSONEncoder)
     # print(posts_json)
     updated_data = []
     for item in posts_list:
@@ -125,9 +124,7 @@ def gethostpost(request):
             'is_public': item.get('is_public')
         }
         updated_data.append(updated_item)
-    #print(updated_data)
     count = Post.objects.filter(host_id=host_id).count()
-    #print(count)
     return JsonResponse({
         'success': True,
         'posts': updated_data,
