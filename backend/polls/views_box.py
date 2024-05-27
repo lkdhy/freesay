@@ -41,16 +41,19 @@ def box(request):
         try:
             user = User.objects.get(user_id=host_id)
             username = user.username
+            signature = user.signature
         except User.DoesNotExist:
             username = None
         updated_item = {
             'username': username,
+            'hostSignature': signature,
             'description': item.get('descr')
         }
         updated_data.append(updated_item)
     count = Box.objects.count()
     return JsonResponse({
         'success': True,
+        'message': '成功请求所有分享广场的提问箱',
         'boxes': updated_data,
         'total_boxes': count
     })
@@ -61,6 +64,8 @@ def post(request):
     username = data.get('username')
     hostUsername = data.get('hostUsername')
     question = data.get('question')
+    is_public = data.get('is_public')
+    is_anonymous = data.get('is_anonymous')
 
     try:
         poster = User.objects.get(username=username)
@@ -72,7 +77,15 @@ def post(request):
         host_id = host.user_id
     except User.DoesNotExist:
         host_id = None
-    post_new = Post(question=question, is_public=True, host_id=host_id, poster_id=poster_id)
+
+    # 按照老师要求，提问者也可以设置 is_public，此处已经增加
+    post_new = Post(
+        question=question,
+        is_public=is_public,
+        is_anonymous=is_anonymous,
+        host_id=host_id,
+        poster_id=poster_id
+    )
     post_new.save()
     ## add; haven't test
 
@@ -89,7 +102,8 @@ def post(request):
 
     ##
     return JsonResponse({
-        'success': True
+        'success': True,
+        'message': '成功post问题及标签（若有）'
     })
 
 def gethostpost(request):
@@ -107,6 +121,7 @@ def gethostpost(request):
             'username': username,
             'question': item.get('question'),
             'answer': item.get('answer'),
+            'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public')
         }
         updated_data.append(updated_item)

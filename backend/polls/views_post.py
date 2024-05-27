@@ -9,5 +9,9 @@ def setsignature(request):
     username = data.get('username')
     signature = data.get('signature')
     User.objects.filter(username=username).update(signature=signature)
+    return JsonResponse({
+        'success': True,
+        'message': f'{username}的个性签名修改成功'
+    })
 
 

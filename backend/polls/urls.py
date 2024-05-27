@@ -17,4 +17,5 @@ urlpatterns = [
     path("getpost", views_box.getpost, name="getpost"),
     path("answer", views_box.answer, name="answer"),
     path("setsignature", views_post.setsignature, name="setsignature"),
+    path("userinfo", views.userinfo, name="userinfo")
 ]

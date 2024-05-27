@@ -80,6 +80,20 @@ def register(request):
             'message': '请输入完整信息！'
         })
 
+def userinfo(request):
+    print('enter getuserinfo')
+    username = request.GET.get('username')
+    user = User.objects.get(username=username)
+    return JsonResponse({
+        'success': True,
+        'message': f'成功请求用户{username}的信息',
+        'userinfo': {
+            'username': username, 
+            'email': user.email,
+            'signature': user.signature
+        }
+    })
+
 def userslist(request):
     print('enter userslist')
     data = json.loads(request.body)
