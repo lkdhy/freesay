@@ -79,19 +79,15 @@ def post(request):
         host_id = None
 
     # 按照老师要求，提问者也可以设置 is_public，此处已经增加
-    post_new = Post(
+    post_new = Post.objects.create(
         question=question,
         is_public=is_public,
         is_anonymous=is_anonymous,
         host_id=host_id,
         poster_id=poster_id
     )
-    post_new.save()
-
-    ## add; haven't test
-
-    # post_id = post_new.post_id #不知道对不对
-    post_id = Post.objects.filter(question=question)[0].post_id
+    post_id = post_new.post_id
+    print(post_id)
     tags = data.get('tags')
     for tag in tags:
         find_tag = Tag.objects.filter(tag_name=tag).count()
@@ -116,13 +112,22 @@ def gethostpost(request):
     # print(posts_json)
     updated_data = []
     for item in posts_list:
+        post_id = item.get('post_id')
+        with_tags = with_tag.objects.filter(post_id_with_id=post_id)
+        with_tag_list = list(with_tags.values())
+        tag_name_list = []
+        for each_with_tag in with_tag_list:
+            tag_id = each_with_tag.get('tag_id_with_id')
+            tag_name = Tag.objects.get(tag_id=tag_id).tag_name
+            tag_name_list.append(tag_name)
         updated_item = {
-            'id': item.get('post_id'),
+            'id': post_id,
             'username': username,
             'question': item.get('question'),
             'answer': item.get('answer'),
             'is_anonymous': item.get('is_anonymous'),
-            'is_public': item.get('is_public')
+            'is_public': item.get('is_public'),
+            'tags': tag_name_list,
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(host_id=host_id).count()
@@ -142,12 +147,23 @@ def getpost(request):
     updated_data = []
     for item in posts_list:
         hostname = User.objects.get(user_id = item.get('host_id')).username
+        post_id = item.get('post_id')
+        with_tags = with_tag.objects.filter(post_id_with_id=post_id)
+        with_tag_list = list(with_tags.values())
+        tag_name_list = []
+        for each_with_tag in with_tag_list:
+            tag_id = each_with_tag.get('tag_id_with_id')
+            tag_name = Tag.objects.get(tag_id=tag_id).tag_name
+            tag_name_list.append(tag_name)
+        #print(tag_name_list, '!tagname!\n')
         updated_item = {
-            'id': item.get('post_id'),
+            'id': post_id,
             'username': hostname, ##???
             'question': item.get('question'),
             'answer': item.get('answer'),
-            'is_public': item.get('is_public')
+            'is_anonymous': item.get('is_anonymous'),
+            'is_public': item.get('is_public'),
+            'tags': tag_name_list,
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(poster_id=poster_id).count()
