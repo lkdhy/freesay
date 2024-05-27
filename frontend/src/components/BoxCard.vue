@@ -39,9 +39,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
         hostUsername: tmp,
         question: postForm.question
       });
-      // console.log('share结果', res);
+      // console.log('post结果', res);
       if (res.success) {
-        console.log('share表单提交成功');
+        console.log('post表单提交成功');
         ElMessage({
           message: '已向TA发送提问',
           type: 'success'

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import PostCard from "@/components/user_box/PostCard.vue";
-import {ref} from "vue";
+import {ref, reactive} from "vue";
 import {useRouter} from "vue-router";
 import {useUserstore} from "@/store/user";
 import {onBeforeMount} from "vue";
-import {GetHostPostApi} from "@/request/api";
+import { GetUserInfo, GetHostPostApi} from "@/request/api";
+import UserInfo from "@/components/user_box/UserInfo.vue";
+import PostDialog from "@/components/user_box/PostDialog.vue";
 
 const router = useRouter()
 const visitedUser = router.currentRoute.value.params.username
@@ -15,13 +17,31 @@ interface GotPost {
   is_public: boolean
   question: string, answer: string
 }
+interface GotUserInfo {
+  username: string,
+  email: string,
+  signature: string
+}
+const userInfo = ref<GotUserInfo>({
+  username: '', email: '', signature: ''
+})
 const posts = ref<GotPost[]>([])
 
 const fetchUserInfo = async () => {
-
+  console.log(`即将请求${visitedUser}的个人信息`)
+  const user_info_res = await GetUserInfo({
+    username: <string>visitedUser
+  })
+  console.log(`${visitedUser}的个人信息请求结果：`, user_info_res)
+  if (user_info_res.success) {
+    userInfo.value = user_info_res.userinfo
+  } else {
+    console.log('WTF，用户个人信息请求失败')
+  }
 }
 
 onBeforeMount(async () => {
+  await fetchUserInfo()
   console.log(`即将请求${visitedUser}的所有公开已答帖子`)
   const host_post_res = await GetHostPostApi({
     username: <string>visitedUser
@@ -37,10 +57,6 @@ onBeforeMount(async () => {
   } else {
     console.log('WTF, host posts 请求失败')
   }
-
-  const host_st_res = await GetHostPostApi({
-    username: <string>visitedUser
-  })
 })
 </script>
 
@@ -53,6 +69,11 @@ onBeforeMount(async () => {
       <div class="description-container">
 
       </div>
+
+      <div class="operation-container">
+        <post-dialog :host-name="visitedUser"></post-dialog>
+      </div>
+
       <div class="post-card-container">
         <el-scrollbar height="500px">
             <el-space
@@ -76,8 +97,13 @@ onBeforeMount(async () => {
       </div>
       </div>
     <div class="right">
-      <el-avatar size="large" shape="square">
-      </el-avatar>
+      <user-info
+          :username="userInfo.username"
+          :email="userInfo.email"
+          :signature="userInfo.signature"
+      >
+
+      </user-info>
     </div>
   </el-space>
 </template>
@@ -96,6 +122,9 @@ onBeforeMount(async () => {
 }
 .description-container {
   height: 200px;
+}
+.operation-container {
+  margin: 10px
 }
 .post-card-container {
   margin-top: 1px;

@@ -59,6 +59,10 @@ const props = defineProps({
 .post-card-content {
   height: 200px;
 }
+.tags-container {
+  display: flex;
+  gap: 5px;
+}
 .question-container {
   height: 60%;
   display: flex;
@@ -67,6 +71,5 @@ const props = defineProps({
 }
 .anwser-container {
   height: 20%;
-
 }
 </style>

@@ -44,6 +44,9 @@ interface Post {
     username: string,
     hostUsername: string,
     question: string
+    is_anonymous: boolean
+    is_public: boolean
+    tags: []
 }
 interface GotPost {
     id: number
@@ -58,8 +61,14 @@ interface GotPost {
 type Res<T> = Promise<ItypeAPI<T>>;
 type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
+type GetUserRes = Promise<GetUserInfoItypeAPI>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
+interface GetUserInfoItypeAPI {
+    success: string | null,
+    message: string,
+    userinfo: User
+}
 interface GotPostItypeAPI<T> {
     success: string | null // 返回状态码的信息，如请求成功等;
     result: T,//请求的数据，用泛型
@@ -102,8 +111,11 @@ interface ItypeAPI_2<T> {
 }
 
 // my APIs
-export const GetUserInfo = (): Promise<User> =>
-    instance.get('/api/userinfo')
+export const GetUserInfo = (params: {'username': string}): GetUserRes =>
+    instance.get('/api/userinfo', {params})
+
+export const SetSignature = (params: {'username': string, 'signature': string}): Res<null> =>
+   instance.post('/api/setsignature', params)
 
 export const GetBoxApi = (): BoxRes<null> =>
     instance.get('/api/box');
