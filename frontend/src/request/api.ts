@@ -50,11 +50,13 @@ interface Post {
 }
 interface GotPost {
     id: number
+    asker_name: string
     username: string
     question: string
     answer: string
     is_anonymous: boolean
     is_public: boolean
+    tags: string[]
 }
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***

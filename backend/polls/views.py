@@ -52,7 +52,6 @@ def hello(request):
     })
 
 def register(request):
-    #print(3)
     data = json.loads(request.body)
     username = data.get('username', 'WTF, no username?!')
     pwd = data.get('password', 'WTF, no password?!')

@@ -5,7 +5,8 @@ import {GetHostPostApi, GetPostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
 import UnansweredCard from "@/components/UnansweredCard.vue";
-import PostCard from "@/components/PostCard.vue";
+import PostCard from "@/components/user_box/PostCard.vue"
+import FullTape from "@/components/full_tape/FullTape.vue";
 // props
 const props = defineProps({
 })
@@ -16,9 +17,13 @@ console.log(`当前访问用户是${userStore.visitedUserName}`);
 console.log(`你是${userStore.userName}`);
 interface GotPost {
   id: number
+  asker_name: string
+  is_anonymous: boolean
+  is_public: boolean
   username: string
   question: string
   answer: string
+  tags: string[]
 }
 const curUser = ref<string>(userStore.userName);
 const visitedUser = ref<string>(userStore.visitedUserName);
@@ -103,12 +108,25 @@ onBeforeMount(async () => {
       <el-tab-pane label="未答" v-if="isMine">
         <el-scrollbar height="400px">
           <div class="canvas">
-            <div v-for="post of p1">
-              <unanswered-card
-                  :post_id="post.id"
-                  :question="post.question">
-              </unanswered-card>
-            </div>
+            <post-card v-for="post in p1"
+                       v-show="post.is_public"
+                       :host-name="visitedUser"
+                       :asker-name="post.asker_name"
+                       :anonymous="post.is_anonymous"
+                       :question="post.question"
+                       :answer="post.answer"
+                       :tags="post.tags"
+            >
+
+            </post-card>
+<!--            <div v-for="post of p1">-->
+<!--              <unanswered-card-->
+<!--                  :post_id="post.id"-->
+<!--                  :question="post.question">-->
+<!--              </unanswered-card>-->
+
+<!--            </div>-->
+
           </div>
         </el-scrollbar>
       </el-tab-pane>

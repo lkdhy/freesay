@@ -13,9 +13,11 @@ const visitedUser = router.currentRoute.value.params.username
 
 interface GotPost {
   id: number, username: string,
+  asker_name: string
   is_anonymous: boolean
   is_public: boolean
   question: string, answer: string
+  tags: string[]
 }
 interface GotUserInfo {
   username: string,
@@ -84,11 +86,13 @@ onBeforeMount(async () => {
 
 <!--              </post-card>-->
               <post-card v-for="post in posts"
+                         v-show="post.is_public"
                          :host-name="visitedUser"
-                         asker-name="TODO"
-                         :anonymous="'is_anonymous' in post ?  post.is_anonymous : true"
+                         :asker-name="post.asker_name"
+                         :anonymous="post.is_anonymous"
                          :question="post.question"
                          :answer="post.answer"
+                         :tags="post.tags"
               >
 
               </post-card>

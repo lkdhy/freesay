@@ -113,6 +113,7 @@ def gethostpost(request):
     updated_data = []
     for item in posts_list:
         post_id = item.get('post_id')
+        # 得到所有 tags
         with_tags = with_tag.objects.filter(post_id_with_id=post_id)
         with_tag_list = list(with_tags.values())
         tag_name_list = []
@@ -120,9 +121,12 @@ def gethostpost(request):
             tag_id = each_with_tag.get('tag_id_with_id')
             tag_name = Tag.objects.get(tag_id=tag_id).tag_name
             tag_name_list.append(tag_name)
+        # 返回 asker_name 从而在 is_anonymous 为 false 时显示
+        asker_name = User.objects.get(user_id=item.get('poster_id')).username
         updated_item = {
             'id': post_id,
             'username': username,
+            'asker_name': asker_name,
             'question': item.get('question'),
             'answer': item.get('answer'),
             'is_anonymous': item.get('is_anonymous'),
