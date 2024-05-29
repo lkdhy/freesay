@@ -42,7 +42,7 @@ const modifySignature = async () => {
   <el-avatar
       :src="avatar"
       :size="100"
-      shape="circle"
+      shape="square"
   ></el-avatar>
 
   <div>

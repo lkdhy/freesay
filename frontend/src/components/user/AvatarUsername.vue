@@ -50,6 +50,5 @@ const props = defineProps({
 .avatar-username-container {
   display: flex;
   justify-content: center;
-  height: 5px;
 }
 </style>

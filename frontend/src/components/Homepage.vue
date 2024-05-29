@@ -7,6 +7,7 @@ import PostDialog from "@/components/PostDialog.vue";
 import UnansweredCard from "@/components/UnansweredCard.vue";
 import PostCard from "@/components/user_box/PostCard.vue"
 import FullTape from "@/components/full_tape/FullTape.vue";
+import AvatarUsername from "@/components/user/AvatarUsername.vue";
 // props
 const props = defineProps({
 })
@@ -18,13 +19,16 @@ console.log(`你是${userStore.userName}`);
 interface GotPost {
   id: number
   asker_name: string
+  asker_avatar: string
   is_anonymous: boolean
   is_public: boolean
   username: string
   question: string
   answer: string
   tags: string[]
+  thread: string[]
 }
+const tapeData = ref<GotPost>({})
 const curUser = ref<string>(userStore.userName);
 const visitedUser = ref<string>(userStore.visitedUserName);
 console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
@@ -76,6 +80,15 @@ onBeforeMount(async () => {
   }
 })
 
+const handleCurrentChange = (post: GotPost) => {
+  console.log('选中了这一行，其信息如下')
+  console.log(post)
+  tapeData.value.username = post.username
+  fullTapeVisible.value = true
+}
+
+const fullTapeVisible = ref(false)
+
 </script>
 
 <template>
@@ -84,6 +97,20 @@ onBeforeMount(async () => {
   <h3>
     你好 {{ curUser }}
   </h3>
+
+  <full-tape
+      v-if="fullTapeVisible"
+      @close="fullTapeVisible = false"
+      :anonymous="tapeData?.is_anonymous"
+      :public="tapeData?.is_public"
+      :answer="tapeData?.answer"
+      :tags="tapeData?.tags"
+      :host="visitedUser"
+      :poster="tapeData?.asker_name"
+      :poster-avatar="tapeData?.asker_avatar"
+      host-avatar=undefined
+  >
+  </full-tape>
 
   <el-descriptions
       title="" border
@@ -106,29 +133,56 @@ onBeforeMount(async () => {
 
     <el-tabs>
       <el-tab-pane label="未答" v-if="isMine">
-        <el-scrollbar height="400px">
-          <div class="canvas">
-            <post-card v-for="post in p1"
-                       v-show="post.is_public"
-                       :host-name="visitedUser"
-                       :asker-name="post.asker_name"
-                       :anonymous="post.is_anonymous"
-                       :question="post.question"
-                       :answer="post.answer"
-                       :tags="post.tags"
-            >
+        <el-table
+            :data="p1"
+            @current-change="handleCurrentChange"
+            height="400"
+        >
+          <el-table-column label="From" width="200">
+            <template #default="scope">
+              <avatar-username
+                  :host-name="scope.row.asker_name"
+                  :host-avatar="scope.row.asker_avatar"
+              >
+              </avatar-username>
+            </template>
+          </el-table-column>
+          <el-table-column label="Question" prop="question">
 
-            </post-card>
-<!--            <div v-for="post of p1">-->
-<!--              <unanswered-card-->
-<!--                  :post_id="post.id"-->
-<!--                  :question="post.question">-->
-<!--              </unanswered-card>-->
+          </el-table-column>
+          <el-table-column label="Tag">
+            <template #default="scope">
+              <el-space>
+                <el-tag v-for="tag in scope.row.tags">
+                  {{ tag }}
+                </el-tag>
+              </el-space>
+            </template>
+          </el-table-column>
+        </el-table>
+<!--        <el-scrollbar height="400px">-->
+<!--          <div class="canvas">-->
+<!--            <post-card v-for="post in p1"-->
+<!--                       v-show="post.is_public"-->
+<!--                       :host-name="visitedUser"-->
+<!--                       :asker-name="post.asker_name"-->
+<!--                       :anonymous="post.is_anonymous"-->
+<!--                       :question="post.question"-->
+<!--                       :answer="post.answer"-->
+<!--                       :tags="post.tags"-->
+<!--            >-->
 
-<!--            </div>-->
+<!--            </post-card>-->
+<!--&lt;!&ndash;            <div v-for="post of p1">&ndash;&gt;-->
+<!--&lt;!&ndash;              <unanswered-card&ndash;&gt;-->
+<!--&lt;!&ndash;                  :post_id="post.id"&ndash;&gt;-->
+<!--&lt;!&ndash;                  :question="post.question">&ndash;&gt;-->
+<!--&lt;!&ndash;              </unanswered-card>&ndash;&gt;-->
 
-          </div>
-        </el-scrollbar>
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+
+<!--          </div>-->
+<!--        </el-scrollbar>-->
       </el-tab-pane>
 
       <el-tab-pane label="已答">

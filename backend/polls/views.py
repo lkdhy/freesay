@@ -53,10 +53,11 @@ def hello(request):
     })
 
 def random_avatar():
+    # 注意用 utf-8 编码
     with open('polls/avatars.txt', encoding='utf-8') as avatar_file:
         avatar_urls = avatar_file.readlines()
         # print(avatar_urls, avatar_urls.index('###'))
-        print(avatar_urls[0:avatar_urls.index('###\n')])
+        # print(avatar_urls[0:avatar_urls.index('###\n')])
     return random.choice(avatar_urls[0:avatar_urls.index('###\n')])
 
 def register(request):
