@@ -9,6 +9,7 @@ const props = defineProps({
   answer: String,
   tags: [String],
   host: String, poster: String,
+  hostAvatar: String, posterAvatar: String,
   thread: [String]
 })
 
@@ -37,14 +38,23 @@ watch(visible, () => {
           </p>
         </div>
         <el-divider content-position="right">
-          <avatar-username v-if="!anonymous" :host-name="host">
+          <avatar-username
+              v-if="!anonymous"
+              :host-name="poster"
+              :host-avatar="posterAvatar"
+          >
           </avatar-username>
         </el-divider>
         <div class="anwser-container">
           <el-space>
-            <el-avatar></el-avatar>
+            <el-avatar :src="hostAvatar">
+            </el-avatar>
             <p> {{ answer }} </p>
           </el-space>
+        </div>
+        <el-divider></el-divider>
+        <div>
+          [TODO] 这里是 thread
         </div>
       </div>
     </el-card>

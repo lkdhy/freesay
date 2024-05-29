@@ -3,9 +3,9 @@ import {ref, reactive, onBeforeMount, onBeforeUpdate, onUpdated} from "vue";
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import { GetBoxApi } from "@/request/api";
 import BoxCard from "@/components/BoxCard.vue";
-
 interface Box {
   username: string,
+  avatar: string,
   hostSignature: string,
   description: string
 }
@@ -16,14 +16,11 @@ const fetchBoxData = async () => {
   let res = await GetBoxApi();
   console.log('boxes请求完毕，结果是：', res);
   if (res.success) {
-    res.boxes.forEach(box => {
-      boxData.value.push({
-        username: box.username,
-        hostSignature: box.hostSignature,
-        description: box.description
-      });
-    })
-    total.value = res.total_boxes;
+    // res.boxes.forEach(box => {
+    //   boxData.value.push(box);
+    // })
+    boxData.value = res.boxes
+    total.value = res.total_boxes
   } else {
     ElMessage.error('WTF, Boxes 请求失败')
   }
@@ -44,6 +41,7 @@ margin-bottom: 1em">
         <box-card
             v-for="box of boxData"
             :host-name="box.username"
+            :host-avatar="box.avatar"
             :host-signature="box.hostSignature"
         >
           <template #desc>

@@ -5,6 +5,7 @@ from django.http import JsonResponse
 import json
 from .models import *
 from django.core.serializers import serialize
+import random
 # Create your views here.
 
 # def index(request):
@@ -51,7 +52,18 @@ def hello(request):
         'message': '你好，我是用 Django 写的后端。我们交互成功了！'
     })
 
+def random_avatar():
+    with open('polls/avatars.txt', encoding='utf-8') as avatar_file:
+        avatar_urls = avatar_file.readlines()
+        # print(avatar_urls, avatar_urls.index('###'))
+        print(avatar_urls[0:avatar_urls.index('###\n')])
+    return random.choice(avatar_urls[0:avatar_urls.index('###\n')])
+
 def register(request):
+    '''
+        用户注册时后端给他随机一个头像
+    '''
+    avatar = random_avatar()
     data = json.loads(request.body)
     username = data.get('username', 'WTF, no username?!')
     pwd = data.get('password', 'WTF, no password?!')
@@ -66,7 +78,10 @@ def register(request):
                 'success': False,
                 'message': 'sorry~ 该用户名已被注册，请重新输入~'
             })
-        stu = User(username=username, user_pwd=pwd, first_name=first_name, last_name=last_name, email=email)
+        stu = User(
+            username=username, user_pwd=pwd, avatar=avatar,
+            first_name=first_name, last_name=last_name, email=email
+        )
         stu.save()
         return JsonResponse({
             'success': True,
@@ -79,6 +94,7 @@ def register(request):
             'message': '请输入完整信息！'
         })
 
+# 已增加头像
 def userinfo(request):
     print('enter getuserinfo')
     username = request.GET.get('username')
@@ -88,6 +104,7 @@ def userinfo(request):
         'message': f'成功请求用户{username}的信息',
         'userinfo': {
             'username': username, 
+            'avatar': user.avatar,
             'email': user.email,
             'signature': user.signature
         }

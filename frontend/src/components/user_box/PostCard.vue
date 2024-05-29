@@ -7,7 +7,9 @@ import {fa} from "element-plus/es/locale";
 // props
 const props = defineProps({
   hostName: String,
+  hostAvatar: String,
   askerName: String,
+  askerAvatar: String,
   anonymous: Boolean,
   question: String,
   answer: String,
@@ -44,14 +46,19 @@ const fullTapeVisible = ref(false)
           </div>
           <el-divider content-position="right">
             <avatar-username v-if="!anonymous"
-                             :host-name="askerName">
+                             :host-name="askerName"
+                             :host-avatar="askerAvatar"
+            >
             </avatar-username>
             <!--          <p v-else>匿名</p>-->
             <!--          <el-avatar size="small"></el-avatar>-->
           </el-divider>
           <div class="anwser-container">
             <el-space>
-              <el-avatar size="default"></el-avatar>
+              <el-avatar
+                  :src="hostAvatar"
+                  size="default"
+              ></el-avatar>
               <p> {{ answer }}</p>
             </el-space>
           </div>
@@ -67,8 +74,8 @@ const fullTapeVisible = ref(false)
         public = true
         :question = question
         :answer = answer
-        :poster = askerName
-        :host = hostName
+        :poster = askerName :host = hostName
+        :poster-avatar="askerAvatar" :host-avatar="hostAvatar"
         :tags="tags"
     >
 

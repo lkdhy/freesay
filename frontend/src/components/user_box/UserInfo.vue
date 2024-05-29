@@ -5,6 +5,7 @@ import { SetSignature } from "@/request/api";
 // props
 const props = defineProps({
   username: String,
+  avatar: String,
   email: String,
   signature: String
 })
@@ -20,6 +21,7 @@ const modifySignature = async () => {
   console.log(input_signature.value)
   if (!input_signature.value.length) return
 
+  // TODO
   const set_res = await SetSignature({
     username: props.username,
     signature: input_signature.value
@@ -34,8 +36,14 @@ const modifySignature = async () => {
 </script>
 
 <template>
-  <el-avatar size="large" shape="square">
-  </el-avatar>
+<!--  <el-avatar size="large" shape="square">-->
+<!--  </el-avatar>-->
+
+  <el-avatar
+      :src="avatar"
+      :size="100"
+      shape="circle"
+  ></el-avatar>
 
   <div>
     <p>{{ username }}</p>

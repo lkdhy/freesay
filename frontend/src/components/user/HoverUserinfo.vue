@@ -4,6 +4,7 @@ import {ref} from "vue";
 // props
 const props = defineProps({
   hostName: String,
+  hostAvatar: String,
   hostSignature: String
 })
 
@@ -16,8 +17,12 @@ const showRecentAnswer = ref(false)
 <!--  你好啊，我是{{ hostName }}，下面是我的个性签名-->
 
   <el-space>
-    <el-avatar :icon="UserFilled" size="large" shape="square"></el-avatar>
+<!--    <el-avatar :icon="UserFilled" size="large" shape="square"></el-avatar>-->
 
+    <el-avatar
+        :src="hostAvatar"
+        :size="60"
+    ></el-avatar>
     <p> {{ hostName }}</p>
   </el-space>
 

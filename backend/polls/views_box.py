@@ -26,6 +26,7 @@ def share(request):
 
     })
 
+# 已增加头像
 def box(request):
     print('enter box')
     records = Box.objects.all().order_by('-box_id')
@@ -41,11 +42,13 @@ def box(request):
         try:
             user = User.objects.get(user_id=host_id)
             username = user.username
+            avatar = user.avatar
             signature = user.signature
         except User.DoesNotExist:
             username = None
         updated_item = {
             'username': username,
+            'avatar': avatar,
             'hostSignature': signature,
             'description': item.get('descr')
         }
@@ -103,6 +106,7 @@ def post(request):
         'message': '成功post问题及标签（若有）'
     })
 
+# 已增加提问者的头像 asker_avatar
 def gethostpost(request):
     print('enter gethostpost')
     username = request.GET.get('username', None)
@@ -122,11 +126,13 @@ def gethostpost(request):
             tag_name = Tag.objects.get(tag_id=tag_id).tag_name
             tag_name_list.append(tag_name)
         # 返回 asker_name 从而在 is_anonymous 为 false 时显示
-        asker_name = User.objects.get(user_id=item.get('poster_id')).username
+        # asker_name = User.objects.get(user_id=item.get('poster_id')).username
+        asker = User.objects.get(user_id=item.get('poster_id'))
         updated_item = {
             'id': post_id,
             'username': username,
-            'asker_name': asker_name,
+            'asker_name': asker.username,
+            'asker_avatar': asker.avatar,
             'question': item.get('question'),
             'answer': item.get('answer'),
             'is_anonymous': item.get('is_anonymous'),

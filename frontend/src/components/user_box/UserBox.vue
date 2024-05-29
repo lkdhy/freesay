@@ -12,8 +12,9 @@ const router = useRouter()
 const visitedUser = router.currentRoute.value.params.username
 
 interface GotPost {
-  id: number, username: string,
+  id: number, username: string
   asker_name: string
+  asker_avatar: string
   is_anonymous: boolean
   is_public: boolean
   question: string, answer: string
@@ -21,11 +22,12 @@ interface GotPost {
 }
 interface GotUserInfo {
   username: string,
+  avatar: string,
   email: string,
   signature: string
 }
 const userInfo = ref<GotUserInfo>({
-  username: '', email: '', signature: ''
+  username: '', email: '', signature: '', avatar: ''
 })
 const posts = ref<GotPost[]>([])
 
@@ -88,7 +90,9 @@ onBeforeMount(async () => {
               <post-card v-for="post in posts"
                          v-show="post.is_public"
                          :host-name="visitedUser"
+                         :host-avatar="userInfo.avatar"
                          :asker-name="post.asker_name"
+                         :asker-avatar="post.asker_avatar"
                          :anonymous="post.is_anonymous"
                          :question="post.question"
                          :answer="post.answer"
@@ -103,6 +107,7 @@ onBeforeMount(async () => {
     <div class="right">
       <user-info
           :username="userInfo.username"
+          :avatar="userInfo.avatar"
           :email="userInfo.email"
           :signature="userInfo.signature"
       >

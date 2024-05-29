@@ -10,6 +10,8 @@ class User(models.Model):
     last_name = models.CharField(max_length=30, null=False)
     email = models.EmailField()
     signature = models.CharField(max_length=150, null=False)
+    # 设了个默认值
+    avatar = models.CharField(max_length=200, default='https://img.touxiangwu.com/uploads/allimg/2022040509/vhiakjotlyc.jpg')
 # 定义盒子表
 class Box(models.Model):
     box_id = models.AutoField(primary_key=True)

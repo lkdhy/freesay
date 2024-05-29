@@ -27,6 +27,7 @@ interface ReqStatus {
 interface User {
     is_active: boolean,
     username: string,
+    avatar: string,
     email: string,
     is_superuser: boolean,
     first_name: string,
@@ -37,6 +38,7 @@ interface User {
 
 interface Box {
     username: string,
+    avatar: string,
     hostSignature: string,
     description: string
 }
@@ -51,6 +53,7 @@ interface Post {
 interface GotPost {
     id: number
     asker_name: string
+    asker_avatar: string
     username: string
     question: string
     answer: string
