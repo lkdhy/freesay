@@ -14,7 +14,7 @@ const props = defineProps({
 <!--    <el-space alignment="center" spacer="|">-->
     <el-popover
         :width=300
-        placement="top-start"
+        placement="bottom"
         class="popover-container"
     >
       <template #reference>

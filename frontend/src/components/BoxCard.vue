@@ -30,24 +30,30 @@ const jump2userBox = (hostName: string) => {
 </script>
 
 <template>
-  <div>
-    <el-card shadow="hover" class="boxCard">
-      <el-tooltip
-        content="点击向TA提问"
-      >
-        <div @click="jump2userBox(<string>hostName)">
-          <p><slot name="desc"></slot></p>
-        </div>
-      </el-tooltip>
-      <template #footer>
-        <avatar-username
-            :host-name="hostName"
-            :host-avatar="hostAvatar"
-            :host-signature="hostSignature"
+    <div>
+      <el-card shadow="hover" class="boxCard">
+        <el-tooltip
+            content="点击进入TA的提问箱"
+            placement="top"
         >
-        </avatar-username>
-      </template>
-    </el-card>
+          <div @click="jump2userBox(<string>hostName)"
+               class="question-container"
+          >
+            <p><slot name="desc"></slot></p>
+          </div>
+        </el-tooltip>
+        <template #footer>
+          <div class="footer-container">
+            <avatar-username
+                :host-name="hostName"
+                :host-avatar="hostAvatar"
+                :host-signature="hostSignature"
+            >
+            </avatar-username>
+          </div>
+        </template>
+      </el-card>
+    </div>
 <!--    <el-dialog v-model="PostVisible">-->
 <!--      <template #header="{ titleClass }" >-->
 <!--        <h3>-->
@@ -83,7 +89,6 @@ const jump2userBox = (hostName: string) => {
 <!--&lt;!&ndash;        </div>&ndash;&gt;-->
 <!--&lt;!&ndash;      </template>&ndash;&gt;-->
 <!--    </el-dialog>-->
-  </div>
 </template>
 
 <style scoped>
@@ -92,11 +97,24 @@ const jump2userBox = (hostName: string) => {
   width: 300px;
   margin-left: 5em;
   /* margin-bottom: 1.5em; */
-  
+
   /*  added */
   border-radius: 10px;
 }
 .hostInfo {
   text-align: center;
+}
+.question-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 10px;
 }
 </style>

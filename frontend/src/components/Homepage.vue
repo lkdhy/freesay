@@ -28,7 +28,11 @@ interface GotPost {
   tags: string[]
   thread: string[]
 }
-const tapeData = ref<GotPost>({})
+const tapeData = ref<GotPost>({
+  id: 0, asker_name: '', asker_avatar: '', is_anonymous: true,
+  is_public: true, username: '', question: '',
+  answer: '', tags: [], thread: []
+})
 const curUser = ref<string>(userStore.userName);
 const visitedUser = ref<string>(userStore.visitedUserName);
 console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
@@ -83,8 +87,9 @@ onBeforeMount(async () => {
 const handleCurrentChange = (post: GotPost) => {
   console.log('选中了这一行，其信息如下')
   console.log(post)
-  tapeData.value.username = post.username
+  tapeData.value = post
   fullTapeVisible.value = true
+  console.log(tapeData.value)
 }
 
 const fullTapeVisible = ref(false)
@@ -101,14 +106,16 @@ const fullTapeVisible = ref(false)
   <full-tape
       v-if="fullTapeVisible"
       @close="fullTapeVisible = false"
-      :anonymous="tapeData?.is_anonymous"
-      :public="tapeData?.is_public"
-      :answer="tapeData?.answer"
-      :tags="tapeData?.tags"
+      :id="tapeData.id"
+      :anonymous="tapeData.is_anonymous"
+      :public="tapeData.is_public"
+      :question="tapeData.question"
+      :answer="tapeData.answer"
+      :tags="tapeData.tags"
       :host="visitedUser"
-      :poster="tapeData?.asker_name"
-      :poster-avatar="tapeData?.asker_avatar"
-      host-avatar=undefined
+      :poster="tapeData.asker_name"
+      :poster-avatar="tapeData.asker_avatar"
+      host-avatar=''
   >
   </full-tape>
 
@@ -140,11 +147,14 @@ const fullTapeVisible = ref(false)
         >
           <el-table-column label="From" width="200">
             <template #default="scope">
-              <avatar-username
+              <avatar-username v-if="!scope.row.is_anonymous"
                   :host-name="scope.row.asker_name"
                   :host-avatar="scope.row.asker_avatar"
               >
               </avatar-username>
+              <el-avatar v-else shape="square">
+                ?
+              </el-avatar>
             </template>
           </el-table-column>
           <el-table-column label="Question" prop="question">
@@ -153,10 +163,20 @@ const fullTapeVisible = ref(false)
           <el-table-column label="Tag">
             <template #default="scope">
               <el-space>
-                <el-tag v-for="tag in scope.row.tags">
+                <el-tag v-for="tag in scope.row.tags" round>
                   {{ tag }}
                 </el-tag>
               </el-space>
+            </template>
+          </el-table-column>
+          <el-table-column label="Setting">
+            <template #default="scope">
+              <div>
+<!--                <el-tag v-if="scope.row.is_anonymous">匿名</el-tag>-->
+<!--                <el-tag v-else>实名</el-tag>-->
+                <el-tag v-if="scope.row.is_public">公开</el-tag>
+                <el-tag v-else>私密</el-tag>
+              </div>
             </template>
           </el-table-column>
         </el-table>
