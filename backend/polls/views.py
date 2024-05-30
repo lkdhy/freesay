@@ -31,18 +31,20 @@ def login(request):
     find_user = User.objects.filter(username=u, user_pwd=p).count()
     #print(find_user)
     if find_user > 0:
+        user = User.objects.filter(username=u)[0]
         return JsonResponse({
             'success': True,
             'message': '恭喜！登陆成功~',
-            'username': data.get('username', 'WTF, no username?!'),
-            'password': data.get('password', 'WTF, no password?!')
+            'userinfo': {
+                'username': user.username,
+                'avatar': user.avatar,
+                'signature': user.signature,
+            }
         })
     else:
         return JsonResponse({
             'success': False,
             'message': '骚瑞，密码或用户名错误了~',
-            'username': data.get('username', 'WTF, no username?!'),
-            'password': data.get('password', 'WTF, no password?!')
         })
 
 def hello(request):

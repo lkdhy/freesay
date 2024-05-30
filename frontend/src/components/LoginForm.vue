@@ -64,8 +64,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('登录结果：', res);
       if (res.success) {
         successMessage(ruleForm.userName);
-        userStore.userName = ruleForm.userName;
-        userStore.isAdmin = res.isAdmin;
+        userStore.userName = res.userinfo.username;
+        userStore.avatar = res.userinfo.avatar;
+        userStore.signature = res.userinfo.signature;
         await router.push('/plaza');
       } else {
         failMessage();

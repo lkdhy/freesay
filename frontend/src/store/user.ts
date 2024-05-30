@@ -7,8 +7,21 @@ export const useUserstore = defineStore(
             return {
                 // initial: empty string
                 userName: '',
+                avatar: '',
+                signature: '',
                 isAdmin: false,
                 visitedUserName: ''
+            }
+        }
+    }
+)
+
+export const useTagsStore = defineStore(
+    'tags',
+    {
+        state() {
+            return {
+                tags: []
             }
         }
     }

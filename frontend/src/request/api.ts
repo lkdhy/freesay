@@ -142,7 +142,7 @@ export const TestHello = (): Res<null> =>
     instance.get('/api/hello');
 
 //登录 api
-export const LoginApi = (data: ReqLogin): Res<null> =>
+export const LoginApi = (data: ReqLogin): GetUserRes =>
     instance.post('/api/login', data);
 
 //注册 api

@@ -51,6 +51,12 @@ onBeforeMount(async () => {
   console.log('这个用户的帖子请求结果：', res);
   if (res.success) {
     res.posts.forEach(post => {
+      for (let tag of post.tags) {
+        if (!relatedTags.value.includes(tag)) {
+          console.log(tag)
+          relatedTags.value.push(tag)
+        }
+      }
       if (!isMine) {
         if (post.answer.length
             && (post.is_public || post.username===curUser.value)) {
@@ -94,6 +100,13 @@ const handleCurrentChange = (post: GotPost) => {
 
 const fullTapeVisible = ref(false)
 
+const filterTag = (value: string, row: GotPost) => {
+  return row.tags.includes(value)
+}
+const filterSetting = (value: boolean, row: GotPost) => {
+  return row.is_public === value
+}
+const relatedTags = ref<string[]>([])
 </script>
 
 <template>
@@ -140,6 +153,7 @@ const fullTapeVisible = ref(false)
 
     <el-tabs>
       <el-tab-pane label="未答" v-if="isMine">
+        <!--            highlight-current-row-->
         <el-table
             :data="p1"
             @current-change="handleCurrentChange"
@@ -160,7 +174,14 @@ const fullTapeVisible = ref(false)
           <el-table-column label="Question" prop="question">
 
           </el-table-column>
-          <el-table-column label="Tag">
+          <el-table-column
+              label="Tag"
+              :filters="relatedTags.map(tag => Object({
+                text: tag, value: tag,
+              }))"
+              :filter-method="filterTag"
+              filter-placement="top-end"
+          >
             <template #default="scope">
               <el-space>
                 <el-tag v-for="tag in scope.row.tags" round>
@@ -169,7 +190,14 @@ const fullTapeVisible = ref(false)
               </el-space>
             </template>
           </el-table-column>
-          <el-table-column label="Setting">
+          <el-table-column
+              label="Setting"
+              :filters="[
+                  { text: '公开', value: true },
+                  { text: '私密', value: false },
+              ]"
+              :filter-method="filterSetting"
+          >
             <template #default="scope">
               <div>
 <!--                <el-tag v-if="scope.row.is_anonymous">匿名</el-tag>-->
