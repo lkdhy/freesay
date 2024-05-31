@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref, watch} from "vue"
-import {AnswerApi} from "@/request/api";
+import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
 import {ElMessage, ElNotification as notify } from 'element-plus';
@@ -40,22 +40,36 @@ const submitResponse = async (response: string) => {
     ElMessage.error('请输入！')
     return
   }
-  const res = await AnswerApi({
-    id: <number>props.id, // 类型断言
-    answer: response,
-    is_public: true,
-  })
-  // console.log('answer结果', res);
-  if (res.success) {
-    // console.log('answer表单提交成功');
-    ElMessage({
-      message: '已回复',
-      type: 'success'
-    });
-    // TODO:
-    // refresh()
+  if (1 > 0) {
+    const res = await AnswerApi({
+      id: <number>props.id, // 类型断言
+      answer: response,
+      is_public: true,
+    })
+    if (res.success) {
+      ElMessage({
+        message: '已回复',
+        type: 'success'
+      });
+      // TODO:
+      // refresh()
+    } else {
+      console.log('WTF, 回复提问失败');
+    }
   } else {
-    console.log('WTF, 回复提问失败');
+    const res = await UpdateThread({
+      id: <number>props.id,
+      tid: 0, // TODO
+      content: response,
+    })
+    if (res.success) {
+      ElMessage({
+        message: '已回复',
+        type: 'success'
+      });
+    } else {
+      console.log('WTF, 回复提问失败');
+    }
   }
 }
 </script>

@@ -8,6 +8,7 @@ import UnansweredCard from "@/components/UnansweredCard.vue";
 import PostCard from "@/components/user_box/PostCard.vue"
 import FullTape from "@/components/full_tape/FullTape.vue";
 import AvatarUsername from "@/components/user/AvatarUsername.vue";
+import {ElTable} from "element-plus";
 // props
 const props = defineProps({
 })
@@ -64,12 +65,12 @@ onBeforeMount(async () => {
         }
         console.log('p2:', p2.value);
       } else {
-        if (!post.answer.length) {
+        // if (!post.answer.length) {
+        //   p1.value.push(post);
+        // } else {
           p1.value.push(post);
-        } else {
-          p2.value.push(post);
           console.log(post);
-        }
+        // }
       }
     })
   } else {
@@ -90,6 +91,7 @@ onBeforeMount(async () => {
   }
 })
 
+const singleTableRef = ref<InstanceType<typeof ElTable>>()
 const handleCurrentChange = (post: GotPost) => {
   console.log('选中了这一行，其信息如下')
   console.log(post)
@@ -118,7 +120,10 @@ const relatedTags = ref<string[]>([])
 
   <full-tape
       v-if="fullTapeVisible"
-      @close="fullTapeVisible = false"
+      @close="
+        fullTapeVisible = false;
+        singleTableRef!.setCurrentRow(-1)
+      "
       :id="tapeData.id"
       :anonymous="tapeData.is_anonymous"
       :public="tapeData.is_public"
@@ -152,10 +157,12 @@ const relatedTags = ref<string[]>([])
   <div>
 
     <el-tabs>
-      <el-tab-pane label="未答" v-if="isMine">
+      <el-tab-pane label="我问的" v-if="isMine">
         <!--            highlight-current-row-->
         <el-table
+            ref="singleTableRef"
             :data="p1"
+            highlight-current-row
             @current-change="handleCurrentChange"
             height="400"
         >
@@ -188,6 +195,16 @@ const relatedTags = ref<string[]>([])
                   {{ tag }}
                 </el-tag>
               </el-space>
+            </template>
+          </el-table-column>
+          <el-table-column label="status">
+            <template #default="scope">
+              <el-tag v-if="scope.row.anwser && scope.row.anwser.length > 0">
+                已回答
+              </el-tag>
+              <el-tag v-else>
+                未回答
+              </el-tag>
             </template>
           </el-table-column>
           <el-table-column

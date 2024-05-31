@@ -68,8 +68,14 @@ type Res<T> = Promise<ItypeAPI<T>>;
 type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
 type GetUserRes = Promise<GetUserInfoItypeAPI>
+type TagRes = Promise<GetTagsItypeAPI>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
+interface GetTagsItypeAPI {
+    success: boolean
+    message: string
+    tags: string[]
+}
 interface GetUserInfoItypeAPI {
     success: string | null,
     message: string,
@@ -117,12 +123,14 @@ interface ItypeAPI_2<T> {
 }
 
 // my APIs
+export const GetTags = (): TagRes =>
+    instance.get('/api/tags')
+export const UpdateThread = (params: {id: number, content: string}): Res<null> =>
+    instance.post('/api/thread', params)
 export const GetUserInfo = (params: {'username': string}): GetUserRes =>
     instance.get('/api/userinfo', {params})
-
 export const SetSignature = (params: {'username': string, 'signature': string}): Res<null> =>
    instance.post('/api/setsignature', params)
-
 export const GetBoxApi = (): BoxRes<null> =>
     instance.get('/api/box');
 export const ShareApi = (data: ReqShare): Res<null> =>

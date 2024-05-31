@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUserstore } from "@/store/user";
-import { ref } from "vue"
-import { PostApi } from "@/request/api";
+import {onBeforeMount, onMounted, ref} from "vue"
+import { PostApi, GetTags } from "@/request/api";
 import {ElMessage} from "element-plus";
 
 const userStore = useUserstore()
@@ -12,7 +12,7 @@ const props = defineProps({
 
 const submitQuestion = async (question: string) => {
   if (question.length === 0) return
-  console.log('准备 post 帖子');
+  // console.log('准备 post 帖子');
   const res = await PostApi({
     username: userStore.userName,
     hostUsername: <string>props.hostName,
@@ -21,7 +21,7 @@ const submitQuestion = async (question: string) => {
     is_anonymous: is_anonymous.value,
     tags: selected_tags.value
   })
-  console.log('post结果', res);
+  // console.log('post结果', res);
   if (res.success) {
     console.log('post表单提交成功');
     ElMessage({
@@ -35,17 +35,20 @@ const submitQuestion = async (question: string) => {
   }
 }
 
+onBeforeMount(async () => {
+  console.log('我是post-dialog')
+})
 const visible = ref(false)
 const question = ref('')
 const is_public = ref(true)
 const is_anonymous = ref(true)
 // as to tags
 const selected_tags = ref<string[]>([])
-const tag_options = [
+const tag_options = ref([
   { tag: '恋爱', label: '恋爱' },
   { tag: '学习', label: '学习' },
   { tag: '动漫', label: '动漫' },
-]
+])
 
 // 14 个推荐问题
 let ref_questions = [
@@ -68,6 +71,16 @@ ref_questions.sort((a, b) => {
   return Math.random() < 0.5 ? 1 : -1
 })
 
+const getExistingTags = async () => {
+  const res = await GetTags()
+  if (res.success) {
+    console.log(res.message)
+    tag_options.value = res.tags.map(tag => ({ tag: tag, label: tag }))
+    console.log(tag_options.value)
+  } else {
+    console.log('WTF, 现有标签请求失败')
+  }
+}
 </script>
 
 <template>
@@ -124,6 +137,7 @@ ref_questions.sort((a, b) => {
 
     <div class="tag-select-container">
       <el-select
+          @focus="getExistingTags"
           v-model="selected_tags"
           multiple
           filterable
