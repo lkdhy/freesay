@@ -3,6 +3,8 @@ from django.urls import path
 from . import views
 from . import views_box
 from . import views_post
+from . import view_tag
+from . import views_thread
 
 urlpatterns = [
     path("hello", views.hello, name="helloTest"),
@@ -17,5 +19,8 @@ urlpatterns = [
     path("getpost", views_box.getpost, name="getpost"),
     path("answer", views_box.answer, name="answer"),
     path("setsignature", views_post.setsignature, name="setsignature"),
-    path("userinfo", views.userinfo, name="userinfo")
+    path("userinfo", views.userinfo, name="userinfo"),
+    path("tags", view_tag.gettags, name="gettags"),
+    # TODO
+    path("thread", views_thread.appendthread, name="appendthread")
 ]

@@ -115,6 +115,7 @@ def gethostpost(request):
     posts_list = list(posts.values())
     # print(posts_json)
     updated_data = []
+    # TODO: 考虑所有thread并返回
     for item in posts_list:
         post_id = item.get('post_id')
         # 得到所有 tags
@@ -138,6 +139,8 @@ def gethostpost(request):
             'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public'),
             'tags': tag_name_list,
+            # TODO
+            'thread': [],
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(host_id=host_id).count()
@@ -155,6 +158,7 @@ def getpost(request):
     posts_list = list(posts.values())
     #print(posts_list)
     updated_data = []
+    # TODO: 考虑所有thread并返回
     for item in posts_list:
         hostname = User.objects.get(user_id = item.get('host_id')).username
         post_id = item.get('post_id')
@@ -174,6 +178,8 @@ def getpost(request):
             'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public'),
             'tags': tag_name_list,
+            # TODO
+            'thread': [],
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(poster_id=poster_id).count()
