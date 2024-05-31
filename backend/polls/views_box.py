@@ -156,11 +156,12 @@ def getpost(request):
     poster_id = User.objects.get(username=username).user_id
     posts = Post.objects.filter(poster_id=poster_id).order_by('-post_id')
     posts_list = list(posts.values())
-    #print(posts_list)
+    # print(posts_list)
     updated_data = []
     # TODO: 考虑所有thread并返回
     for item in posts_list:
-        hostname = User.objects.get(user_id = item.get('host_id')).username
+        host = User.objects.get(user_id = item.get('host_id'))
+        hostname = host.username
         post_id = item.get('post_id')
         with_tags = with_tag.objects.filter(post_id_with_id=post_id)
         with_tag_list = list(with_tags.values())
@@ -169,10 +170,10 @@ def getpost(request):
             tag_id = each_with_tag.get('tag_id_with_id')
             tag_name = Tag.objects.get(tag_id=tag_id).tag_name
             tag_name_list.append(tag_name)
-        #print(tag_name_list, '!tagname!\n')
         updated_item = {
             'id': post_id,
-            'username': hostname, ##???
+            'username': hostname, ##??? ——对的
+            'user_avatar': host.avatar,
             'question': item.get('question'),
             'answer': item.get('answer'),
             'is_anonymous': item.get('is_anonymous'),

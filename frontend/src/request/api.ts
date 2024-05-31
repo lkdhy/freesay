@@ -55,6 +55,7 @@ interface GotPost {
     asker_name: string
     asker_avatar: string
     username: string
+    user_avatar: string
     question: string
     answer: string
     is_anonymous: boolean

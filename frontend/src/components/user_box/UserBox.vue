@@ -84,9 +84,6 @@ onBeforeMount(async () => {
                 size="large"
                 wrap
             >
-<!--              <post-card v-for="i in [1,2,3,4,5,6,7,8,9,1,1,1,1,1,1,1,1,1,1,1,1]">-->
-
-<!--              </post-card>-->
               <post-card v-for="post in posts"
                          v-show="post.is_public"
                          :host-name="visitedUser"
@@ -98,7 +95,6 @@ onBeforeMount(async () => {
                          :answer="post.answer"
                          :tags="post.tags"
               >
-
               </post-card>
             </el-space>
         </el-scrollbar>

@@ -59,7 +59,6 @@ const submitResponse = async (response: string) => {
   } else {
     const res = await UpdateThread({
       id: <number>props.id,
-      tid: 0, // TODO
       content: response,
     })
     if (res.success) {
@@ -79,7 +78,7 @@ const submitResponse = async (response: string) => {
   >
     <div class="full-tape-container"
     >
-    <el-card>
+    <el-card shadow="never">
       <div class="tags-container">
         <el-tag v-for="tag in tags">
           {{ tag }}

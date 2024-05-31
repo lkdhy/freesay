@@ -4,8 +4,6 @@ import {useRouter} from 'vue-router';
 import {GetHostPostApi, GetPostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
 import PostDialog from "@/components/PostDialog.vue";
-import UnansweredCard from "@/components/UnansweredCard.vue";
-import PostCard from "@/components/user_box/PostCard.vue"
 import FullTape from "@/components/full_tape/FullTape.vue";
 import AvatarUsername from "@/components/user/AvatarUsername.vue";
 import {ElTable} from "element-plus";
@@ -15,8 +13,6 @@ const props = defineProps({
 
 const router = useRouter();
 const userStore = useUserstore();
-console.log(`当前访问用户是${userStore.visitedUserName}`);
-console.log(`你是${userStore.userName}`);
 interface GotPost {
   id: number
   asker_name: string
@@ -24,6 +20,7 @@ interface GotPost {
   is_anonymous: boolean
   is_public: boolean
   username: string
+  user_avatar: string
   question: string
   answer: string
   tags: string[]
@@ -31,21 +28,21 @@ interface GotPost {
 }
 const tapeData = ref<GotPost>({
   id: 0, asker_name: '', asker_avatar: '', is_anonymous: true,
-  is_public: true, username: '', question: '',
-  answer: '', tags: [], thread: []
+  is_public: true, username: '', user_avatar: '', question: '',
+  answer: '', tags: [], thread: [],
 })
 const curUser = ref<string>(userStore.userName);
 const visitedUser = ref<string>(userStore.visitedUserName);
 console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
-const isMine = curUser.value === visitedUser.value;
+// const isMine = curUser.value === visitedUser.value;
 const p1 = ref<GotPost[]>([]);
 const p2 = ref<GotPost[]>([]);
-const p3 = ref<GotPost[]>([]);
-const p4 = ref<GotPost[]>([]);
-// console.log(isMine.value);
+// ---- 获取别人问自己的帖子 ----
+// TODO: 用两个 loading
+const loading = ref(true)
 
 onBeforeMount(async () => {
-  console.log('即将请求这个用户相关的帖子!')
+  // ---- 获取别人问自己的帖子 ----
   let res = await GetHostPostApi({
     username: visitedUser.value
   });
@@ -53,67 +50,71 @@ onBeforeMount(async () => {
   if (res.success) {
     res.posts.forEach(post => {
       for (let tag of post.tags) {
-        if (!relatedTags.value.includes(tag)) {
-          console.log(tag)
-          relatedTags.value.push(tag)
+        if (!relatedTags1.value.includes(tag)) {
+          relatedTags1.value.push(tag)
         }
       }
-      if (!isMine) {
-        if (post.answer.length
-            && (post.is_public || post.username===curUser.value)) {
-          p2.value.push(post);
-        }
-        console.log('p2:', p2.value);
-      } else {
-        // if (!post.answer.length) {
-        //   p1.value.push(post);
-        // } else {
-          p1.value.push(post);
-          console.log(post);
-        // }
-      }
+      p1.value.push(post);
+      console.log(post);
     })
   } else {
     console.log('WTF, host posts 请求失败')
   }
-  if (!isMine) return
+  // ---- 获取别人问自己的帖子 ----
+  // ---- 获取自己问别人的帖子 ----
   let res2 = await GetPostApi({
     username: visitedUser.value
   });
   if (res2.success) {
     res2.posts.forEach(post => {
-      if (post.answer.length) {
-        p3.value.push(post);
-      } else {
-        p4.value.push(post);
+      for (let tag of post.tags) {
+        if (!relatedTags2.value.includes(tag)) {
+          relatedTags2.value.push(tag)
+        }
       }
+      p2.value.push(post)
     })
+    // ---- 获取自己问别人的帖子 ----
+    loading.value = false
   }
 })
 
 const singleTableRef = ref<InstanceType<typeof ElTable>>()
-const handleCurrentChange = (post: GotPost) => {
-  console.log('选中了这一行，其信息如下')
-  console.log(post)
+const handleCurrentChange1 = (post: GotPost) => {
+  // console.log('选中了这一行，其信息如下')
+  // console.log(post)
   tapeData.value = post
+  tapeData.value.username = userStore.userName
+  tapeData.value.user_avatar = userStore.avatar
   fullTapeVisible.value = true
-  console.log(tapeData.value)
+}
+const handleCurrentChange2 = (post: GotPost) => {
+  tapeData.value = post
+  tapeData.value.asker_name = userStore.userName
+  tapeData.value.asker_avatar = userStore.avatar
+  fullTapeVisible.value = true
 }
 
 const fullTapeVisible = ref(false)
 
+// ------ filters ------
 const filterTag = (value: string, row: GotPost) => {
   return row.tags.includes(value)
 }
 const filterSetting = (value: boolean, row: GotPost) => {
   return row.is_public === value
 }
-const relatedTags = ref<string[]>([])
+const filterStatus = (value: boolean, row: GotPost) => {
+  return (row.answer.length > 0) === value
+}
+// ------ filters ------
+
+const relatedTags1 = ref<string[]>([])
+const relatedTags2 = ref<string[]>([])
 </script>
 
 <template>
-  <h2 v-if="isMine">我的主页</h2>
-  <h2 v-else>{{ visitedUser }} 的主页</h2>
+  <h2>我的主页</h2>
   <h3>
     你好 {{ curUser }}
   </h3>
@@ -122,7 +123,6 @@ const relatedTags = ref<string[]>([])
       v-if="fullTapeVisible"
       @close="
         fullTapeVisible = false;
-        singleTableRef!.setCurrentRow(-1)
       "
       :id="tapeData.id"
       :anonymous="tapeData.is_anonymous"
@@ -133,7 +133,7 @@ const relatedTags = ref<string[]>([])
       :host="visitedUser"
       :poster="tapeData.asker_name"
       :poster-avatar="tapeData.asker_avatar"
-      host-avatar=''
+      :host-avatar="tapeData.user_avatar"
   >
   </full-tape>
 
@@ -148,7 +148,7 @@ const relatedTags = ref<string[]>([])
     </el-descriptions-item>
   </el-descriptions>
 
-  <post-dialog v-if="!isMine">
+  <post-dialog>
     <template v-slot:hostName>
       {{ $route.params.id }}
     </template>
@@ -156,14 +156,14 @@ const relatedTags = ref<string[]>([])
 
   <div>
 
-    <el-tabs>
-      <el-tab-pane label="我问的" v-if="isMine">
+    <el-tabs v-loading="loading">
+      <el-tab-pane label="TA问我的">
         <!--            highlight-current-row-->
         <el-table
             ref="singleTableRef"
             :data="p1"
             highlight-current-row
-            @current-change="handleCurrentChange"
+            @current-change="handleCurrentChange1"
             height="400"
         >
           <el-table-column label="From" width="200">
@@ -179,11 +179,10 @@ const relatedTags = ref<string[]>([])
             </template>
           </el-table-column>
           <el-table-column label="Question" prop="question">
-
           </el-table-column>
           <el-table-column
               label="Tag"
-              :filters="relatedTags.map(tag => Object({
+              :filters="relatedTags1.map(tag => Object({
                 text: tag, value: tag,
               }))"
               :filter-method="filterTag"
@@ -197,9 +196,16 @@ const relatedTags = ref<string[]>([])
               </el-space>
             </template>
           </el-table-column>
-          <el-table-column label="status">
+          <el-table-column
+              label="Status"
+              :filters="[
+                  { text: '已回答', value: true },
+                  { text: '未回答', value: false },
+              ]"
+              :filter-method="filterStatus"
+          >
             <template #default="scope">
-              <el-tag v-if="scope.row.anwser && scope.row.anwser.length > 0">
+              <el-tag v-if="scope.row.answer.length > 0">
                 已回答
               </el-tag>
               <el-tag v-else>
@@ -225,73 +231,75 @@ const relatedTags = ref<string[]>([])
             </template>
           </el-table-column>
         </el-table>
-<!--        <el-scrollbar height="400px">-->
-<!--          <div class="canvas">-->
-<!--            <post-card v-for="post in p1"-->
-<!--                       v-show="post.is_public"-->
-<!--                       :host-name="visitedUser"-->
-<!--                       :asker-name="post.asker_name"-->
-<!--                       :anonymous="post.is_anonymous"-->
-<!--                       :question="post.question"-->
-<!--                       :answer="post.answer"-->
-<!--                       :tags="post.tags"-->
-<!--            >-->
-
-<!--            </post-card>-->
-<!--&lt;!&ndash;            <div v-for="post of p1">&ndash;&gt;-->
-<!--&lt;!&ndash;              <unanswered-card&ndash;&gt;-->
-<!--&lt;!&ndash;                  :post_id="post.id"&ndash;&gt;-->
-<!--&lt;!&ndash;                  :question="post.question">&ndash;&gt;-->
-<!--&lt;!&ndash;              </unanswered-card>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-
-<!--          </div>-->
-<!--        </el-scrollbar>-->
       </el-tab-pane>
 
-      <el-tab-pane label="已答">
-        <el-scrollbar height="400px">
-          <div class="canvas">
-            <div v-for="post of p2">
-              <post-card
-                  :post_id="post.id"
-                  :question="post.question"
-                  :answer="post.answer">
-              </post-card>
-            </div>
-          </div>
-        </el-scrollbar>
-      </el-tab-pane>
-
-      <el-tab-pane label="有回答" v-if="isMine">
-        <el-scrollbar height="400px">
-          <div class="canvas">
-            <div v-for="post of p3">
-              <post-card
-                  :post_id="post.id"
-                  :question="post.question"
-                  :answer="post.answer"
-                  :username="post.username">
-              </post-card>
-            </div>
-          </div>
-        </el-scrollbar>
-      </el-tab-pane>
-
-      <el-tab-pane label="未回答" v-if="isMine">
-        <el-scrollbar height="400px">
-          <div class="canvas">
-            <div v-for="post of p4">
-              <post-card
-                  :post_id="post.id"
-                  :question="post.question"
-                  :answer="post.answer"
-                  :username="post.username">
-              </post-card>
-            </div>
-          </div>
-        </el-scrollbar>
+      <el-tab-pane label="我问TA的">
+        <el-table
+            :data="p2"
+            highlight-current-row
+            @current-change="handleCurrentChange2"
+            height="400"
+        >
+          <el-table-column label="To" width="200">
+            <template #default="scope">
+              <avatar-username
+                  :host-name="scope.row.username"
+                  :host-avatar="scope.row.user_avatar"
+              >
+              </avatar-username>
+            </template>
+          </el-table-column>
+          <el-table-column label="Question" prop="question">
+          </el-table-column>
+          <el-table-column
+              label="Tag" width="200"
+              :filters="relatedTags2.map(tag => Object({
+                text: tag, value: tag,
+              }))"
+              :filter-method="filterTag"
+              filter-placement="top-end"
+          >
+            <template #default="scope">
+              <el-space>
+                <el-tag v-for="tag in scope.row.tags" round>
+                  {{ tag }}
+                </el-tag>
+              </el-space>
+            </template>
+          </el-table-column>
+          <el-table-column
+              label="Status" width="150"
+              :filters="[
+                  { text: '已回答', value: true },
+                  { text: '未回答', value: false },
+              ]"
+              :filter-method="filterStatus"
+          >
+            <template #default="scope">
+              <el-tag v-if="scope.row.answer.length > 0">
+                已回答
+              </el-tag>
+              <el-tag v-else>
+                未回答
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+              label="Setting"
+              :filters="[
+                  { text: '公开', value: true },
+                  { text: '私密', value: false },
+              ]"
+              :filter-method="filterSetting"
+          >
+            <template #default="scope">
+              <div>
+                <el-tag v-if="scope.row.is_public">公开</el-tag>
+                <el-tag v-else>私密</el-tag>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
     </el-tabs>
   </div>

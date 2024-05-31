@@ -11,10 +11,12 @@ interface Box {
 }
 const boxData = ref<Box[]>([]);
 const total = ref(100);
+const loading = ref(true)
 const fetchBoxData = async () => {
-  console.log('即将发送获取所有 boxes 的请求');
+  // console.log('即将发送获取所有 boxes 的请求');
+  loading.value = true
   let res = await GetBoxApi();
-  console.log('boxes请求完毕，结果是：', res);
+  // console.log('boxes请求完毕，结果是：', res);
   if (res.success) {
     // res.boxes.forEach(box => {
     //   boxData.value.push(box);
@@ -24,6 +26,7 @@ const fetchBoxData = async () => {
   } else {
     ElMessage.error('WTF, Boxes 请求失败')
   }
+  loading.value = false
 }
 
 onBeforeMount(fetchBoxData)
@@ -35,7 +38,10 @@ onBeforeMount(fetchBoxData)
 margin-bottom: 1em">
     广场
   </h2>
-  <el-scrollbar height="550px">
+  <el-scrollbar
+      v-loading="loading"
+      height="550px"
+  >
     <el-space wrap :size="20" alignment="center">
 <!--      <div v-for="box of boxData">-->
         <box-card

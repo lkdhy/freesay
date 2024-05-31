@@ -90,15 +90,16 @@ const submitForm = (formEl: FormInstance | undefined) => {
     display: flex;
     justify-content: space-between;
     align-items: center;">
-    <div class="Icons" style="
-    ;">
-      <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
-           alt="FDU" style="height: 50px;">
-      <p style="font-size: 28px;">
-        FDU Tape
-      </p>
-      <img src="@/assets/icons/chat-icon.svg"
-           alt="Logo" style="height: 40px;">
+    <div class="Icons" style=";">
+      <el-space size="large">
+        <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
+             alt="FDU" style="height: 50px;">
+        <p style="font-size: 28px;">
+          FDU Tape
+        </p>
+        <img src="@/assets/icons/chat-icon.svg"
+             alt="Logo" style="height: 40px;">
+      </el-space>
     </div>
 
     <div>
@@ -164,7 +165,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   flex-direction: row;
   align-items: center;
 }
-.Icons > * {
+/* .Icons > * {
   margin-right: 10px;
-}
+} */
 </style>
