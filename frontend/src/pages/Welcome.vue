@@ -53,7 +53,7 @@ const jump2Register = () => { router.push('/register'); }
 
       <el-main class="desc">
         <h2 class="title">
-          复旦大学 Tape 匿名提问箱
+          复旦大学 <span class="freesay">freesay</span> 匿名提问箱
         </h2>
         <h3 class="poem">
           卿云烂兮，乣缦缦兮

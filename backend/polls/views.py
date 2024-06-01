@@ -39,6 +39,7 @@ def login(request):
                 'username': user.username,
                 'avatar': user.avatar,
                 'signature': user.signature,
+                'email': user.email,
             }
         })
     else:

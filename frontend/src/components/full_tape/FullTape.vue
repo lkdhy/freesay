@@ -4,6 +4,8 @@ import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
 import {ElMessage, ElNotification as notify } from 'element-plus';
+import AvatarMessageLeft  from "@/components/full_tape/AvatarMessageLeft.vue";
+import AvatarMessageRight from "@/components/full_tape/AvatarMessageRight.vue";
 
 const props = defineProps({
   id: Number,
@@ -76,16 +78,13 @@ const submitResponse = async (response: string) => {
 <template>
   <el-dialog v-model="visible"
   >
-    <div class="full-tape-container"
-    >
-    <el-card shadow="never">
-      <div class="tags-container">
-        <el-tag v-for="tag in tags">
-          {{ tag }}
-        </el-tag>
-      </div>
-
+    <div class="full-tape-container">
       <div>
+        <div class="tags-container">
+          <el-tag v-for="tag in tags">
+            {{ tag }}
+          </el-tag>
+        </div>
         <div class="question-container">
           <p>
             {{ question }}
@@ -99,19 +98,27 @@ const submitResponse = async (response: string) => {
           >
           </avatar-username>
         </el-divider>
-        <div class="anwser-container">
-          <el-space>
-            <el-avatar :src="hostAvatar">
-            </el-avatar>
-            <p> {{ answer }} </p>
-          </el-space>
+      </div>
+      <div class="thread-container">
+        <div class="answer-container"
+             v-if="props.answer && props.answer.length > 0"
+        >
+          <avatar-message-left
+              :avatar="hostAvatar"
+              :message="answer"
+          ></avatar-message-left>
+
+<!--          <avatar-message-right-->
+<!--              :avatar="hostAvatar"-->
+<!--              :message="answer"-->
+<!--          ></avatar-message-right>-->
         </div>
-        <el-divider></el-divider>
+
         <div>
           [TODO] 这里是 thread（若有）
         </div>
       </div>
-    </el-card>
+<!--        <el-divider></el-divider>-->
 
     <div class="respond-area">
       <el-input
@@ -135,14 +142,14 @@ const submitResponse = async (response: string) => {
 .full-tape-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   min-height: 400px;
 }
 .question-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 20px;
 }
-
 
 </style>

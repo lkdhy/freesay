@@ -95,7 +95,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
              alt="FDU" style="height: 50px;">
         <p style="font-size: 28px;">
-          FDU Tape
+          FDU <span class="freesay">freesay</span>
         </p>
         <img src="@/assets/icons/chat-icon.svg"
              alt="Logo" style="height: 40px;">

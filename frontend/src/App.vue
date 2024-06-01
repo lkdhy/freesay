@@ -15,4 +15,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
   padding:0;
   border:0
 }
+.freesay {
+   font-style: italic;
+   font-family: Consolas;
+}
 </style>

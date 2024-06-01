@@ -9,6 +9,7 @@ export const useUserstore = defineStore(
                 userName: '',
                 avatar: '',
                 signature: '',
+                email: '',
                 isAdmin: false,
                 visitedUserName: ''
             }

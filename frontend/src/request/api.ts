@@ -18,12 +18,10 @@ interface ReqRegister {
     last_name: string
     email: string
 }
-
 interface ReqStatus {
     id: string
     navStatus: string
 }
-
 interface User {
     is_active: boolean,
     username: string,
@@ -35,7 +33,6 @@ interface User {
     signature: string,
     isAdmin: boolean
 }
-
 interface Box {
     username: string,
     avatar: string,

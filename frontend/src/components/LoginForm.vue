@@ -67,6 +67,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         userStore.userName = res.userinfo.username;
         userStore.avatar = res.userinfo.avatar;
         userStore.signature = res.userinfo.signature;
+        userStore.email = res.userinfo.email;
         await router.push('/plaza');
       } else {
         failMessage();
