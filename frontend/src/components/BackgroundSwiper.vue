@@ -21,6 +21,9 @@ const onSlideChange = () => {
       @slideChange="onSlideChange"
   >
     <swiper-slide>
+      <img src="@/assets/FDU_images/bright/江湾湖岸.jpg" alt="江湾湖岸">
+    </swiper-slide>
+    <swiper-slide>
       <img src="@/assets/FDU_images/bright/菜地.jpg" alt="菜地"/>
     </swiper-slide>
     <swiper-slide>
