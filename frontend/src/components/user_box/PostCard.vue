@@ -5,6 +5,7 @@ import FullTape from "@/components/full_tape/FullTape.vue";
 
 // props
 const props = defineProps({
+  id: Number,
   hostName: String,
   hostAvatar: String,
   askerName: String,
@@ -70,12 +71,15 @@ const fullTapeVisible = ref(false)
     <full-tape
         v-if="fullTapeVisible"
         @close="fullTapeVisible = false"
+        :id="id"
         :anonymous = anonymous
         :question = question
         :answer = answer
-        :poster = askerName :host = hostName
-        :poster-avatar="askerAvatar" :host-avatar="hostAvatar"
         :tags="tags"
+        :host = hostName
+        :poster = askerName
+        :poster-avatar="askerAvatar"
+        :host-avatar="hostAvatar"
         :thread="thread"
     >
 

@@ -35,12 +35,8 @@ const jump2Register = () => { router.push('/register'); }
         align-items: center;"
       >
         <div class="Icons">
-          <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg"
-               alt="Logo" style="height: 50px;">
-          <img src="@/assets/icons/chat-icon.svg"
-               alt="Logo" style="height: 40px;">
+          <img src="@/assets/icons/freesay-icon_FDU.svg"/>
         </div>
-
         <div>
           <el-button type="success" @click="jump2Login">
             登录
@@ -52,8 +48,8 @@ const jump2Register = () => { router.push('/register'); }
       </div>
 
       <el-main class="desc">
-        <h2 class="title">
-          复旦大学 <span class="freesay">freesay</span> 匿名提问箱
+        <h2 class="title two">
+          复旦大学 <span class="freesay">freesay</span> 提问箱
         </h2>
         <h3 class="poem">
           卿云烂兮，乣缦缦兮
@@ -77,30 +73,50 @@ const jump2Register = () => { router.push('/register'); }
   align-items: center;
 }
 .title {
-  font-size: 60px;
-  margin-bottom: 100px;
-  font-family: 华文细黑;
-  color: yellow;
+  opacity: 95%;
+  font-size: 90px;
+  margin-top: 40px;
+  margin-bottom: 175px;
+  color: transparent;
+  /* letter-spacing: 0.1rem; */
+  background-position: 0 0;
+  animation: animated-text 20s linear infinite;
+}
+@keyframes animated-text {
+  100% {
+    background-position: 200% 0;
+  }
+}
+.one {
+  -webkit-text-stroke: 1px rgba(16, 104, 31, 0.8);
+  background: url(
+  https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/e9d06cb6-2844-49ed-9bde-23d3364b9fa4);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.two {
+  -webkit-text-stroke: 1px yellow;
+  -webkit-text-stroke: 1px #fff;
+  background: url(
+  https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/ba4edde6-822d-437a-88c2-f54392d7a56f);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 .poem {
+  opacity: 90%;
   font-size: 30px;
-  font-family: 华文中宋;
-  margin-bottom: 10px;
-  color: blue;
+  /* font-family: 华文中宋; */
+  margin-top: 10px;
+  color: yellow;
 }
 .loginTip {
-  margin-top: 100px;
-  color: black;
+  margin-top: 150px;
+  color: white;
 }
-/*
-.Icons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
- */
 .Icons > * {
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  margin-top: 5px;
+  max-height: 45px;
 }
 
 </style>

@@ -15,6 +15,10 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
   padding:0;
   border:0
 }
+.background-image {
+  opacity: 98%;
+  filter: brightness(0.9);
+}
 .freesay {
    font-style: italic;
    font-family: Consolas;

@@ -14,26 +14,37 @@ const onSlideChange = () => {
       :slides-per-view="1"
       :loop="true"
       navigation
-      :autoplay="{ delay: 5000 }"
+      :autoplay="{ delay: 2000 }"
       :mousewheel="{ enabled: true }"
       :scrollbar="{ draggable: true }"
       :pagination="{ clickable: true }"
       @slideChange="onSlideChange"
   >
+    <swiper-slide class="Tmp">
+      <img src="@/assets/FDU_images/bright/江湾湖岸.jpg" alt="江湾湖岸"
+           class="background-image"
+      >
+    </swiper-slide>
+<!--    <swiper-slide>-->
+<!--      <img src="@/assets/FDU_images/bright/菜地.jpg" alt="菜地"-->
+<!--           class="background-image"-->
+<!--      />-->
+<!--    </swiper-slide>-->
     <swiper-slide>
-      <img src="@/assets/FDU_images/bright/江湾湖岸.jpg" alt="江湾湖岸">
+      <img src="@/assets/FDU_images/dark/任重入口.jpg" alt="任重入口"
+           class="background-image"
+      >
     </swiper-slide>
     <swiper-slide>
-      <img src="@/assets/FDU_images/bright/菜地.jpg" alt="菜地"/>
+      <img src="@/assets/FDU_images/bright/三教自习.jpg" alt="三教"
+           class="background-image"
+           style="filter: brightness(0.87)"
+      />
     </swiper-slide>
     <swiper-slide>
-      <img src="@/assets/FDU_images/dark/任重入口.jpg" alt="任重入口">
-    </swiper-slide>
-    <swiper-slide>
-      <img src="@/assets/FDU_images/bright/三教自习.jpg" alt="三教"/>
-    </swiper-slide>
-    <swiper-slide>
-      <img src="@/assets/FDU_images/dark/光草.jpg" alt="三教"/>
+      <img src="@/assets/FDU_images/dark/光草.jpg" alt="三教"
+           class="background-image"
+      />
     </swiper-slide>
   </swiper>
   </section>

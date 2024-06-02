@@ -87,6 +87,7 @@ onBeforeMount(async () => {
             >
               <post-card v-for="post in posts"
                          v-show="post.is_public"
+                         :id="post.id"
                          :host-name="visitedUser"
                          :host-avatar="userInfo.avatar"
                          :asker-name="post.asker_name"
