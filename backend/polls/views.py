@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 # 我们只要用 JsonResponse 返回 Json 对象即可，其直接接收Python的字典
 from django.http import JsonResponse
-import json
 from .models import *
 from django.core.serializers import serialize
+from . views_thread import get_thread
+import json
 import random
 # Create your views here.
 
@@ -49,7 +50,6 @@ def login(request):
         })
 
 def hello(request):
-    #print(2)
     return JsonResponse({
         'success': True, 
         'message': '你好，我是用 Django 写的后端。我们交互成功了！'
@@ -100,7 +100,7 @@ def register(request):
 
 # 已增加头像
 def userinfo(request):
-    print('enter getuserinfo')
+    # print('enter getuserinfo')
     username = request.GET.get('username')
     user = User.objects.get(username=username)
     return JsonResponse({
@@ -115,7 +115,7 @@ def userinfo(request):
     })
 
 def userslist(request):
-    print('enter userslist')
+    # print('enter userslist')
     data = json.loads(request.body)
     pageNumber = data.get('pageNumber')
     number = data.get('number')

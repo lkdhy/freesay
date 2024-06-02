@@ -19,4 +19,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
    font-style: italic;
    font-family: Consolas;
 }
+.tags-container {
+  display: flex;
+  gap: 8px;
+}
 </style>

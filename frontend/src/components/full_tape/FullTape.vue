@@ -3,20 +3,21 @@ import {ref, watch} from "vue"
 import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
+import {useUserstore} from "@/store/user";
 import {ElMessage, ElNotification as notify } from 'element-plus';
 import AvatarMessageLeft  from "@/components/full_tape/AvatarMessageLeft.vue";
 import AvatarMessageRight from "@/components/full_tape/AvatarMessageRight.vue";
 
+const userStore = useUserstore()
 const props = defineProps({
   id: Number,
   anonymous: Boolean,
-  public: Boolean,
   question: String,
   answer: String,
-  tags: [String],
+  tags: Array,
   host: String, poster: String,
   hostAvatar: String, posterAvatar: String,
-  thread: [String]
+  thread: Array<String>
 })
 
 const router = useRouter();
@@ -36,13 +37,48 @@ const refresh = () => {
   })
 }
 
+const thread_got = ref<Array<string>>(props.thread);
+// if (props.thread) thread_got.value = props.thread
+// console.log(thread_got.value)
+console.log('length', thread_got.value.length)
+const thread = ref<Array<Array<string>>>([])
+if (thread_got.value && thread_got.value.length>0 && thread_got.value[thread_got.value.length-1].length===0)
+  thread_got.value.pop()
+// console.log('length', thread_got.value.length)
+const real_len = thread_got.value.length
+if (thread_got.value && thread_got.value.length%2===1) {
+  thread_got.value.push('')
+}
+// console.log('length', thread_got.value.length)
+if (thread_got.value && props.thread) {
+  for (let i = 0; i < thread_got.value.length; i += 2) {
+    thread.value.push([<string>thread_got.value[i], <string>thread_got.value[i+1]])
+  }
+  // console.log(thread)
+}
+// console.log('answer:', props.answer)
+const can_answer =
+    (userStore.userName===props.host && props.answer!=undefined && props.answer.length===0)
+// console.log('lll', props.answer.length)
+// console.log('lppp', can_answer)
+// TODO: check this
+const can_update_thread =
+    (userStore.userName===props.host && props.thread!=undefined && real_len%2===1)
+    || (userStore.userName===props.poster && props.thread!=undefined && props.answer && real_len%2===0)
+// console.log('ghifhuiiorwnuiorwn')
+// console.log('jjj',  (props.thread.length), (0)
+//     || (userStore.userName===props.poster && props.thread && props.answer
+//         && props.answer.length>0 && props.thread.length%2===0))
+// console.log(props.thread?.length)
+// console.log(props.thread)
+const can_respond = ref(can_answer || can_update_thread)
 const submitResponse = async (response: string) => {
   if (response.length === 0)
   {
     ElMessage.error('请输入！')
     return
   }
-  if (1 > 0) {
+  if (can_answer) {
     const res = await AnswerApi({
       id: <number>props.id, // 类型断言
       answer: response,
@@ -58,7 +94,7 @@ const submitResponse = async (response: string) => {
     } else {
       console.log('WTF, 回复提问失败');
     }
-  } else {
+  } else if (can_update_thread) {
     const res = await UpdateThread({
       id: <number>props.id,
       content: response,
@@ -81,7 +117,7 @@ const submitResponse = async (response: string) => {
     <div class="full-tape-container">
       <div>
         <div class="tags-container">
-          <el-tag v-for="tag in tags">
+          <el-tag v-for="tag in tags" round>
             {{ tag }}
           </el-tag>
         </div>
@@ -100,6 +136,9 @@ const submitResponse = async (response: string) => {
         </el-divider>
       </div>
       <div class="thread-container">
+        <el-scrollbar
+            height="300px"
+        >
         <div class="answer-container"
              v-if="props.answer && props.answer.length > 0"
         >
@@ -107,20 +146,25 @@ const submitResponse = async (response: string) => {
               :avatar="hostAvatar"
               :message="answer"
           ></avatar-message-left>
-
-<!--          <avatar-message-right-->
-<!--              :avatar="hostAvatar"-->
-<!--              :message="answer"-->
-<!--          ></avatar-message-right>-->
         </div>
+        <div v-for="conversation in thread">
+          <avatar-message-right
+              :anonymous="anonymous"
+              :message="conversation[0]"
+              :avatar="posterAvatar"
+          ></avatar-message-right>
+          <avatar-message-left
+              v-if="conversation[1].length"
+              :message="conversation[1]"
+              :avatar="hostAvatar"
+          ></avatar-message-left>
 
-        <div>
-          [TODO] 这里是 thread（若有）
         </div>
+        </el-scrollbar>
       </div>
 <!--        <el-divider></el-divider>-->
 
-    <div class="respond-area">
+    <div class="respond-area" v-if="can_respond">
       <el-input
           type="textarea"
           v-model="response"

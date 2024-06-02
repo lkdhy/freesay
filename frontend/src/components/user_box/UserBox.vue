@@ -19,6 +19,7 @@ interface GotPost {
   is_public: boolean
   question: string, answer: string
   tags: string[]
+  thread: string[]
 }
 interface GotUserInfo {
   username: string,
@@ -94,6 +95,7 @@ onBeforeMount(async () => {
                          :question="post.question"
                          :answer="post.answer"
                          :tags="post.tags"
+                         :thread="post.thread"
               >
               </post-card>
             </el-space>

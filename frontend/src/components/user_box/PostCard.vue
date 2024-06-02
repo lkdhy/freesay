@@ -2,7 +2,6 @@
 import { ref } from "vue"
 import AvatarUsername from "@/components/user/AvatarUsername.vue";
 import FullTape from "@/components/full_tape/FullTape.vue";
-import {fa} from "element-plus/es/locale";
 
 // props
 const props = defineProps({
@@ -13,7 +12,8 @@ const props = defineProps({
   anonymous: Boolean,
   question: String,
   answer: String,
-  tags: [String]
+  tags: Array<String>,
+  thread: Array<String>,
 })
 
 const fullTapeVisible = ref(false)
@@ -71,12 +71,12 @@ const fullTapeVisible = ref(false)
         v-if="fullTapeVisible"
         @close="fullTapeVisible = false"
         :anonymous = anonymous
-        public = true
         :question = question
         :answer = answer
         :poster = askerName :host = hostName
         :poster-avatar="askerAvatar" :host-avatar="hostAvatar"
         :tags="tags"
+        :thread="thread"
     >
 
     </full-tape>
@@ -96,10 +96,6 @@ const fullTapeVisible = ref(false)
 }
 .post-card-content{
   height: 200px;
-}
-.tags-container {
-  display: flex;
-  gap: 5px;
 }
 .question-container {
   height: 60%;

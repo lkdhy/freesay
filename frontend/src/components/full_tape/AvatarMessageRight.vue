@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
+  anonymous: Boolean,
   avatar: String,
   message: String,
 })
@@ -10,7 +11,10 @@ const props = defineProps({
   <div class="avatar-message-container">
     <el-space size="large">
       <p class="message-container">{{ message }}</p>
-      <el-avatar :src="avatar"></el-avatar>
+      <el-avatar v-if="anonymous">
+        ?
+      </el-avatar>
+      <el-avatar v-else :src="avatar"></el-avatar>
     </el-space>
   </div>
 
@@ -29,7 +33,7 @@ const props = defineProps({
 }
 .message-container {
   text-align: center;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 </style>

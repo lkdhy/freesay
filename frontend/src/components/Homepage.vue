@@ -55,7 +55,7 @@ onBeforeMount(async () => {
         }
       }
       p1.value.push(post);
-      console.log(post);
+      // console.log(post);
     })
   } else {
     console.log('WTF, host posts 请求失败')
@@ -73,6 +73,7 @@ onBeforeMount(async () => {
         }
       }
       p2.value.push(post)
+      console.log(post)
     })
     // ---- 获取自己问别人的帖子 ----
     loading.value = false
@@ -86,12 +87,18 @@ const handleCurrentChange1 = (post: GotPost) => {
   tapeData.value = post
   tapeData.value.username = userStore.userName
   tapeData.value.user_avatar = userStore.avatar
+  if (post.thread.length>0 && post.thread[post.thread.length-1].length===0)
+    post.thread.pop()
   fullTapeVisible.value = true
 }
 const handleCurrentChange2 = (post: GotPost) => {
   tapeData.value = post
   tapeData.value.asker_name = userStore.userName
   tapeData.value.asker_avatar = userStore.avatar
+  // console.log(tapeData.value)
+  if (post.thread.length>0 && post.thread[post.thread.length-1].length===0)
+    post.thread.pop()
+  // console.log('ppp', post)
   fullTapeVisible.value = true
 }
 
@@ -116,7 +123,7 @@ const relatedTags2 = ref<string[]>([])
 <template>
   <h2>我的主页</h2>
   <h3>
-    你好 {{ curUser }}
+    你好 {{ userStore.userName }}
   </h3>
 
   <full-tape
@@ -130,21 +137,25 @@ const relatedTags2 = ref<string[]>([])
       :question="tapeData.question"
       :answer="tapeData.answer"
       :tags="tapeData.tags"
-      :host="visitedUser"
+      :host="tapeData.username"
       :poster="tapeData.asker_name"
       :poster-avatar="tapeData.asker_avatar"
       :host-avatar="tapeData.user_avatar"
+      :thread="tapeData.thread"
   >
   </full-tape>
 
   <el-descriptions
       title="" border
   >
-    <el-descriptions-item label="Username">
-      {{ $route.params.id }}
-    </el-descriptions-item>
+<!--    <el-descriptions-item label="Username">-->
+<!--      {{ $route.params.id }}-->
+<!--    </el-descriptions-item>-->
     <el-descriptions-item label="个性签名">
-        这个人很懒，什么都没有写
+        {{ userStore.signature }}
+    </el-descriptions-item>
+    <el-descriptions-item label="邮箱">
+      {{ userStore.email }}
     </el-descriptions-item>
   </el-descriptions>
 
@@ -181,7 +192,7 @@ const relatedTags2 = ref<string[]>([])
           <el-table-column label="Question" prop="question">
           </el-table-column>
           <el-table-column
-              label="Tag"
+              label="Tag" width="250"
               :filters="relatedTags1.map(tag => Object({
                 text: tag, value: tag,
               }))"
@@ -197,7 +208,7 @@ const relatedTags2 = ref<string[]>([])
             </template>
           </el-table-column>
           <el-table-column
-              label="Status"
+              label="Status" width="150"
               :filters="[
                   { text: '已回答', value: true },
                   { text: '未回答', value: false },
@@ -205,16 +216,16 @@ const relatedTags2 = ref<string[]>([])
               :filter-method="filterStatus"
           >
             <template #default="scope">
-              <el-tag v-if="scope.row.answer.length > 0">
+              <el-tag v-if="scope.row.answer.length > 0" type="success">
                 已回答
               </el-tag>
-              <el-tag v-else>
+              <el-tag v-else type="warning">
                 未回答
               </el-tag>
             </template>
           </el-table-column>
           <el-table-column
-              label="Setting"
+              label="Setting" width="150"
               :filters="[
                   { text: '公开', value: true },
                   { text: '私密', value: false },
@@ -252,7 +263,7 @@ const relatedTags2 = ref<string[]>([])
           <el-table-column label="Question" prop="question">
           </el-table-column>
           <el-table-column
-              label="Tag" width="200"
+              label="Tag" width="250"
               :filters="relatedTags2.map(tag => Object({
                 text: tag, value: tag,
               }))"
@@ -276,16 +287,16 @@ const relatedTags2 = ref<string[]>([])
               :filter-method="filterStatus"
           >
             <template #default="scope">
-              <el-tag v-if="scope.row.answer.length > 0">
+              <el-tag v-if="scope.row.answer.length > 0" type="success">
                 已回答
               </el-tag>
-              <el-tag v-else>
+              <el-tag v-else type="warning">
                 未回答
               </el-tag>
             </template>
           </el-table-column>
           <el-table-column
-              label="Setting"
+              label="Setting" width="150"
               :filters="[
                   { text: '公开', value: true },
                   { text: '私密', value: false },
@@ -294,8 +305,19 @@ const relatedTags2 = ref<string[]>([])
           >
             <template #default="scope">
               <div>
-                <el-tag v-if="scope.row.is_public">公开</el-tag>
-                <el-tag v-else>私密</el-tag>
+                <el-tag v-if="scope.row.is_public" type="info">公开</el-tag>
+                <el-tag v-else type="danger">私密</el-tag>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+              label="Anonymity" width="150"
+          >
+            <template #default="scope">
+              <div>
+                <el-tag v-if="scope.row.is_anonymous" type="primary">匿名</el-tag>
+                <el-tag v-else type="warning">实名</el-tag>
               </div>
             </template>
           </el-table-column>

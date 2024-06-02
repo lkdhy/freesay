@@ -3,6 +3,7 @@ import json
 from .models import *
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
+from . views_thread import get_thread
 
 def delete_box(host_id):
     try:
@@ -13,7 +14,7 @@ def delete_box(host_id):
         print('box not found')
 
 def share(request):
-    print('enter share')
+    # print('enter share')
     data = json.loads(request.body)
     username = data.get('username')
     description = data.get('description')
@@ -28,7 +29,7 @@ def share(request):
 
 # 已增加头像
 def box(request):
-    print('enter box')
+    # print('enter box')
     records = Box.objects.all().order_by('-box_id')
     records = serialize('json', records)
     json_data = json.loads(records)
@@ -62,7 +63,7 @@ def box(request):
     })
 
 def post(request):
-    print('enter post')
+    # print('enter post')
     data = json.loads(request.body)
     username = data.get('username')
     hostUsername = data.get('hostUsername')
@@ -90,7 +91,7 @@ def post(request):
         poster_id=poster_id
     )
     post_id = post_new.post_id
-    print(post_id)
+    # print(post_id)
     tags = data.get('tags')
     for tag in tags:
         find_tag = Tag.objects.filter(tag_name=tag).count()
@@ -106,16 +107,16 @@ def post(request):
         'message': '成功post问题及标签（若有）'
     })
 
-# 已增加提问者的头像 asker_avatar
+# 已增加提问者的头像asker_avatar
+# 已加上thread
 def gethostpost(request):
-    print('enter gethostpost')
+    # print('enter gethostpost')
     username = request.GET.get('username', None)
     host_id = User.objects.get(username=username).user_id
     posts = Post.objects.filter(host_id=host_id).order_by('-post_id')
     posts_list = list(posts.values())
     # print(posts_json)
     updated_data = []
-    # TODO: 考虑所有thread并返回
     for item in posts_list:
         post_id = item.get('post_id')
         # 得到所有 tags
@@ -140,7 +141,7 @@ def gethostpost(request):
             'is_public': item.get('is_public'),
             'tags': tag_name_list,
             # TODO
-            'thread': [],
+            'thread': get_thread(item.get('head_thread')),
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(host_id=host_id).count()
@@ -150,15 +151,15 @@ def gethostpost(request):
         'total_posts': count
     })
 
+# 已加上thread
 def getpost(request):
-    print('enter getpost')
+    # print('enter getpost')
     username = request.GET.get('username', None)
     poster_id = User.objects.get(username=username).user_id
     posts = Post.objects.filter(poster_id=poster_id).order_by('-post_id')
     posts_list = list(posts.values())
     # print(posts_list)
     updated_data = []
-    # TODO: 考虑所有thread并返回
     for item in posts_list:
         host = User.objects.get(user_id = item.get('host_id'))
         hostname = host.username
@@ -179,8 +180,7 @@ def getpost(request):
             'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public'),
             'tags': tag_name_list,
-            # TODO
-            'thread': [],
+            'thread': get_thread(item.get('head_thread')),
         }
         updated_data.append(updated_item)
     count = Post.objects.filter(poster_id=poster_id).count()
@@ -193,7 +193,7 @@ def getpost(request):
     })
 
 def answer(request):
-    print('enter answer')
+    # print('enter answer')
     data = json.loads(request.body)
     post_id = data.get('id')
     answer = data.get('answer')

@@ -29,7 +29,7 @@ const props = defineProps({
 }
 .message-container {
   text-align: center;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 </style>
