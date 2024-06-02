@@ -44,4 +44,17 @@ class with_tag(models.Model):
     post_id_with = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_id_with')
     tag_id_with = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='tag_id_with')
 
+class publicpost(models.Model):
+    public_id = models.AutoField(primary_key=True)
+    #poster_id_public = models.ForeignKey(User, on_delete=models.CASCADE, related_name='poster_id_public')
+    #is_anonymous = models.BooleanField(default=True)
+    head_thread = models.IntegerField(default=0)
+
+class publicthread(models.Model):
+    publicthread_id = models.AutoField(primary_key=True)
+    content = models.TextField(null=False)
+    nxt = models.IntegerField(default=0)
+    is_anonymous = models.BooleanField(default=True)
+    user_id_thread = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_id_thread')
+
 
