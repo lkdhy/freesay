@@ -9,7 +9,9 @@ const props = defineProps({
 <template>
   <div class="avatar-message-container">
     <el-space size="large">
-      <el-avatar :src="avatar"></el-avatar>
+      <div class="avatar-container">
+        <el-avatar :src="avatar" shape="square"></el-avatar>
+      </div>
       <p class="message-container">{{ message }}</p>
     </el-space>
   </div>
@@ -22,7 +24,7 @@ const props = defineProps({
   justify-content: left;
   align-items: center;
   height: 50px;
-  margin: 10px;
+  margin: 9px;
   border-radius: 4px;
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
@@ -30,6 +32,9 @@ const props = defineProps({
 .message-container {
   text-align: center;
   font-size: 15px;
+}
+.avatar-container {
+  margin-left: 10px;
 }
 
 </style>

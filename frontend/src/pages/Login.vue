@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import LoginForm from "@/components/LoginForm.vue";
-import Pacts2 from "@/pages/Pacts2.vue";
 import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue";
 </script>
 
@@ -11,6 +10,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
 
     <header id="welcomeTitle">
       <h1>欢迎来到复旦大学提问箱</h1>
+      <p class="introduction">Freesay is where you can chat and share freely.
+      </p>
     </header>
 
     <div class="background">
@@ -56,5 +57,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
   margin-bottom: 30px;
   color: deeppink;
   /* padding-bottom: 70px; */
+}
+.introduction {
+  margin-top: 5px;
 }
 </style>

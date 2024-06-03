@@ -11,10 +11,13 @@ const props = defineProps({
   <div class="avatar-message-container">
     <el-space size="large">
       <p class="message-container">{{ message }}</p>
-      <el-avatar v-if="anonymous">
-        ?
-      </el-avatar>
-      <el-avatar v-else :src="avatar"></el-avatar>
+      <div class="avatar-container">
+        <el-avatar v-if="anonymous"
+                   src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
+                   shape="square">
+        </el-avatar>
+        <el-avatar v-else :src="avatar" shape="square"></el-avatar>
+      </div>
     </el-space>
   </div>
 
@@ -26,7 +29,7 @@ const props = defineProps({
   justify-content: right;
   align-items: center;
   height: 50px;
-  margin: 10px;
+  margin: 9px;
   border-radius: 4px;
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
@@ -34,6 +37,9 @@ const props = defineProps({
 .message-container {
   text-align: center;
   font-size: 15px;
+}
+.avatar-container {
+  margin-right: 10px;
 }
 
 </style>

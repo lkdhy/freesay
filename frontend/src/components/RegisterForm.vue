@@ -88,7 +88,7 @@ const jump2Login = () => {
     <!--      切换密码隐藏与显示（show-password） -->
     <el-form-item label="密码" prop="password">
       <el-input v-model="registerForm.password" type="password"
-                placeholder="6位至16位，建议字母、数字（开发时取111111这种就行了）"
+                placeholder="6位至16位，建议字母、数字组合"
                 show-password autocomplete="off"/>
     </el-form-item>
 <!--    TODO: 把姓、名搞到一行（但有可能有点麻烦）  -->
@@ -109,7 +109,7 @@ const jump2Login = () => {
       <el-button type="success" @click="jump2Login">登录</el-button>
     </div>
 <!--    </el-form-item>-->
-    <p style="text-align: center">[TODO]已有账号？登录</p>
+<!--    <p style="text-align: center">[TODO]已有账号？登录</p>-->
   </el-form>
 </template>
 

@@ -159,16 +159,16 @@ const relatedTags2 = ref<string[]>([])
     </el-descriptions-item>
   </el-descriptions>
 
-  <post-dialog>
-    <template v-slot:hostName>
-      {{ $route.params.id }}
-    </template>
-  </post-dialog>
+<!--  <post-dialog>-->
+<!--    <template v-slot:hostName>-->
+<!--      {{ $route.params.id }}-->
+<!--    </template>-->
+<!--  </post-dialog>-->
 
   <div>
 
     <el-tabs v-loading="loading">
-      <el-tab-pane label="TA问我的">
+      <el-tab-pane label="TA 问我的">
         <!--            highlight-current-row-->
         <el-table
             ref="singleTableRef"
@@ -184,8 +184,9 @@ const relatedTags2 = ref<string[]>([])
                   :host-avatar="scope.row.asker_avatar"
               >
               </avatar-username>
-              <el-avatar v-else shape="square">
-                ?
+              <el-avatar v-else
+                         src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
+                         shape="square">
               </el-avatar>
             </template>
           </el-table-column>
@@ -244,7 +245,7 @@ const relatedTags2 = ref<string[]>([])
         </el-table>
       </el-tab-pane>
 
-      <el-tab-pane label="我问TA的">
+      <el-tab-pane label="我问 TA 的">
         <el-table
             :data="p2"
             highlight-current-row

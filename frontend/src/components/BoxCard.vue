@@ -37,7 +37,7 @@ const jump2userBox = (hostName: string) => {
             placement="top"
         >
           <div @click="jump2userBox(<string>hostName)"
-               class="question-container"
+               class="box-description-container"
           >
             <p><slot name="desc"></slot></p>
           </div>
@@ -116,5 +116,8 @@ const jump2userBox = (hostName: string) => {
   justify-content: center;
   align-items: center;
   height: 10px;
+}
+.box-description-container {
+  font-size: 17px;
 }
 </style>

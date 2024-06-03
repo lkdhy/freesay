@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from . models import Tag
 
 def gettags(request):
-    print('enter gettags')
+    # print('enter gettags')
     # print(list(Tag.objects.all().values_list('tag_name', flat=True)))
     return JsonResponse({
         'success': True,

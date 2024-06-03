@@ -6,11 +6,13 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
 </script>
 
 <template>
-  <snow-particles></snow-particles>
-
+<!--  <snow-particles></snow-particles>-->
+  <colorful-bubbles-particles></colorful-bubbles-particles>
   <div class="container">
     <header id="welcomeTitle">
       <h1>欢迎来到复旦大学提问箱</h1>
+      <p class="introduction">Freesay is where you can chat and share freely.
+      </p>
     </header>
 
     <div class="background">
@@ -37,7 +39,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
 .background {
 
   /* 设置背景颜色为白色，透明度为0.5 */
-  background-color: rgba(103, 186, 239, 0.9);
+  /*background-color: rgba(103, 186, 239, 0.9);*/
+  background-color: rgba(103, 186, 239, 1);
   /* 其他样式，例如内边距、边框圆角等 */
   padding: 20px;
   border-radius: 8px;
@@ -51,5 +54,8 @@ import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesPart
 #welcomeTitle {
   margin-bottom: 30px;
   color: deeppink;
+}
+.introduction {
+  margin-top: 5px;
 }
 </style>

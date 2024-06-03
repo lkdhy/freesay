@@ -113,7 +113,7 @@ const jump2Register = () => {
       <el-button type="danger" @click="jump2Register">注册</el-button>
     </div>
 
-    <p style="text-align: center">[TODO]没有账号？注册</p>
+<!--    <p style="text-align: center">[TODO]没有账号？注册</p>-->
 <!--    </el-form-item>-->
 
   </el-form>

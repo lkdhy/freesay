@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { UserFilled } from "@element-plus/icons-vue"
 import {ref} from "vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 // props
 const props = defineProps({
   hostName: String,
@@ -9,6 +12,10 @@ const props = defineProps({
 })
 
 const showRecentAnswer = ref(false)
+
+const jump2userBox = (hostName: string) => {
+  router.push(`/user2/${hostName}`)
+}
 
 </script>
 
@@ -32,9 +39,10 @@ const showRecentAnswer = ref(false)
 
   <el-button
       type="primary"
-      @click="showRecentAnswer=true"
+      @click="jump2userBox(<string>hostName)"
   >
-    TA 最近的回答
+<!--    TA 最近的回答-->
+    向 TA 提问
   </el-button>
 
   <div v-if="showRecentAnswer">

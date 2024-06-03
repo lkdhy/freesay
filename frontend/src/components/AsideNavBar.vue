@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  User, Compass
+  User, Compass, View, ChatLineRound
 } from '@element-plus/icons-vue';
 import {useRouter} from 'vue-router';
 
@@ -33,6 +33,15 @@ function change(key: string, keyPath: string[]) {
       <span>看看有谁！</span>
     </el-menu-item>
 
+    <el-menu-item index="/">
+      <el-icon><View /></el-icon>
+      <span>今日表白墙</span>
+    </el-menu-item>
+
+    <el-menu-item index="/">
+      <el-icon><ChatLineRound /></el-icon>
+      <span>我的聊天</span>
+    </el-menu-item>
 <!--    <el-menu-item index="profile">-->
 <!--      <span>（我认为不需要这条）你的 profile</span>-->
 <!--    </el-menu-item>-->

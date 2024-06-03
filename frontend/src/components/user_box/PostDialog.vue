@@ -145,6 +145,7 @@ const getExistingTags = async () => {
           default-first-option
           :reserve-keyword="false"
           placeholder="选择标签，可以输入新增标签"
+          style="width: 400px; margin-right: 30px"
       >
         <el-option
             v-for="tag in tag_options"
@@ -164,16 +165,20 @@ const getExistingTags = async () => {
       </el-select>
     </div>
 
-    <div>
-      <p>是否匿名</p>
-      <el-switch v-model="is_anonymous"
-                 style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-      >
-      </el-switch>
+    <div class="post-settings-container">
+      <div class="single-setting-container">
+        <p>是否匿名</p>
+        <el-switch v-model="is_anonymous"
+                   style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+        >
+        </el-switch>
+      </div>
 
-      <p>是否公开</p>
-      <el-switch v-model="is_public">
-      </el-switch>
+      <div class="single-setting-container">
+        <p>是否公开</p>
+        <el-switch v-model="is_public">
+        </el-switch>
+      </div>
     </div>
 
     <template #footer>
@@ -181,6 +186,7 @@ const getExistingTags = async () => {
         <el-button
             type="primary"
             @click="submitQuestion(question); visible = false"
+            style="margin-right: 10px; mar-bottom: 10px;"
         >
           发送提问
         </el-button>
@@ -200,6 +206,9 @@ const getExistingTags = async () => {
 }
 .tag-select-container {
   margin: 20px;
+  display: flex;
+  justify-content: right;
+  gap: 50px;
 }
 .input-question-area {
   font-size: 20px;
@@ -209,6 +218,13 @@ const getExistingTags = async () => {
 .reference-question {
   margin-bottom: 1px;
   font-size: 16px;
+}
+.post-settings-container {
+  font-size: 17px;
+  margin-left: 40px;
+}
+.single-setting-container {
+  margin-bottom: 8px;
 }
 
 </style>

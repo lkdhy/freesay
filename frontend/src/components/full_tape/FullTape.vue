@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CircleCloseFilled } from '@element-plus/icons-vue'
 import {ref, watch} from "vue"
 import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
@@ -112,8 +113,16 @@ const submitResponse = async (response: string) => {
 </script>
 
 <template>
-  <el-dialog v-model="visible"
+  <el-dialog v-model="visible" :show-close="false"
   >
+    <template #header="{ close, titleClass }">
+      <div class="my-header">
+        <el-button type="danger" @click="close">
+          <el-icon class="el-icon--left"><circle-close-filled/></el-icon>
+          Close
+        </el-button>
+      </div>
+    </template>
     <div class="full-tape-container">
       <div>
         <div class="tags-container">
@@ -172,9 +181,14 @@ const submitResponse = async (response: string) => {
 
       </el-input>
 
-      <el-button @click="submitResponse(response)" >
-        回复
-      </el-button>
+      <div class="respond-button-container">
+        <el-button
+            @click="submitResponse(response)"
+            type="primary"
+        >
+          回复
+        </el-button>
+      </div>
     </div>
     </div>
   </el-dialog>
@@ -189,11 +203,27 @@ const submitResponse = async (response: string) => {
   gap: 5px;
   min-height: 400px;
 }
+.respond-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
 .question-container {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
+  color: var(--el-color-warning);
+  /* background: var(--el-color-success-light-9) */
 }
-
+.my-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+.respond-button-container {
+  display: flex;
+  justify-content: right;
+}
 </style>

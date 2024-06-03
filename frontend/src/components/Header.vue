@@ -97,7 +97,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
         <div class="Icons">
           <img src="@/assets/icons/freesay-icon_FDU.svg"/>
         </div>
-        <p style="font-size: 28px;">
+        <p style="font-size: 28px;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+">
           FDU <span class="freesay">freesay</span>
         </p>
 <!--        <img src="@/assets/icons/chat-icon.svg"-->

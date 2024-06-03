@@ -46,7 +46,7 @@ const options = {
       type: "circle"
     },
     size: {
-      value: { min: 5, max: 35 },
+      value: { min: 6, max: 33 },
       animation: {
         startValue: "min",
         enable: true,
@@ -61,7 +61,7 @@ const options = {
     direction: "none",
     rate: {
       quantity: 3,
-      delay: 0.3
+      delay: 0.55
     },
     size: {
       width: 0, height: 0
