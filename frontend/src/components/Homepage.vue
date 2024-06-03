@@ -121,10 +121,10 @@ const relatedTags2 = ref<string[]>([])
 </script>
 
 <template>
-  <h2>我的主页</h2>
-  <h3>
-    你好 {{ userStore.userName }}
-  </h3>
+  <h2 style="margin-bottom: 20px">我的主页</h2>
+<!--  <h3>-->
+<!--    你好 {{ userStore.userName }}-->
+<!--  </h3>-->
 
   <full-tape
       v-if="fullTapeVisible"

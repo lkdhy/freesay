@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PostCard from "@/components/user_box/PostCard.vue";
-import {ref, reactive} from "vue";
+import {ref, reactive, watch} from "vue";
 import {useRouter} from "vue-router";
 import {useUserstore} from "@/store/user";
 import {onBeforeMount} from "vue";
@@ -30,7 +30,41 @@ interface GotUserInfo {
 const userInfo = ref<GotUserInfo>({
   username: '', email: '', signature: '', avatar: ''
 })
+const all_posts = ref<GotPost[]>([])
 const posts = ref<GotPost[]>([])
+const aim_tag = ref('All')
+watch(aim_tag, () => {
+  if (aim_tag.value === 'All') {
+    posts.value.length = 0
+    all_posts.value.forEach(post => {
+      posts.value.push(post)
+    })
+    return
+  }
+  posts.value.length = 0
+  all_posts.value.forEach(post => {
+    if (post.tags.includes(aim_tag.value)) {
+      posts.value.push(post)
+    }
+  })
+})
+const options = [
+  {
+    value: 'All', label: 'All'
+  },
+  {
+    value: '美食', label: '美食'
+  },
+  {
+    value: '学习', label: '学习'
+  },
+  {
+    value: '阅读', label: '阅读'
+  },
+  {
+    value: '恋爱', label: '恋爱'
+  },
+]
 
 const fetchUserInfo = async () => {
   console.log(`即将请求${visitedUser}的个人信息`)
@@ -55,6 +89,7 @@ onBeforeMount(async () => {
   if (host_post_res.success) {
     host_post_res.posts.forEach(post => {
       if (post.answer.length) {
+        all_posts.value.push(post)
         posts.value.push(post)
       }
     })
@@ -72,7 +107,18 @@ onBeforeMount(async () => {
   >
     <div class="main">
       <div class="description-container">
-
+        <div class="selector-container">
+          <el-select
+              v-model="aim_tag" placeholder="选择标签" style="width: 140px;"
+          >
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+        </div>
       </div>
 
       <div class="operation-container">
@@ -102,7 +148,7 @@ onBeforeMount(async () => {
             </el-space>
         </el-scrollbar>
       </div>
-      </div>
+    </div>
     <div class="right">
       <user-info
           :username="userInfo.username"
@@ -136,5 +182,8 @@ onBeforeMount(async () => {
 }
 .post-card-container {
   margin-top: 1px;
+}
+.selector-container {
+  margin-top: 10px;
 }
 </style>
