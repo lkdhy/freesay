@@ -21,72 +21,55 @@ import UserBox from "@/components/user_box/UserBox.vue";
 const routes =
     [
         {
-            path: '/tmp3', name: 'background',
-            component: ColorfulBubblesParticles
+            path: '/tmp3', name: 'background', component: ColorfulBubblesParticles
         },
         {
-            path: '/snow', name: 'Snow',
-            component: SnowParticles
+            path: '/snow', name: 'Snow', component: SnowParticles
         },
         {
-            path: '/particles', name: 'particles',
-            component: Partcs
+            path: '/particles', name: 'particles', component: Partcs
         },
         {
-            path: '/particles2', name: 'particles2',
-            component: Pacts2
+            path: '/particles2', name: 'particles2', component: Pacts2
         },
         {
-            path: '/empty', name: 'forRefresh',
-            component: Empty
+            path: '/empty', name: 'forRefresh', component: Empty
         },
         {
-            path: '/index', name: 'Welcome',
-            component: Welcome
+            path: '/index', name: 'Welcome', component: Welcome
         },
         {
-            path: '/test', name: 'Test',
-            component: Test
+            path: '/test', name: 'Test', component: Test
         },
         {
-            path: '/login', name: 'Login',
-            component: Login
+            path: '/login', name: 'Login', component: Login
         },
         {
-            path: '/', name: 'Index',
-            component: Index,
+            path: '/', name: 'Index', component: Index,
             children: [
                 {
-                    path: 'userBox', name: 'UserBox',
-                    component: UserBox
+                    path: 'userBox', name: 'UserBox', component: UserBox
                 },
                 {
-                    path: 'userList', name: 'UserList',
-                    component: UserList
+                    path: 'userList', name: 'UserList', component: UserList
                 },
                 {
-                    path: 'user', name: 'UserListProfile',
-                    component: UserListProfile
+                    path: 'user', name: 'UserListProfile', component: UserListProfile
                 },
                 {
-                    path: 'plaza', name: 'Plaza',
-                    component: Plaza
+                    path: 'plaza', name: 'Plaza', component: Plaza
                 },
                 {
-                    path: 'test', name: 'Test',
-                    component: Test
+                    path: 'test', name: 'Test', component: Test
                 },
                 {
-                    path: 'profile', name: 'Profile',
-                    component: Profile
+                    path: 'profile', name: 'Profile', component: Profile
                 },
                 {
-                    path: '/user/:id', name: 'User',
-                    component: Homepage
+                    path: '/user/:id', name: 'User', component: Homepage
                 },
                 {
-                    path: '/user2/:username', name: 'User2',
-                    component: UserBox
+                    path: '/user2/:username', name: 'User2', component: UserBox
                 }
             ]
         },

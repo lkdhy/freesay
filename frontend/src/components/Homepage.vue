@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, reactive, ref} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
 import {useRouter} from 'vue-router';
 import {GetHostPostApi, GetPostApi} from "@/request/api";
 import {useUserstore} from "@/store/user";
@@ -11,7 +11,10 @@ import {ElTable} from "element-plus";
 const props = defineProps({
 })
 
-const router = useRouter();
+const router = useRouter()
+// console.log(route.currentRoute.value.fullPath)
+// console.log(route.currentRoute.value.hash)
+
 const userStore = useUserstore();
 interface GotPost {
   id: number
@@ -33,7 +36,7 @@ const tapeData = ref<GotPost>({
 })
 const curUser = ref<string>(userStore.userName);
 const visitedUser = ref<string>(userStore.visitedUserName);
-console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
+// console.log(`cur: ${curUser.value}, vised: ${visitedUser.value}`)
 // const isMine = curUser.value === visitedUser.value;
 const p1 = ref<GotPost[]>([]);
 const p2 = ref<GotPost[]>([]);
@@ -41,12 +44,12 @@ const p2 = ref<GotPost[]>([]);
 // TODO: 用两个 loading
 const loading = ref(true)
 
-onBeforeMount(async () => {
+const fetchData = async () => {
   // ---- 获取别人问自己的帖子 ----
   let res = await GetHostPostApi({
     username: visitedUser.value
   });
-  console.log('这个用户的帖子请求结果：', res);
+  // console.log('这个用户的帖子请求结果：', res);
   if (res.success) {
     res.posts.forEach(post => {
       for (let tag of post.tags) {
@@ -73,12 +76,17 @@ onBeforeMount(async () => {
         }
       }
       p2.value.push(post)
-      console.log(post)
+      // console.log(post)
     })
     // ---- 获取自己问别人的帖子 ----
     loading.value = false
   }
-})
+}
+
+onBeforeMount(fetchData)
+// watch(router.currentRoute.value.params, () => {
+//   console.log('hahah')
+// })
 
 const singleTableRef = ref<InstanceType<typeof ElTable>>()
 const handleCurrentChange1 = (post: GotPost) => {
@@ -124,6 +132,9 @@ const relatedTags2 = ref<string[]>([])
   <h2 style="margin-bottom: 20px">我的主页</h2>
 <!--  <h3>-->
 <!--    你好 {{ userStore.userName }}-->
+<!--  </h3>-->
+<!--  <h3>-->
+<!--    你好 {{ $route.params.id }}-->
 <!--  </h3>-->
 
   <full-tape

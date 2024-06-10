@@ -74,9 +74,9 @@ ref_questions.sort((a, b) => {
 const getExistingTags = async () => {
   const res = await GetTags()
   if (res.success) {
-    console.log(res.message)
+    // console.log(res.message)
     tag_options.value = res.tags.map(tag => ({ tag: tag, label: tag }))
-    console.log(tag_options.value)
+    // console.log(tag_options.value)
   } else {
     console.log('WTF, 现有标签请求失败')
   }

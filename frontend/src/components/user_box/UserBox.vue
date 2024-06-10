@@ -9,7 +9,7 @@ import UserInfo from "@/components/user_box/UserInfo.vue";
 import PostDialog from "@/components/user_box/PostDialog.vue";
 
 const router = useRouter()
-const visitedUser = router.currentRoute.value.params.username
+const visitedUser = ref(router.currentRoute.value.params.username)
 
 interface GotPost {
   id: number, username: string
@@ -48,25 +48,13 @@ watch(aim_tag, () => {
     }
   })
 })
-const options = [
+const options = ref([
   {
     value: 'All', label: 'All'
   },
-  {
-    value: '美食', label: '美食'
-  },
-  {
-    value: '学习', label: '学习'
-  },
-  {
-    value: '阅读', label: '阅读'
-  },
-  {
-    value: '恋爱', label: '恋爱'
-  },
-]
+])
 
-const fetchUserInfo = async () => {
+const fetchUserInfo = async (visitedUser: string) => {
   console.log(`即将请求${visitedUser}的个人信息`)
   const user_info_res = await GetUserInfo({
     username: <string>visitedUser
@@ -78,26 +66,40 @@ const fetchUserInfo = async () => {
     console.log('WTF，用户个人信息请求失败')
   }
 }
-
-onBeforeMount(async () => {
-  await fetchUserInfo()
-  console.log(`即将请求${visitedUser}的所有公开已答帖子`)
+const fetchUserPosts = async (visitedUser: string) => {
+  // console.log(`即将请求${visitedUser}的所有公开已答帖子`)
+  all_posts.value.length = 0
+  posts.value.length = 0
   const host_post_res = await GetHostPostApi({
     username: <string>visitedUser
   })
-  console.log('在这个用户的公开已答帖子请求结果：', host_post_res)
+  // console.log('在这个用户的公开已答帖子请求结果：', host_post_res)
   if (host_post_res.success) {
     host_post_res.posts.forEach(post => {
       if (post.answer.length) {
         all_posts.value.push(post)
         posts.value.push(post)
+        post.tags.forEach(tag => {
+          options.value.push({ value: tag, label: tag })
+        })
       }
     })
-    console.log(posts.value)
+    // console.log(posts.value)
   } else {
     console.log('WTF, host posts 请求失败')
   }
+}
+
+onBeforeMount(() => {
+  fetchUserInfo(<string>router.currentRoute.value.params.username)
+  fetchUserPosts(<string>router.currentRoute.value.params.username)
 })
+
+watch(router.currentRoute, () => {
+  fetchUserInfo(<string>router.currentRoute.value.params.username)
+  fetchUserPosts(<string>router.currentRoute.value.params.username)
+})
+
 </script>
 
 <template>
