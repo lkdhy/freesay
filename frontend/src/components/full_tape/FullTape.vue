@@ -5,7 +5,7 @@ import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
 import {useUserstore} from "@/store/user";
-import {ElMessage, ElNotification as notify } from 'element-plus';
+import {ElMessage, ElNotification } from 'element-plus';
 import AvatarMessageLeft  from "@/components/full_tape/AvatarMessageLeft.vue";
 import AvatarMessageRight from "@/components/full_tape/AvatarMessageRight.vue";
 
@@ -24,7 +24,7 @@ const props = defineProps({
 const router = useRouter();
 
 // 监听visible并emit给父组件，关闭完整Tape的这个对话框
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'responded'])
 const visible = ref(true)
 watch(visible, () => {
   emit('close')
@@ -86,10 +86,18 @@ const submitResponse = async (response: string) => {
       is_public: true,
     })
     if (res.success) {
-      ElMessage({
-        message: '已回复',
-        type: 'success'
-      });
+      // ElMessage({
+      //   message: '已回复',
+      //   type: 'success'
+      // });
+      ElNotification({
+        title: '已回复',
+        message: `“${props.question}”`,
+        type: 'success',
+        showClose: false,
+      })
+      console.log(' 回复提问成功');
+      emit('responded');
       // TODO:
       // refresh()
     } else {
@@ -101,10 +109,15 @@ const submitResponse = async (response: string) => {
       content: response,
     })
     if (res.success) {
-      ElMessage({
-        message: '已回复',
-        type: 'success'
-      });
+      // ElMessage({
+      //   message: '已回复',
+      //   type: 'success'
+      // });
+      ElNotification({
+        title: '已回复',
+        type: 'success',
+        showClose: false,
+      })
     } else {
       console.log('WTF, 回复提问失败');
     }
@@ -146,7 +159,7 @@ const submitResponse = async (response: string) => {
       </div>
       <div class="thread-container">
         <el-scrollbar
-            height="300px"
+            height="260px"
         >
         <div class="answer-container"
              v-if="props.answer && props.answer.length > 0"
@@ -177,14 +190,15 @@ const submitResponse = async (response: string) => {
       <el-input
           type="textarea"
           v-model="response"
-          :rows="5"
+          :rows="2"
+          input-style="font-size: 17px; letter-spacing: 1.5px; line-height: 1.5;"
       >
 
       </el-input>
 
       <div class="respond-button-container">
         <el-button
-            @click="submitResponse(response)"
+            @click="submitResponse(response); visible=false; "
             type="primary"
         >
           回复
@@ -204,12 +218,6 @@ const submitResponse = async (response: string) => {
   gap: 5px;
   min-height: 400px;
 }
-.respond-area {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 15px;
-}
 .question-container {
   display: flex;
   align-items: center;
@@ -222,6 +230,12 @@ const submitResponse = async (response: string) => {
   display: flex;
   flex-direction: row;
   justify-content: right;
+}
+.respond-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
 }
 .respond-button-container {
   display: flex;

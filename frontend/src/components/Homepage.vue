@@ -45,12 +45,16 @@ const p2 = ref<GotPost[]>([]);
 const loading = ref(true)
 
 const fetchData = async () => {
-  // ---- 获取别人问自己的帖子 ----
+  loading.value = true
+  // BEGIN: ---- 获取别人问自己的帖子 ----
   let res = await GetHostPostApi({
     username: visitedUser.value
   });
   // console.log('这个用户的帖子请求结果：', res);
   if (res.success) {
+    relatedTags1.value.length = 0
+    // p1.value.length = 0
+    p1.value = []
     res.posts.forEach(post => {
       for (let tag of post.tags) {
         if (!relatedTags1.value.includes(tag)) {
@@ -58,17 +62,19 @@ const fetchData = async () => {
         }
       }
       p1.value.push(post);
-      // console.log(post);
+      console.log(post);
     })
   } else {
     console.log('WTF, host posts 请求失败')
   }
-  // ---- 获取别人问自己的帖子 ----
-  // ---- 获取自己问别人的帖子 ----
+  // END: ---- 获取别人问自己的帖子 ----
+  // BEGIN: ---- 获取自己问别人的帖子 ----
   let res2 = await GetPostApi({
     username: visitedUser.value
   });
   if (res2.success) {
+    relatedTags2.value.length = 0
+    p2.value.length = 0
     res2.posts.forEach(post => {
       for (let tag of post.tags) {
         if (!relatedTags2.value.includes(tag)) {
@@ -78,7 +84,7 @@ const fetchData = async () => {
       p2.value.push(post)
       // console.log(post)
     })
-    // ---- 获取自己问别人的帖子 ----
+    // END: ---- 获取自己问别人的帖子 ----
     loading.value = false
   }
 }
@@ -93,8 +99,8 @@ const handleCurrentChange1 = (post: GotPost) => {
   // console.log('选中了这一行，其信息如下')
   // console.log(post)
   tapeData.value = post
-  tapeData.value.username = userStore.userName
-  tapeData.value.user_avatar = userStore.avatar
+  if (userStore.userName && 'username' in tapeData) tapeData.value.username = userStore.userName
+  if (userStore.avatar && 'user_avatar' in tapeData) tapeData.value.user_avatar = userStore.avatar
   if (post.thread.length>0 && post.thread[post.thread.length-1].length===0)
     post.thread.pop()
   fullTapeVisible.value = true
@@ -128,6 +134,7 @@ const relatedTags1 = ref<string[]>([])
 const relatedTags2 = ref<string[]>([])
 </script>
 
+
 <template>
   <h2 style="margin-bottom: 20px">我的主页</h2>
 <!--  <h3>-->
@@ -139,9 +146,8 @@ const relatedTags2 = ref<string[]>([])
 
   <full-tape
       v-if="fullTapeVisible"
-      @close="
-        fullTapeVisible = false;
-      "
+      @close="fullTapeVisible = false;"
+      @responded="fullTapeVisible = false; fetchData()"
       :id="tapeData.id"
       :anonymous="tapeData.is_anonymous"
       :public="tapeData.is_public"
