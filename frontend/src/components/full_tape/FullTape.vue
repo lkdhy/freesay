@@ -177,6 +177,7 @@ const submitResponse = async (response: string) => {
       <el-input
           type="textarea"
           v-model="response"
+          :rows="5"
       >
 
       </el-input>
@@ -207,7 +208,7 @@ const submitResponse = async (response: string) => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
+  gap: 15px;
 }
 .question-container {
   display: flex;
