@@ -57,4 +57,9 @@ class publicthread(models.Model):
     is_anonymous = models.BooleanField(default=True)
     user_id_thread = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_id_thread')
 
-
+class chat(models.Model):
+    chat_id = models.AutoField(primary_key=True)
+    sender = models.IntegerField(null=False)
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user1')
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user2')
+    message = models.TextField(null=False)

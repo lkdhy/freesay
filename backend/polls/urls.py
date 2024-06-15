@@ -6,6 +6,7 @@ from . import views_post
 from . import view_tag
 from . import views_thread
 from . import views_public
+from . import views_chat
 
 urlpatterns = [
     path("hello", views.hello, name="helloTest"),
@@ -26,4 +27,6 @@ urlpatterns = [
     path("thread", views_thread.appendthread, name="appendthread"),
     path("publicpost", views_public.publicpost, name="publicpost"),
     path("appendpublicpost", views_public.appendpublicpost, name="appendpublicpost"),
+    path("appendchat", views_chat.appendchat, name="appendchat"),
+    path("getchat", views_chat.getchat, name="getchat"),
 ]
