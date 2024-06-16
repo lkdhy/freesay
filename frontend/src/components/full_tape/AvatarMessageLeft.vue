@@ -30,7 +30,7 @@ const props = defineProps({
   height: 50px;
   margin: 9px;
   border-radius: 4px;
-   background: var(--el-color-primary-light-9);
+  background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
 .message-container {

@@ -67,7 +67,7 @@ type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
 type GetUserRes = Promise<GetUserInfoItypeAPI>
 type TagRes = Promise<GetTagsItypeAPI>
-type GotChatRes = Promise<GotChatMessage>
+type GotChatRes = Promise<ChatItypeAPI>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface GetTagsItypeAPI {

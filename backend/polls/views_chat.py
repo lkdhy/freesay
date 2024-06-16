@@ -8,7 +8,6 @@ def appendchat(request):
     # 前端传给我的信息：（你当然可以修改名字）
     # sender代表发消息的人的用户名
     # user1、user2代表当前聊天的两个人的用户名 顺序无所谓
-    print("appendchat")
     # 先按照post方法接受
     data = json.loads(request.body)
     sender = data.get('sender')
@@ -18,19 +17,27 @@ def appendchat(request):
     user1 = User.objects.get(username=user1).user_id
     user2 = User.objects.get(username=user2).user_id
     msg = data.get('content')
+    # print(user1, user2, sender, msg)
     if user1 > user2:
         user1, user2 = user2, user1
-    chat.objects.create(sender=sender, message=msg, user1=user1, user2=user2)
+    chat.objects.create(user1_id=user1, user2_id=user2, sender=sender, message=msg)
+    # chat.objects.create(sender=sender, message=msg, user1=user1, user2=user2)
+    return JsonResponse({
+        'success': True,
+        'message': '成功发送私聊消息',
+    })
 
 def getchat(request):
     # 前端传给我的信息：
-    # host代表当前登录用户的用户名
+    # # host代表当前登录用户的用户名
     # user1、user2代表当前聊天的两个人的用户名 顺序无所谓
-    print("getchat")
     data = json.loads(request.body)
-    host = data.get('host')
+    # host = data.get('host')
     user1 = data.get('user1')
     user2 = data.get('user2')
+    user1 = User.objects.get(username=user1).user_id
+    user2 = User.objects.get(username=user2).user_id
+    # print('hh', user1, user2)
     if user1 > user2:
         user1, user2 = user2, user1
     chats = chat.objects.filter(user1=user1, user2=user2).order_by('chat_id')

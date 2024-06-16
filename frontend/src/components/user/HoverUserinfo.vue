@@ -57,7 +57,9 @@ const jump2userBox = (hostName: string) => {
   <div
       v-if="showChatDialog"
   >
-    <chat-dialog @close="showChatDialog = false">
+    <chat-dialog @close="showChatDialog = false"
+                 :user="hostName" :user-avatar="hostAvatar"
+    >
     </chat-dialog>
   </div>
 <!--  <div v-if="showRecentAnswer">-->

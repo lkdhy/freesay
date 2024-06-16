@@ -101,7 +101,6 @@ def post(request):
         withTag = with_tag(post_id_with_id=post_id, tag_id_with_id=tag_id)
         withTag.save()
 
-    ##
     return JsonResponse({
         'success': True,
         'message': '成功post问题及标签（若有）'

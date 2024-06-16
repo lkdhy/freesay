@@ -23,10 +23,10 @@ urlpatterns = [
     path("setsignature", views_post.setsignature, name="setsignature"),
     path("userinfo", views.userinfo, name="userinfo"),
     path("tags", view_tag.gettags, name="gettags"),
-    # TODO
     path("thread", views_thread.appendthread, name="appendthread"),
     path("publicpost", views_public.publicpost, name="publicpost"),
     path("appendpublicpost", views_public.appendpublicpost, name="appendpublicpost"),
+    # TODO
     path("appendchat", views_chat.appendchat, name="appendchat"),
     path("getchat", views_chat.getchat, name="getchat"),
 ]
