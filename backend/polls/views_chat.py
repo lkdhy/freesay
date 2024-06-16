@@ -37,14 +37,11 @@ def getchat(request):
     chat_list = list(chats.values())
     ret_list = []
     for item in chat_list:
-        user1 = item.get('user1')
-        user2 = item.get('user2')
+        # user1 = item.get('user1')
+        # user2 = item.get('user2')
         message = item.get('message')
         sender = item.get('sender')
-        if user1 == sender:
-            sendername = User.objects.get(user_id=user1).username
-        else:
-            sendername = User.objects.get(user_id=user2).username
+        sendername = User.objects.get(user_id=sender).username
         chat_dict = {
             'username': sendername,
             'message': message
