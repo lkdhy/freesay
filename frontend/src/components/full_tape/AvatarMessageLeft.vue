@@ -23,10 +23,14 @@ const props = defineProps({
   display: flex;
   justify-content: left;
   align-items: center;
+  /*
+  width: 70%;
+  border: 1px solid #ebeef5;
+  */
   height: 50px;
   margin: 9px;
   border-radius: 4px;
-  background: var(--el-color-primary-light-9);
+   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
 .message-container {

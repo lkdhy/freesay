@@ -33,9 +33,7 @@ const fullTapeVisible = ref(false)
         <!--        </div>-->
         <!--      </template>-->
         <div class="tags-container">
-          <!--        <el-tag type="primary">恋爱</el-tag>-->
-          <!--        <el-tag type="success">学习</el-tag>-->
-          <el-tag v-for="tag in tags">
+          <el-tag v-for="tag in tags" round>
             {{ tag }}
           </el-tag>
         </div>
@@ -54,7 +52,7 @@ const fullTapeVisible = ref(false)
             <!--          <p v-else>匿名</p>-->
             <!--          <el-avatar size="small"></el-avatar>-->
           </el-divider>
-          <div class="anwser-container">
+          <div class="answer-container">
             <el-space>
               <el-avatar
                   :src="hostAvatar"
@@ -107,7 +105,7 @@ const fullTapeVisible = ref(false)
   align-items: center;
   justify-content: center;
 }
-.anwser-container {
+.answer-container {
   height: 20%;
 }
 </style>

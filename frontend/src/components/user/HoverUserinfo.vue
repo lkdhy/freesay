@@ -2,6 +2,7 @@
 import { UserFilled } from "@element-plus/icons-vue"
 import {ref} from "vue";
 import {useRouter} from "vue-router";
+import ChatDialog from "@/components/chat_dialog/ChatDialog.vue";
 
 const router = useRouter()
 // props
@@ -12,6 +13,7 @@ const props = defineProps({
 })
 
 const showRecentAnswer = ref(false)
+const showChatDialog = ref(false)
 
 const jump2userBox = (hostName: string) => {
   router.push(`/user2/${hostName}`)
@@ -45,11 +47,24 @@ const jump2userBox = (hostName: string) => {
     向 TA 提问
   </el-button>
 
-  <div v-if="showRecentAnswer">
-    <p>
-      这里会显示 TA 最近的问答帖
-    </p>
+  <el-button
+      type="success"
+      @click="showChatDialog = true"
+  >
+    私信 TA
+  </el-button>
+
+  <div
+      v-if="showChatDialog"
+  >
+    <chat-dialog @close="showChatDialog = false">
+    </chat-dialog>
   </div>
+<!--  <div v-if="showRecentAnswer">-->
+<!--    <p>-->
+<!--      这里会显示 TA 最近的问答帖-->
+<!--    </p>-->
+<!--  </div>-->
 </template>
 
 <style scoped>

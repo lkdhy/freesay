@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CircleCloseFilled } from '@element-plus/icons-vue'
-import {ref, watch} from "vue"
+import {onBeforeMount, onBeforeUnmount, ref, watch} from "vue"
 import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
@@ -123,10 +123,18 @@ const submitResponse = async (response: string) => {
     }
   }
 }
+// onBeforeMount(() => {
+//   console.log('我是full-tape')
+// })
+// onBeforeUnmount(() => {
+//   console.log('我要去挂载了')
+// })
 </script>
 
 <template>
   <el-dialog v-model="visible" :show-close="false"
+             top="10vh"
+             width="40%"
   >
     <template #header="{ close, titleClass }">
       <div class="my-header">
@@ -159,7 +167,7 @@ const submitResponse = async (response: string) => {
       </div>
       <div class="thread-container">
         <el-scrollbar
-            height="260px"
+            height="370px"
         >
         <div class="answer-container"
              v-if="props.answer && props.answer.length > 0"

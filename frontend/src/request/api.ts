@@ -67,6 +67,7 @@ type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
 type GetUserRes = Promise<GetUserInfoItypeAPI>
 type TagRes = Promise<GetTagsItypeAPI>
+type GotChatRes = Promise<GotChatMessage>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface GetTagsItypeAPI {
@@ -119,8 +120,26 @@ interface ItypeAPI_2<T> {
     code: number
 //     TODO
 }
-
+interface ChatMessage {
+    user1: string
+    user2: string
+    sender: string
+    content: string
+}
+interface GotChatMessage {
+    username: string
+    message: string
+}
+interface ChatItypeAPI {
+    success: boolean
+    chats: GotChatMessage[]
+    total_chat: number
+}
 // my APIs
+export const ChatSendApi = (params: ChatMessage): Res<null> =>
+    instance.post('/api/appendchat', params)
+export const ChatGetApi = (params: {user1: string, user2: string}): GotChatRes  =>
+    instance.post('/api/getchat', params)
 export const GetTags = (): TagRes =>
     instance.get('/api/tags')
 export const UpdateThread = (params: {id: number, content: string}): Res<null> =>
