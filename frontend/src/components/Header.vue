@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import type {FormInstance, FormRules} from 'element-plus';
 import {ElMessage, ElNotification as notify } from 'element-plus';
-import {LogoutApi, ShareApi} from "@/request/api";
+import {AddPublicApi, LogoutApi, ShareApi} from "@/request/api";
 import {useRouter} from 'vue-router';
 import {useUserstore} from "@/store/user";
 
@@ -38,33 +38,57 @@ async function logout() {
 }
 
 const createBoxVisible = ref(false);
+const createPublicVisible = ref(false)
+const is_anonymous = ref(false)
+
 const ruleFormRef = ref<FormInstance>();
 const shareForm = reactive({
   username: userStore.userName,
   description: '来向我提问吧~'
 });
 
-const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  console.log('准备 share 提问箱到广场');
+const submitPublic = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
   formEl.validate(async (valid) => {
     if (valid) {
-      console.log('分享提问箱表单验证通过，准备提交');
-      console.log(shareForm);
+      let res = await AddPublicApi({
+        username: shareForm.username,
+        content: shareForm.description,
+        is_anonymous: is_anonymous.value,
+      });
+      if (res.success) {
+        ElMessage({
+          message: '已分享到公开表白墙',
+          type: 'success'
+        });
+        console.log(res.success)
+      } else {
+        console.log('WTF，公有墙分享失败')
+      }
+    } else {
+      console.log('share表单验证不通过')
+    }
+  })
+}
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  // console.log('准备 share 提问箱到广场');
+  formEl.validate(async (valid) => {
+    if (valid) {
       let res = await ShareApi({
         username: shareForm.username,
         description: shareForm.description
       });
-      console.log('share结果', res);
+      // console.log('share结果', res);
       if (res.success) {
         console.log('share表单提交成功');
         ElMessage({
           message: '提问箱已分享到广场',
           type: 'success'
         });
-        console.log('提问箱分享成功，我要刷新界面喽！')
+        // console.log('提问箱分享成功，我要刷新界面喽！')
         refresh();
-        console.log('刷新完毕！应该能看到刚刚分享的提问箱')
+        // console.log('刷新完毕！应该能看到刚刚分享的提问箱')
       } else {
         console.log('WTF，提问箱分享失败');
       }
@@ -111,24 +135,71 @@ const submitForm = (formEl: FormInstance | undefined) => {
     </div>
     <div>
       <el-button type="success" @click="createBoxVisible = true;">
-        分享我的提问箱
+        分享提问箱
       </el-button>
-      <el-button type="warning" @click="jump2MyHomepage">
-        我的主页
+      <el-button type="warning" @click="createPublicVisible = true;">
+        我要表白
       </el-button>
     </div>
 
     <div>
-      <el-button type="primary" @click="logout">
+      <el-button type="info" @click="jump2MyHomepage">
+        我的主页
+      </el-button>
+      <el-button type="danger" @click="logout">
         退出登录
       </el-button>
     </div>
 
+    <el-dialog v-model="createPublicVisible">
+      <template #header="{ titleClass }" >
+        <h2>
+          分享到公开表白墙！
+        </h2>
+      </template>
+      <el-form
+          ref="ruleFormRef"
+          :model="shareForm"
+      >
+        <el-form-item prop="message">
+          <!--          TODO: 调整 min/maxRows  -->
+          <el-input
+              v-model="shareForm.description"
+              type="textarea"
+              :autosize="{ minRows: 8, maxRows: 100 }"
+              input-style="font-size:18px; padding: 10px;"
+          >
+            <!--  placeholder="来问我问题吧~"-->
+          </el-input>
+        </el-form-item>
+        <div class="single-setting-container">
+          <p>是否匿名</p>
+          <el-switch v-model="is_anonymous"
+                     style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+          >
+          </el-switch>
+        </div>
+      </el-form>
+      <template #footer>
+        <div>
+          <el-button
+              type="primary"
+              @click="submitPublic(ruleFormRef);
+                      createPublicVisible=false;">
+            分享
+          </el-button>
+          <el-button @click="createPublicVisible = false;">
+            取消
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+
     <el-dialog v-model="createBoxVisible">
       <template #header="{ titleClass }" >
-        <h3>
+        <h2>
           分享提问箱让大家来问你问题吧！
-        </h3>
+        </h2>
       </template>
       <el-form
           ref="ruleFormRef"
@@ -140,6 +211,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
               v-model="shareForm.description"
               type="textarea"
               :autosize="{ minRows: 10, maxRows: 100 }"
+              input-style="font-size:18px; padding: 10px;"
           >
             <!--  placeholder="来问我问题吧~"-->
           </el-input>

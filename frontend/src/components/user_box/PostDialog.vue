@@ -76,7 +76,6 @@ const getExistingTags = async () => {
   if (res.success) {
     // console.log(res.message)
     tag_options.value = res.tags.map(tag => ({ tag: tag, label: tag }))
-    // console.log(tag_options.value)
   } else {
     console.log('WTF, 现有标签请求失败')
   }
@@ -145,7 +144,7 @@ const getExistingTags = async () => {
           default-first-option
           :reserve-keyword="false"
           placeholder="选择标签，可以输入新增标签"
-          style="width: 400px; margin-right: 30px"
+          style="width: 300px; margin-right: 30px"
       >
         <el-option
             v-for="tag in tag_options"
@@ -154,13 +153,15 @@ const getExistingTags = async () => {
             :value="tag.tag"
         />
 
-        <template #tag>
-          <el-tag v-for="tag in selected_tags"
-                  :key="tag"
-                  round
-          >
-            {{ tag }}
-          </el-tag>
+        <template #tag >
+<!--          <div style="display: flex; justify-content: center;">-->
+            <el-tag v-for="tag in selected_tags"
+                    :key="tag"
+                    round
+            >
+              {{ tag }}
+            </el-tag>
+<!--          </div>-->
         </template>
       </el-select>
     </div>
@@ -224,7 +225,7 @@ const getExistingTags = async () => {
   margin-left: 40px;
 }
 .single-setting-container {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 </style>

@@ -33,6 +33,7 @@ const userInfo = ref<GotUserInfo>({
 const all_posts = ref<GotPost[]>([])
 const posts = ref<GotPost[]>([])
 const aim_tag = ref('All')
+const loading = ref(false)
 watch(aim_tag, () => {
   if (aim_tag.value === 'All') {
     posts.value.length = 0
@@ -55,11 +56,11 @@ const options = ref([
 ])
 
 const fetchUserInfo = async (visitedUser: string) => {
-  console.log(`即将请求${visitedUser}的个人信息`)
+  // console.log(`即将请求${visitedUser}的个人信息`)
   const user_info_res = await GetUserInfo({
     username: <string>visitedUser
   })
-  console.log(`${visitedUser}的个人信息请求结果：`, user_info_res)
+  // console.log(`${visitedUser}的个人信息请求结果：`, user_info_res)
   if (user_info_res.success) {
     userInfo.value = user_info_res.userinfo
   } else {
@@ -68,6 +69,7 @@ const fetchUserInfo = async (visitedUser: string) => {
 }
 const fetchUserPosts = async (visitedUser: string) => {
   // console.log(`即将请求${visitedUser}的所有公开已答帖子`)
+  loading.value = true
   all_posts.value.length = 0
   posts.value.length = 0
   const host_post_res = await GetHostPostApi({
@@ -84,6 +86,7 @@ const fetchUserPosts = async (visitedUser: string) => {
         })
       }
     })
+    loading.value = false
     // console.log(posts.value)
   } else {
     console.log('WTF, host posts 请求失败')
@@ -106,6 +109,7 @@ watch(router.currentRoute, () => {
   <el-space
       size="large"
       alignment="start"
+      v-loading="loading"
   >
     <div class="main">
       <div class="description-container">
@@ -135,6 +139,8 @@ watch(router.currentRoute, () => {
             >
               <post-card v-for="post in posts"
                          v-show="post.is_public"
+                         @responded="console.log('UserBox收到了有消息回复的信息');
+                                        fetchUserPosts(<string>router.currentRoute.value.params.username); "
                          :id="post.id"
                          :host-name="visitedUser"
                          :host-avatar="userInfo.avatar"

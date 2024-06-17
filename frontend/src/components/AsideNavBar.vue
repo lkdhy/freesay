@@ -34,7 +34,7 @@ const router = useRouter();
 
     <el-menu-item index="/">
       <el-icon><View /></el-icon>
-      <span>今日表白墙</span>
+      <span>表白墙</span>
     </el-menu-item>
 
     <el-menu-item index="/">

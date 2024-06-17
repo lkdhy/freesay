@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import { UserFilled } from "@element-plus/icons-vue"
 import HoverUserinfo from "@/components/user/HoverUserinfo.vue";
+import {useUserstore} from "@/store/user";
 // props
 const props = defineProps({
   hostName: String,
   hostAvatar: String,
   hostSignature: String
 })
+
+const userStore = useUserstore()
+
 </script>
 
 <template>
-  <div class="avatar-username-container">
+  <div class="avatar-username-container"
+  >
 <!--    <el-space alignment="center" spacer="|">-->
     <el-popover
+        :disabled="userStore.userName === hostName"
         :width=300
         placement="bottom"
         class="popover-container"

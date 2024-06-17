@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CircleCloseFilled } from '@element-plus/icons-vue'
-import {onBeforeMount, onBeforeUnmount, ref, watch} from "vue"
+import {onBeforeMount, onBeforeUnmount, onMounted, ref, watch} from "vue"
 import {AnswerApi, UpdateThread} from "@/request/api";
 import AvatarUsername from "../user/AvatarUsername.vue";
 import {useRouter} from "vue-router";
@@ -41,7 +41,7 @@ const refresh = () => {
 const thread_got = ref<Array<string>>(props.thread);
 // if (props.thread) thread_got.value = props.thread
 // console.log(thread_got.value)
-console.log('length', thread_got.value.length)
+// console.log('length', thread_got.value.length)
 const thread = ref<Array<Array<string>>>([])
 if (thread_got.value && thread_got.value.length>0 && thread_got.value[thread_got.value.length-1].length===0)
   thread_got.value.pop()
@@ -76,8 +76,7 @@ const can_respond = ref(can_answer || can_update_thread)
 const submitResponse = async (response: string) => {
   if (response.length === 0)
   {
-    ElMessage.error('请输入！')
-    return
+    ElMessage.error('请输入~'); return
   }
   if (can_answer) {
     const res = await AnswerApi({
@@ -118,6 +117,8 @@ const submitResponse = async (response: string) => {
         type: 'success',
         showClose: false,
       })
+      console.log(' 回复提问成功');
+      emit('responded');
     } else {
       console.log('WTF, 回复提问失败');
     }
@@ -129,11 +130,22 @@ const submitResponse = async (response: string) => {
 // onBeforeUnmount(() => {
 //   console.log('我要去挂载了')
 // })
+// onMounted(() => {
+//   // get the el-scrollbar element, and call the setScrollTop method of it
+//   const el = document.querySelector('.el-scrollbar__wrap')
+//   if (el) {
+//     console.log('jfiooneioa')
+//     el.scrollTop = 60
+//     console.log(el.scrollTop)
+//     console.log(el.scrollHeight)
+//     // log the total height of all elements inside
+//   }
+// })
 </script>
 
 <template>
   <el-dialog v-model="visible" :show-close="false"
-             top="10vh"
+             top="8vh"
              width="40%"
   >
     <template #header="{ close, titleClass }">
@@ -167,7 +179,7 @@ const submitResponse = async (response: string) => {
       </div>
       <div class="thread-container">
         <el-scrollbar
-            height="370px"
+            height="45vh"
         >
         <div class="answer-container"
              v-if="props.answer && props.answer.length > 0"
@@ -198,7 +210,7 @@ const submitResponse = async (response: string) => {
       <el-input
           type="textarea"
           v-model="response"
-          :rows="2"
+          autosize
           input-style="font-size: 17px; letter-spacing: 1.5px; line-height: 1.5;"
       >
 
@@ -206,7 +218,7 @@ const submitResponse = async (response: string) => {
 
       <div class="respond-button-container">
         <el-button
-            @click="submitResponse(response); visible=false; "
+            @click="submitResponse(response);"
             type="primary"
         >
           回复

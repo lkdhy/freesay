@@ -60,14 +60,27 @@ interface GotPost {
     tags: string[]
     thread: string[]
 }
+interface public_thread {
+    username: string
+    avatar: string
+    is_anonymous: boolean
+    content: string
+}
+interface GotPublic {
+    username: string
+    avatar: string
+    is_anonymous: boolean
+    content: string
+    thread: public_thread[]
+}
 
-// Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
 type BoxRes<T> = Promise<BoxItypeAPI<T>>;
 type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
 type GetUserRes = Promise<GetUserInfoItypeAPI>
 type TagRes = Promise<GetTagsItypeAPI>
 type GotChatRes = Promise<ChatItypeAPI>
+type GotPublicRes = Promise<GotPublic>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface GetTagsItypeAPI {
@@ -136,6 +149,11 @@ interface ChatItypeAPI {
     total_chat: number
 }
 // my APIs
+export const GetPublicApi = (): GotChatRes =>
+    instance.get('/api/publicpost')
+export const AddPublicApi = (params: {
+    username: string, content: string, is_anonymous: boolean }): Res<null> =>
+    instance.post('/api/addpublic', params)
 export const ChatSendApi = (params: ChatMessage): Res<null> =>
     instance.post('/api/appendchat', params)
 export const ChatGetApi = (params: {user1: string, user2: string}): GotChatRes  =>
@@ -158,7 +176,6 @@ export const GetPostApi = (params: { 'username': string } ): GotPostRes<null> =>
     instance.get('/api/getpost', {params})
 export const AnswerApi = (params: { 'id': number, 'answer': string, 'is_public': boolean } ): Res<null> =>
     instance.post('/api/answer', params)
-
 export const GetHostPostApi = (params: { 'username': string } ): GotPostRes<null> =>
     instance.get('/api/gethostpost', {params})
 

@@ -139,7 +139,6 @@ def gethostpost(request):
             'is_anonymous': item.get('is_anonymous'),
             'is_public': item.get('is_public'),
             'tags': tag_name_list,
-            # TODO
             'thread': get_thread(item.get('head_thread')),
         }
         updated_data.append(updated_item)

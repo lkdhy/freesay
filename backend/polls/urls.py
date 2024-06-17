@@ -24,9 +24,11 @@ urlpatterns = [
     path("userinfo", views.userinfo, name="userinfo"),
     path("tags", view_tag.gettags, name="gettags"),
     path("thread", views_thread.appendthread, name="appendthread"),
-    path("publicpost", views_public.publicpost, name="publicpost"),
+    # TODO: frontend
+    path("publicpost", views_public.getpublicpost, name="publicpost"),
+    path("addpublic", views_public.addpublicpost, name="addpublicpost"),
     path("appendpublicpost", views_public.appendpublicpost, name="appendpublicpost"),
-    # TODO
+    # TODO: frontend
     path("appendchat", views_chat.appendchat, name="appendchat"),
     path("getchat", views_chat.getchat, name="getchat"),
 ]

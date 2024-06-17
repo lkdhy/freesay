@@ -16,6 +16,7 @@ const props = defineProps({
   tags: Array<String>,
   thread: Array<String>,
 })
+const emit = defineEmits(['responded'])
 
 const fullTapeVisible = ref(false)
 
@@ -26,12 +27,8 @@ const fullTapeVisible = ref(false)
     <el-tooltip content="点击查看">
       <el-card class="post-card"
                shadow="hover"
-               @click="console.log(fullTapeVisible);fullTapeVisible = !fullTapeVisible"
+               @click="fullTapeVisible = true;"
       >
-        <!--      <template #header>-->
-        <!--        <div class="flex gap-2">-->
-        <!--        </div>-->
-        <!--      </template>-->
         <div class="tags-container">
           <el-tag v-for="tag in tags" round>
             {{ tag }}
@@ -69,6 +66,7 @@ const fullTapeVisible = ref(false)
     <full-tape
         v-if="fullTapeVisible"
         @close="fullTapeVisible = false"
+        @responded="console.log('userbox中有回复了'); emit('responded'); "
         :id="id"
         :anonymous = anonymous
         :question = question
@@ -100,7 +98,7 @@ const fullTapeVisible = ref(false)
   height: 200px;
 }
 .question-container {
-  height: 60%;
+  height: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
