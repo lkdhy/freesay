@@ -5,7 +5,6 @@ from django.core.serializers import serialize
 
 # 表白墙按钮接口，显示所有publicpost
 def getpublicpost(request):
-    print('enter publicbox')
     records = publicpost.objects.all().order_by('-public_id')
     # records = serialize('json', records)
     # json_data = json.loads(records)
@@ -15,7 +14,6 @@ def getpublicpost(request):
     fields_list = list(records.values())
     updated_data = []
     for item in fields_list:
-        # print('item:', item)
         public_id = item.get('public_id')
         # print(public_id)
         tid = item.get('head_thread')
@@ -64,8 +62,6 @@ def getpublicpost(request):
             # 'threadanonymous': thread_anonymous,
         }
         updated_data.append(updated_item)
-    for _ in updated_data:
-        print(_)
 
     count = publicpost.objects.count()
     return JsonResponse({
@@ -104,15 +100,12 @@ def addpublicpost(request):
     })
 
 def appendpublicpost(request):
-    print('enter appendpublicpost')
     data = json.loads(request.body)
     pid = data.get('pid')
     content = data.get('content')
     is_anonymous = data.get('is_anonymous')
     username = data.get('username') #同上，也可以改成user_id，看你怎么方便了
     user_id = User.objects.get(username=username).user_id
-
-    print('pid=', pid)
 
     # 创立新的publicthread
     new_thread = publicthread.objects.create(
