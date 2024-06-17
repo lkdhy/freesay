@@ -34,8 +34,7 @@ onBeforeMount(fetchBoxData)
 </script>
 
 <template>
-  <h2 style="text-align: center;
-margin-bottom: 1em">
+  <h2 style="text-align: center; margin-bottom: 1em">
     广场
   </h2>
   <el-scrollbar

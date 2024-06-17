@@ -183,7 +183,7 @@ watch(router.currentRoute, () => {
   border: orange 4px solid;
 }
 .description-container {
-  height: 200px;
+  height: 100px;
 }
 .operation-container {
   margin: 10px

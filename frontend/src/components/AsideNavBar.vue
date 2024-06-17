@@ -27,20 +27,20 @@ const router = useRouter();
 <!--      <span>用户</span>-->
 <!--    </el-menu-item>-->
 
-    <el-menu-item index="/userList">
-      <el-icon><User /></el-icon>
-      <span>看看有谁！</span>
-    </el-menu-item>
+<!--    <el-menu-item index="/userList">-->
+<!--      <el-icon><User /></el-icon>-->
+<!--      <span>看看有谁！</span>-->
+<!--    </el-menu-item>-->
 
-    <el-menu-item index="/">
+    <el-menu-item index="/publicBox">
       <el-icon><View /></el-icon>
       <span>表白墙</span>
     </el-menu-item>
 
-    <el-menu-item index="/">
-      <el-icon><ChatLineRound /></el-icon>
-      <span>我的聊天</span>
-    </el-menu-item>
+<!--    <el-menu-item index="/">-->
+<!--      <el-icon><ChatLineRound /></el-icon>-->
+<!--      <span>我的聊天</span>-->
+<!--    </el-menu-item>-->
 <!--    <el-menu-item index="profile">-->
 <!--      <span>（我认为不需要这条）你的 profile</span>-->
 <!--    </el-menu-item>-->

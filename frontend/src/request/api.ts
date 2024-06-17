@@ -67,6 +67,7 @@ interface public_thread {
     content: string
 }
 interface GotPublic {
+    pid: number
     username: string
     avatar: string
     is_anonymous: boolean
@@ -80,7 +81,7 @@ type GotPostRes<T> = Promise<GotPostItypeAPI<T>>
 type GetUserRes = Promise<GetUserInfoItypeAPI>
 type TagRes = Promise<GetTagsItypeAPI>
 type GotChatRes = Promise<ChatItypeAPI>
-type GotPublicRes = Promise<GotPublic>
+type GotPublicRes = Promise<GotPublicItypeAPI>
 // 一般情况下响应数据返回的这三个参数，
 // 但不排除后端返回其它的可能性，
 interface GetTagsItypeAPI {
@@ -104,10 +105,15 @@ interface GotPostItypeAPI<T> {
     total_posts: number
     // total_pages: number
 }
+interface GotPublicItypeAPI {
+    success: string | null // 返回状态码的信息，如请求成功等;
+    message: string
+    code: number //返回后端自c定义的200，404，500这种状态码
+    posts: GotPublic[]
+    totalposts: number
+}
 interface BoxItypeAPI<T> {
     success: string | null // 返回状态码的信息，如请求成功等;
-    result: T,//请求的数据，用泛型
-    msg: string | null // 返回状态码的信息，如请求成功等
     message: string
     code: number //返回后端自c定义的200，404，500这种状态码
     box: Box
@@ -149,7 +155,12 @@ interface ChatItypeAPI {
     total_chat: number
 }
 // my APIs
-export const GetPublicApi = (): GotChatRes =>
+export const SendPublicApi = (params:
+                                  {pid: number, username: string, content: string,
+                                      is_anonymous: boolean}): Res<null> =>
+    instance.post('api/appendpublic', params)
+
+export const GetPublicApi = (): GotPublicRes =>
     instance.get('/api/publicpost')
 export const AddPublicApi = (params: {
     username: string, content: string, is_anonymous: boolean }): Res<null> =>

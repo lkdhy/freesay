@@ -7,14 +7,17 @@ from django.core.serializers import serialize
 def getpublicpost(request):
     print('enter publicbox')
     records = publicpost.objects.all().order_by('-public_id')
-    records = serialize('json', records)
-    json_data = json.loads(records)
-    fields_list = []
-    for obj in json_data:
-        fields_list.append(obj['fields'])
+    # records = serialize('json', records)
+    # json_data = json.loads(records)
+    # fields_list = []
+    # for obj in json_data:
+    #     fields_list.append(obj['fields'])
+    fields_list = list(records.values())
     updated_data = []
     for item in fields_list:
-        # public_id = item.get('public_id')
+        # print('item:', item)
+        public_id = item.get('public_id')
+        # print(public_id)
         tid = item.get('head_thread')
         cur = publicthread.objects.get(publicthread_id=tid)
         user_id = cur.user_id_thread_id
@@ -24,6 +27,7 @@ def getpublicpost(request):
         avatar = user.avatar # 链中第一个人的头像
 
         is_anonymous = cur.is_anonymous # 链中第一个人是否匿名，这将影响是否在一点进去的表白墙界面中显示发帖者的头像和用户名
+        content0 = cur.content # 链中第一个人的内容
 
         # thread_name = []
         # thread_content = []
@@ -48,9 +52,11 @@ def getpublicpost(request):
             tid = cur.nxt
 
         updated_item = {
+            'pid': public_id,
             'username': username,
             'avatar': avatar,
             'is_anonymous': is_anonymous,
+            'content': content0,
             'thread': thread,
             # 如果匿名，那么username和头像应该隐藏，这应该是前端实现的？
             # 'threadcontent': thread_content,
@@ -58,11 +64,13 @@ def getpublicpost(request):
             # 'threadanonymous': thread_anonymous,
         }
         updated_data.append(updated_item)
-    print(updated_data)
+    for _ in updated_data:
+        print(_)
 
     count = publicpost.objects.count()
     return JsonResponse({
         'success': True,
+        'message': '成功获得表白墙数据',
         'posts': updated_data,
         'totalposts': count,
     })
@@ -98,27 +106,30 @@ def addpublicpost(request):
 def appendpublicpost(request):
     print('enter appendpublicpost')
     data = json.loads(request.body)
-    pid = data.get('id')
+    pid = data.get('pid')
     content = data.get('content')
     is_anonymous = data.get('is_anonymous')
     username = data.get('username') #同上，也可以改成user_id，看你怎么方便了
     user_id = User.objects.get(username=username).user_id
 
+    print('pid=', pid)
+
     # 创立新的publicthread
-    new_thread_id = publicthread.objects.create(
+    new_thread = publicthread.objects.create(
         content=content,
         nxt=0,
         is_anonymous=is_anonymous,
         user_id_thread_id=user_id,
     )
 
-    post = publicpost.objects.get(publicpost_id=pid)
+    post = publicpost.objects.get(public_id=pid)
     tid = post.head_thread
     while tid > 0:
         cur = publicthread.objects.get(publicthread_id=tid)
         tid = cur.nxt
-    cur.nxt = new_thread_id
+    cur.nxt = new_thread.publicthread_id
     cur.save() # 保存新的cur，增加了nxt
+
     return JsonResponse({
         'success': True,
         'message': '创建表白墙thread',

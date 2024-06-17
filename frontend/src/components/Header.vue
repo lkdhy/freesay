@@ -173,7 +173,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
           </el-input>
         </el-form-item>
         <div class="single-setting-container">
-          <p>是否匿名</p>
+          <p>是否匿名（默认不匿名）</p>
           <el-switch v-model="is_anonymous"
                      style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
           >

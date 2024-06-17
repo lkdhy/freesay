@@ -17,6 +17,7 @@ import Pacts2 from "@/pages/Pacts2.vue"
 import ColorfulBubblesParticles from "@/components/Particles/ColorfulBubblesParticles.vue"
 import SnowParticles from "@/components/Particles/SnowParticles.vue"
 import UserBox from "@/components/user_box/UserBox.vue";
+import PublicBox from "@/components/public_box/PublicBox.vue";
 
 const routes =
     [
@@ -47,6 +48,9 @@ const routes =
         {
             path: '/', name: 'Index', component: Index,
             children: [
+                {
+                    path: 'publicBox', name: 'PublicBox', component: PublicBox
+                },
                 {
                     path: 'userBox', name: 'UserBox', component: UserBox
                 },

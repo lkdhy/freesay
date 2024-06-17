@@ -168,7 +168,7 @@ const getExistingTags = async () => {
 
     <div class="post-settings-container">
       <div class="single-setting-container">
-        <p>是否匿名</p>
+        <p>是否匿名（默认匿名）</p>
         <el-switch v-model="is_anonymous"
                    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
         >
@@ -176,7 +176,7 @@ const getExistingTags = async () => {
       </div>
 
       <div class="single-setting-container">
-        <p>是否公开</p>
+        <p>是否公开（默认公开）</p>
         <el-switch v-model="is_public">
         </el-switch>
       </div>

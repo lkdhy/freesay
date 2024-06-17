@@ -134,6 +134,7 @@ const submitResponse = async (response: string) => {
         <el-button
             @click="submitResponse(chatResponse);"
             type="primary"
+            round
         >
           回复
         </el-button>
